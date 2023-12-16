@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import User from "@/app/_models/User";
+import User from "@/app/_mongoDB/models/User";
 import bcrypt from "bcrypt";
 
 export async function POST(req){
@@ -15,9 +15,9 @@ export async function POST(req){
         // check for duplicate emails
         const duplicate = await User.findOne({email: userData.email}).lean().exec()
 
-        // if (duplicate){
-        //     return NextResponse.json({message: "Email already in use"}, {status: 409})
-        // }
+        if (duplicate){
+            return NextResponse.json({message: "Email already in use"}, {status: 409})
+        }
 
         const hashPassword = await bcrypt.hash(userData.password, 10);
         userData.password = hashPassword;

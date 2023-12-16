@@ -1,12 +1,13 @@
 import mongoose, {Schema} from "mongoose"
 
-mongoose.connect(process.env.MONGODB_URL)
-mongoose.Promise = global.Promise
-
 const userSchema = new Schema({
-    name: String,
-    email: String,
+    username: String,
     password: String,
+    rank: String,
+    level: String,
+    buildTokens: String,
+    crystals: String,
+    friends: String
 }, {
     timestamps: true
 })

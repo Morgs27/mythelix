@@ -2,9 +2,10 @@
 
 import { SessionProvider } from "next-auth/react"
 
-const AuthProvider = ({ children }) => {
+// CLient side auth
+
+const AuthProvider = ({ children }: {children: any}) => {
     return (
-        // @ts-ignore
         <SessionProvider>{children}</SessionProvider>
     )
 }
