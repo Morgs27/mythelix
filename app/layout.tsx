@@ -24,6 +24,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+
+      </head>
       {/* @ts-ignore */}
       <AuthProvider>
           <body className={inter.className}>

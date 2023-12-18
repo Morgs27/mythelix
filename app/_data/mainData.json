@@ -1,0 +1,6 @@
+{
+    "account_setup": {
+        "starting_tokens": 10,
+        "starting_crystals": 600
+    }
+}

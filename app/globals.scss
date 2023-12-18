@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600&family=Silkscreen:wght@400;700&display=swap');
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   color: white;
+  font-family: 'Raleway', sans-serif;
 }
 
 html,
@@ -67,25 +69,27 @@ $colours: (
 }
 
 .fade-in{
-  transform: translateY(-5px);
-  opacity: 0;
+  transform: translateY(-3px);
+  // opacity: 0 !important;
+  filter: blur(1px);
 }
 
 .fade-left{
-  transform: translateX(-5px);
+  transform: translateX(-3px);
 }
 
 .fade-bottom{
-  transform: translateY(5px);
+  transform: translateY(3px);
 }
 
 .fade-right{
-  transform: translateX(5px);
+  transform: translateX(3px);
 }
 
 .visible{
-  opacity: 1 !important;
+  // opacity: 1 !important;
   transform: translateY(0px) !important;
+  filter: blur(0px);
 }
 
 // loop through and create styles for fade-x to 100
@@ -106,7 +110,7 @@ $colours: (
   height: calc(100vh - 150px);
   // border: 1px solid white;
   margin: 10px auto;
-  padding-right: 10px;
+  padding-right: 5px;
   overflow-x: hidden;
   overflow-y: scroll;
 
@@ -143,5 +147,13 @@ $colours: (
 }
 
 .page{background-color: purple;}
+
+.loader{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
 
 

@@ -1,78 +1,65 @@
-import GitHubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/app/_mongoDB/models/User";
 import bcrypt from "bcrypt";
+import { connectDB } from "@/app/_mongoDB/connect";
+import { NextResponse } from "next/server";
 
 export const options = {
     providers: [
         CredentialsProvider({
             name: "Credentials",
             credentials: {
-                email: {
-                    label: "Email:",
+                username: {
+                    label: "username:",
                     type: "text",
-                    placeholder: "",
+                    placeholder: "username",
                 },
                 password: {
-                    label: "Password",
+                    label: "password",
                     type: "password",
-                    placeholder: "",
+                    placeholder: "password",
                 },
             },
             async authorize(credentials){
+
+                let error = "server";
+
                 try {
-                    const foundUser = await User.findOne({email: credentials.email}).lean().exec();
+
+                    connectDB();
+
+                    const foundUser = await User.findOne({username: credentials.username}).lean().exec();
+
                     if (foundUser){
-                        console.log("Found User: ", foundUser);
+
                         const match = await bcrypt.compare(credentials.password, foundUser.password);
+
                         if (match) {
-                            console.log("Good Pass");
+
                             delete foundUser.password;
-                            foundUser["role"] = "Unverified Email";
+
                             return foundUser;
                         }
+                        else {
+
+                            error = "password&username=" + credentials.username
+ 
+                        }
+
+                    }else {
+
+                       error = "username"
 
                     }
+
                 } catch (error){
                     console.log(error);
                 }
-                return null;
-            }
-        }),
-        GitHubProvider({
-            profile(profile){
-                console.log("Profile Github: ", profile);
 
-                let userRole = "Github User";
-                if (profile?.email == "morganjdaniel@gmail.com"){
-                    userRole = "Admin";
-                }
-
-                return {
-                    ...profile, 
-                    role: userRole,
-                }
+                throw new Error(error);
+                
             },
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET,
         }),
-        GoogleProvider({
-            profile(profile) {
-                console.log("Profile Google: ", profile);
-
-                let userRole = "Google User";
-
-                return {
-                    ...profile,
-                    id: profile.sub,
-                    role: userRole,
-                };
-            },
-            clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_SECRET,
-        }),
-      
     ],
     callbacks: {
         async jwt({token, user}){
@@ -83,5 +70,10 @@ export const options = {
             if (session?.user) session.user.role = token.role;
             return session;
         }
+    },
+    pages: {
+        signIn: "../../../auth/signin",
+        signOut: "../../../auth/signout",
+        error: "../../../auth/signin",
     }
 }

@@ -175,7 +175,7 @@ const Background  = ({ width, height, brightness,  style }: { width: number, hei
             const iResolutionYLocation = gl.getUniformLocation(program, 'iResolutionY');
             const iBrightnessLocation = gl.getUniformLocation(program, 'iBrightness');
 
-            if (iTimeLocation && iResolutionXLocation && iResolutionYLocation) {
+            if (iTimeLocation && iResolutionXLocation && iResolutionYLocation && iBrightnessLocation) {
               gl.uniform1f(iTimeLocation, time);
               gl.uniform1f(iResolutionXLocation, width);
               gl.uniform1f(iResolutionYLocation, height);
