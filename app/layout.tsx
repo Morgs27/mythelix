@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-
+  
       </head>
       {/* @ts-ignore */}
       <AuthProvider>
@@ -46,6 +46,8 @@ export default function RootLayout({
 
           </body>
       </AuthProvider>
+
     </html>
+    
   )
 }

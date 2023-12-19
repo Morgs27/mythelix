@@ -34,11 +34,12 @@ $background: rgb(40,40,40);
         }
 
         .form__description{
-            opacity: 0.6;
+            color: rgba(255,255,255,0.7);
             font-size: 16px;
             margin-bottom: 20px;
 
             a {
+                color: rgba(255,255,255,0.7);
                 text-decoration: underline;
             }
         }
@@ -64,6 +65,7 @@ $background: rgb(40,40,40);
         }
 
         .form__button{
+            width: 100%;
             background: rgba(255,255,255,0.2);
             background: $secondary;
             margin-top: 10px;
@@ -72,7 +74,7 @@ $background: rgb(40,40,40);
             display: flex;
             justify-content: center;
             align-items: center;
-            opacity: 0.6;
+            opacity: 0.3;
             margin-top: 20px;
             &.active{
                 display: flex;

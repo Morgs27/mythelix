@@ -5,7 +5,9 @@ const UnclaimedImageSchema = new Schema({
     type: {type: String, required: true},
     alterations: {type: String, required: true},
     photo: { type: String, required: true},
-    promptVersion: {type: String, required: true}
+    promptVersion: {type: String, required: true},
+    uses: Number,
+    beingTried: Boolean,
 }, {
     timestamps: true
 })

@@ -5,7 +5,6 @@ import React, {useEffect, useState} from "react"
 import Link from "next/link"
 import { FaEye } from "react-icons/fa";
 import {signIn} from 'next-auth/react';
-import useObserver from "@/app/_hooks/useObserver";
 
 const UserForm = () => {
     const router = useRouter()
@@ -25,6 +24,8 @@ const UserForm = () => {
 
     const [visible, setVisible] = useState(false);
 
+    const [fadeActive, setFadeActive] = useState(false);
+
     let usernameTimeout: NodeJS.Timeout | null  = null;
     let emailTimeout: NodeJS.Timeout | null  = null;
     let passwordTimeout: NodeJS.Timeout | null   = null;
@@ -32,9 +33,7 @@ const UserForm = () => {
     const checkDelay = 300;
 
     useEffect(() => {
-
-        useObserver();
-    
+        setFadeActive(true);
     }, [])
     
 
@@ -144,7 +143,20 @@ const UserForm = () => {
                 }
 
                 else {
-                    setEmailError({fine: true, error: 'Email Valid'})
+
+                    // check to see if username is taken
+                    const res = await fetch(`/api/auth/checkEmail?email=${value}`);
+
+                    if (res.ok){
+                        // Username should be fine
+                        setEmailError({error: 'Valid Email', fine: true})
+                    }
+                    else {
+                        // Username Taken
+                        setEmailError({fine: false, error: 'Email Already Used'})
+                    }
+
+
                 }
 
                
@@ -233,33 +245,35 @@ const UserForm = () => {
         setVisible((visible) => {return !visible})
     }
 
-
+    
     return (
         <>
         <form onSubmit={handleSubmit} method="post" className='form'>
-            <div className="form__title fade-in fade-time-10 fade-left fade-delay-0">Create Mythelix Account</div>
-            <div className="form__description fade-in fade-time-10 fade-left fade-delay-20">Already have an accout? <Link href='./signin'>Sign In</Link></div>
+            <div className={`form__title fade-delay-0 ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'}`}>Create Mythelix Account</div>
+            <div className={`form__description fade-delay-15 ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'}`}>Already have an accout? <Link href='./signin'>Sign In</Link></div>
 
-            <div className={`form__input__container fade-in fade-time-10 fade-left fade-delay-6 ${usernameError.fine == true ? 'fine' : (username.length > 0 ? 'red' : '')}`}>
+            <div className={`form__input__container ${fadeActive ? 'fade-in-normal-active fade-delay-3' : 'fade-in-normal fade-delay-5'}  ${usernameError.fine == true ? 'fine' : (username.length > 0 ? 'red' : '')}`}>
                 <input placeholder="Username" id = "name" name = "name" onChange = {handleUsername}  type = "text" value={username}/>
-                <div className='form__error' style={{ borderRightWidth: `${usernameError.error.length > 0 ? '1px' : '0px'}` }}>{usernameError.error}</div>
+                <div className='form__error' >{usernameError.error}</div>
             </div>
 
-            <div className={`form__input__container fade-in fade-time-10 fade-left fade-delay-9 ${emailError.fine == true ? 'fine' : (email.length > 0 ? 'red' : '')}`}>
+            <div className={`form__input__container ${fadeActive ? 'fade-in-normal-active fade-delay-6' : 'fade-in-normal fade-delay-8'} ${emailError.fine == true ? 'fine' : (email.length > 0 ? 'red' : '')}`}>
                 <input placeholder="Email" id = "email" name = "email" onChange = {handleEmail} type = "text" value={email}/>
-                <div className='form__error' style={{ borderRightWidth: `${emailError.error.length > 0 ? '1px' : '0px'}` }}>{emailError.error}</div>
+                <div className='form__error'>{emailError.error}</div>
             </div>
 
-            <div className={`form__input__container fade-in fade-time-10 fade-left fade-delay-12 ${passwordError.fine == true ? 'fine' : (password.length > 0 ? 'red' : '')}`}>
+            <div className={`form__input__container ${fadeActive ? 'fade-in-normal-active fade-delay-9' : 'fade-in-normal fade-delay-11'} ${passwordError.fine == true ? 'fine' : (password.length > 0 ? 'red' : '')}`}>
                 <input placeholder = 'Password' id = "password" name = "password" onChange = {handlePassword} type = {visible ? 'text' : 'password'} value={password}/>
                 
                 <div onClick={handleVisible} className={`eye ${password.length > 0 ? 'active' : ''}`}><FaEye></FaEye></div>
 
-                <div className='form__error' style={{ borderRightWidth: `${passwordError.error.length > 0 ? '1px' : '0px'}` }}>{passwordError.error}</div>
+                <div className='form__error'>{passwordError.error}</div>
             </div>
             
-            <input className={`form__button fade-in fade-time-10 fade-left fade-delay-16 ${active ? 'active' : ''}`} type = "submit" value = "Create Account" onSubmit = {handleSubmit}/>
-            
+            <div className = {fadeActive ? 'fade-in-normal-active fade-delay-12' : 'fade-in-normal fade-delay-15'} style = {{width: '100%'}}>
+                <input className={`form__button  ${active ? 'active' : ''}`} type = "submit" value = "Create Account" onSubmit = {handleSubmit}/>
+            </div>
+
             <div className = {`form__main__error ${errorMessage.length > 0 ? 'active' : ''}`}  >{errorMessage}</div>
         </form>
         </>

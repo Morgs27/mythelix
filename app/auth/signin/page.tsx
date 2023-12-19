@@ -21,6 +21,12 @@ const page = () => {
     const [usernameError, setUsernameError] = useState({error: '', fine: false});
     const [passwordError, setPasswordError] = useState({error: '', fine: false});
 
+    const [fadeActive, setFadeActive] = useState(false);
+
+    useEffect(() => {
+        setFadeActive(true);
+    }, [])
+
     useEffect(() => {
         
       if (username.length > 0 && password.length > 0){
@@ -68,22 +74,16 @@ const page = () => {
         if (username.length == 0){
             setUsernameError({error: 'Please enter a username', fine: false})
         }
-        else {
-            setUsernameError({error: '', fine: true})
-        }
-
-        if (password.length == 0){
+        else if (password.length == 0){
             setPasswordError({error: 'Please enter a password', fine: false})
         }
         else {
-            setPasswordError({error: '', fine: true})
+            const res = await signIn('credentials', { 
+              username: username, 
+              password: password,
+              callbackUrl: callBackUrl,
+            })
         }
-
-        const res = await signIn('credentials', { 
-          username: username, 
-          password: password,
-          callbackUrl: callBackUrl,
-        })
 
     }
 
@@ -103,23 +103,26 @@ const page = () => {
     return (
         <>
         <form onSubmit={handleLogin} method="post" className='form'>
-            <div className="form__title fade-in fade-time-10 fade-left fade-delay-0">Sign In</div>
-            <div className="form__description fade-in fade-time-10 fade-left fade-delay-15">Don't have an account? <Link href='./signup'>Sign Up</Link></div>
+            <div className={`form__title ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'}`}>Sign In</div>
+            <div className={`form__description ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} fade-delay-12`}>Don't have an account? <Link href='./signup'>Sign Up</Link></div>
 
-            <div className={`form__input__container fade-in fade-time-10 fade-left fade-delay-6  ${usernameError.error.length > 0 ? 'red' : ''}`}>
+            <div className={`form__input__container ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} fade-delay-3  ${usernameError.error.length > 0 ? 'red' : ''}`}>
                 <input onChange={handleUsername} placeholder="Username" id = "name" name = "name" type = "text" value={username}/>
                 <div className='form__error '>{usernameError.error}</div>
 
             </div>
 
-            <div className={`form__input__container fade-in fade-time-10 fade-left fade-delay-9 ${passwordError.error.length > 0 ? 'red' : ''}`}>
+            <div className={`form__input__container fade-delay-6 ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} ${passwordError.error.length > 0 ? 'red' : ''}`}>
                 <input onChange={handlePassword} placeholder = 'Password' id = "password" name = "password" type = {visible ? 'text' : 'password'} value={password}/>
                 
                 <div onClick={handleVisible} className={`eye ${password.length > 0 ? 'active' : ''}`}><FaEye></FaEye></div>
                 <div className='form__error'>{passwordError.error}</div>
             </div>
+
+            <div className = {fadeActive ? 'fade-in-normal-active fade-delay-9' : 'fade-in-normal fade-delay-15'} style = {{width: '100%'}}>
+                <input className={`form__button active`} type = "submit" value = "Log In"/>
+            </div>
             
-            <input className={`form__button fade-in fade-time-10 fade-left fade-delay-12 ${active ? 'active' : ''}`} type = "submit" value = "Log In"/>
             
             <div className = {`form__main__error ${errorMessage.length > 0 ? 'active' : ''}`}  >{errorMessage}</div>
         </form>

@@ -1,6 +1,161 @@
 {
-    "account_setup": {
-        "starting_tokens": 10,
-        "starting_crystals": 600
-    }
+  "version": {
+    "image": "1.12"
+  },
+  "account_setup": {
+    "starting_tokens": 10,
+    "starting_crystals": 600
+  },
+  "card_generation": {
+    "alterChance": 0.3,
+    "statlines": [
+        {"probability": 1, "stats": {"cost": 2, "attack": 2, "defence": 2}},
+        {"probability": 1, "stats": {"cost": 3, "attack": 3, "defence": 3}},
+        {"probability": 1, "stats": {"cost": 4, "attack": 4, "defence": 4}}
+    ],
+    "promptWeights": [
+      {
+        "prompt": "Dragon",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Ukiyo-e", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism", "probability": "0.3", "type": "before" },
+          { "value": "Fire", "probability": "1.5", "type": "before" },
+          { "value": "Frost", "probability": "1.5", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Giant",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Yeti", "probability": "1", "type": "before" },
+          { "value": "Hecatoncheires", "probability": "1", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" },
+          { "value": "Ogre", "probability": "1", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Goblin",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Bugbear", "probability": "1.5", "type": "before" },
+          { "value": "Burglar", "probability": "1.5", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Zombie",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Voodoo", "probability": "3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Wizard",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Druid", "probability": "1", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" },
+          { "value": "Frost", "probability": "1", "type": "before" },
+          { "value": "Necromancer", "probability": "1", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Owl",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Magic", "probability": "1", "type": "before" },
+          { "value": "Warrior", "probability": "1", "type": "before" },
+          { "value": "Golden", "probability": "1", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Demon",
+        "probability": "1",
+        "alters": [
+          { "value": "Oni", "probability": "1", "type": "before" },
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Fire", "probability": "2", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Vampire",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Fanged ", "probability": "3", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Warewolf",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Shapeshifter", "probability": "1.5", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" },
+          { "value": "Frost", "probability": "1.5", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Unicorn",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Warrior", "probability": "3", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Phoenix",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" },
+          { "value": "Frost", "probability": "3", "type": "before" }
+        ]
+      },
+      {
+        "prompt": "Faerie",
+        "probability": "1",
+        "alters": [
+          { "value": "Monochromatic", "probability": "0.3", "type": "before" },
+          { "value": "Evil", "probability": "3", "type": "before" },
+          { "value": "Ukiyo-e ", "probability": "0.3", "type": "before" },
+          { "value": "Pop Art", "probability": "0.3", "type": "before" },
+          { "value": "Fauvism ", "probability": "0.3", "type": "before" }
+        ]
+      }
+    ]
+  }
 }
