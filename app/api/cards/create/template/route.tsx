@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
                 $in: ['1.12', '1.11']
             }}).limit(3);
             
-            if (imageOptions.length < 3){
+            if (imageOptions[2].length < 5){
                 return new Response(JSON.stringify({'message': 'Issue Generating Image Options'}), { status: 409 } );
             }
             
