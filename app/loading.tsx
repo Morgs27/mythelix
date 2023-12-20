@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Loader from "./_components/loader/Loader";
+import useObserver from "./_hooks/useObserver";
 
 export default function  Loading() {
 
@@ -9,6 +10,8 @@ export default function  Loading() {
 
     let interval = setInterval(() => {
         if ((global as any).background_rendered){
+
+            useObserver();
 
             setDisplayLoader(false)
             clearInterval(interval)
