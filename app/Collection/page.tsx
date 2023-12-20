@@ -10,7 +10,6 @@ import initCardStyles from "../_components/cardStylesInit";
 
 const page = () => {
 
-  const [userData, setUserData] = useState({username: ''} as any);
   const [collection, setCollection] = useState([]) as any[];
 
   const [creatingCard, setCreatingCard] = useState(false);
@@ -41,6 +40,7 @@ const page = () => {
       headers: {
         'Content-Type': 'application/json',
       },
+      // @ts-ignore
       body: JSON.stringify({...createCardData, username: session?.user?.username})
     });
 
@@ -54,17 +54,15 @@ const page = () => {
   
   const handleGetCollection = async () => {
 
-    if (!session || !session.user || !session.user.username) return;
-    
+    // @ts-ignore
     const response = await fetch("/api/cards/getCollection/" + session.user.username);
+
     const data = await response.json();
     console.log(data.data);
     setCollection(data.data);
   }
 
   useEffect(() => {
-
-    if (!session || !session.user || !session.user.username) console.log('no user');
 
     initCardStyles();
 
@@ -118,7 +116,8 @@ const page = () => {
                     if (card.type.toLowerCase().includes(typeFilter.toLowerCase())){
                       return (
                       <div key = {card._id}  className = "card-locality-collection">
-  
+                        
+                        {/* @ts-ignore */}
                         <Card effect={card.effect} name="Noctus" style={{ '--i': index }} cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
   
                       </div>

@@ -15,7 +15,7 @@ type cardProps = {
     effect: string,
 }   
 
-const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...props}: cardProps) => {
+const Card = ({imageSrc, effect, cost, name, contribution, type,special, style}: cardProps) => {
 
     const card = useRef<HTMLDivElement>(null);
 
@@ -28,35 +28,43 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...prop
         const mouseX = e.clientX;
         const mouseY = e.clientY;
 
-        const leftX = mouseX - bounds.x;
-        const topY = mouseY - bounds.y;
+        const leftX = bounds ? mouseX - bounds.x : 0;
+        const topY = bounds ? mouseY - bounds.y : 0;
 
         const center = {
-        x: leftX - bounds.width / 2,
-        y: topY - bounds.height / 2
+        x: bounds ? leftX - bounds.width / 2 : 0,
+        y: bounds ? topY - bounds.height / 2 : 0
         };
 
         const distance = Math.sqrt(center.x ** 2 + center.y ** 2);
+        
+        if (card.current){
+            card.current.style.transform = `
+            scale3d(1.07, 1.07, 1.07)
+            rotate3d(
+                ${center.y / 100},
+                ${-center.x / 100},
+                0,
+                ${Math.log(distance) * 2}deg
+            )
+            `;
+            
+            const glowElement = card.current?.querySelector(".glow") as HTMLDivElement;
+            if (glowElement) {
+                if (glowElement) {
+                    glowElement.style.backgroundImage = `
+                radial-gradient(
+                    circle at
+                    ${center.x * 2 + (bounds ? bounds.width / 2 : 0)}px
+                    ${center.y * 2 + (bounds ? bounds.height / 2 : 0)}px,
+                    #ffffff20,
+                    #0000000f
+                )
+                `;
+            }
+
+        }
     
-        card.current.style.transform = `
-        scale3d(1.07, 1.07, 1.07)
-        rotate3d(
-            ${center.y / 100},
-            ${-center.x / 100},
-            0,
-            ${Math.log(distance) * 2}deg
-        )
-        `;
-    
-        card.current.querySelector(".glow").style.backgroundImage = `
-        radial-gradient(
-            circle at
-            ${center.x * 2 + bounds.width / 2}px
-            ${center.y * 2 + bounds.height / 2}px,
-            #ffffff20,
-            #0000000f
-        )
-        `;
     }
 
     const mouseEnter = () => {
@@ -68,9 +76,14 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...prop
 
     const mouseLeave = () => {  
         document.removeEventListener("mousemove", rotateToMouse);
-        card.current.style.transform = "";
-        card.current.style.background = "";
-        card.current.querySelector(".glow").style.backgroundImage = "";
+        if (card.current){
+            card.current.style.transform = "";
+            card.current.style.background = "";
+            const glowElement = card.current?.querySelector(".glow") as HTMLDivElement;
+            if (glowElement) {
+                glowElement.style.backgroundImage = "";
+            }
+        }
 
         console.log('mouse leave')
     }
@@ -89,7 +102,7 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...prop
         setImagesLoaded({...imagesLoaded, overlay: true})
     }
 
-    const handleImageError = (error) => {
+    const handleImageError = (error: any) => {
         console.log('handle image error', error)
         setImagesLoaded({...imagesLoaded, image: true})
     }
@@ -100,7 +113,7 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...prop
         onMouseEnter={() => mouseEnter()} 
         onMouseLeave={() => mouseLeave()}
         onClick={() => focusCard()}
-        {...props}
+        style={style}
         >
 
            
@@ -140,6 +153,9 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...prop
       
     )
 }
+}
+
+
 
 const renderContribution = (contribution: any) => {
     if (contribution == 1 ){
@@ -220,4 +236,6 @@ const renderContribution = (contribution: any) => {
   
 }
 
+
 export default Card
+
