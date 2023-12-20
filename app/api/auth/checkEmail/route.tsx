@@ -4,7 +4,6 @@ import User from '@/app/_mongoDB/models/User';
 
 export async function GET(request: NextRequest) { 
 
-
     await connectDB();
 
     const email = request.nextUrl.searchParams.get('email')
