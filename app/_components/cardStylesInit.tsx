@@ -3,6 +3,11 @@ import cardStyles from "@/app/_data/cardStyles.json";
 
 const initCardStyles = () => {
 
+    // First check to see if the css is already generated
+    if (document.getElementById("cardStyles")) {
+        return;
+    }
+    
     // Generate CSS dynamically
     let css = "";
 
@@ -13,14 +18,14 @@ const initCardStyles = () => {
     let typeStyles = cardStyles[1];
 
     for (const alterationType in alterationStyles) {
-        var gradient = alterationStyles[alterationType].gradient.join(", ");
 
-        console.log(alterationStyles[alterationType].solid[0]);
+        // @ts-ignore
+        let item  = alterationStyles[alterationType];
 
-        const [lighter, darker] = compareColours(alterationStyles[alterationType].gradient[0], alterationStyles[alterationType].gradient[2]);
+        var gradient = item.gradient.join(", ");
 
         // compare too colours to see which one is nearer white
-        
+        const [lighter, darker] = compareColours(item.gradient[0], item.gradient[2]);
 
         css += `
             .card.${alterationType}::before {
@@ -33,7 +38,7 @@ const initCardStyles = () => {
                 background-image: linear-gradient(var(--rotate), white 0%,  ${lighter} 30%, ${darker}  80%);
             }
             .card .alteration.${alterationType} {
-                color: ${alterationStyles[alterationType].solid[0]}
+                color: ${item.solid[0]}
             }
         `;
 
@@ -42,6 +47,7 @@ const initCardStyles = () => {
 
     for (const cardType in typeStyles) {
 
+        // @ts-ignore
         var colour = typeStyles[cardType];
 
         css += `
@@ -53,10 +59,9 @@ const initCardStyles = () => {
 
     }
 
-    console.log("CSS: ", css);
-
     // Create style element
     const style = document.createElement("style");
+    style.id = "cardStyles";
     style.innerHTML = css;
     document.head.appendChild(style);
 

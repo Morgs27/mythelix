@@ -104,22 +104,22 @@ const page = () => {
         <>
         <form onSubmit={handleLogin} method="post" className='form'>
             <div className={`form__title ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'}`}>Sign In</div>
-            <div className={`form__description ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} fade-delay-12`}>Don't have an account? <Link href='./signup'>Sign Up</Link></div>
+            <div className={`form__description ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} fade-delay-9`}>Don't have an account? <Link href='./signup'>Sign Up</Link></div>
 
-            <div className={`form__input__container ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} fade-delay-3  ${usernameError.error.length > 0 ? 'red' : ''}`}>
+            <div className={`form__input__container ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} fade-delay-2  ${usernameError.error.length > 0 ? 'red' : ''}`}>
                 <input onChange={handleUsername} placeholder="Username" id = "name" name = "name" type = "text" value={username}/>
                 <div className='form__error '>{usernameError.error}</div>
 
             </div>
 
-            <div className={`form__input__container fade-delay-6 ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} ${passwordError.error.length > 0 ? 'red' : ''}`}>
+            <div className={`form__input__container fade-delay-4 ${fadeActive ? 'fade-in-normal-active' : 'fade-in-normal'} ${passwordError.error.length > 0 ? 'red' : ''}`}>
                 <input onChange={handlePassword} placeholder = 'Password' id = "password" name = "password" type = {visible ? 'text' : 'password'} value={password}/>
                 
                 <div onClick={handleVisible} className={`eye ${password.length > 0 ? 'active' : ''}`}><FaEye></FaEye></div>
                 <div className='form__error'>{passwordError.error}</div>
             </div>
 
-            <div className = {fadeActive ? 'fade-in-normal-active fade-delay-9' : 'fade-in-normal fade-delay-15'} style = {{width: '100%'}}>
+            <div className = {fadeActive ? 'fade-in-normal-active fade-delay-6' : 'fade-in-normal fade-delay-6'} style = {{width: '100%'}}>
                 <input className={`form__button active`} type = "submit" value = "Log In"/>
             </div>
             

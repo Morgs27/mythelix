@@ -3,14 +3,18 @@ import { NextResponse, NextRequest } from 'next/server'
 import Card from '@/app/_mongoDB/models/Card';
 import { connectDB } from '@/app/_mongoDB/connect';
 
-export async function GET(request: NextRequest, params : {username: string}) { 
+export async function GET(request: NextRequest, params: {params: {username: string}}) { 
 
     await connectDB();
 
-    const { username } = params;
+    const { username } = params.params;
 
     // Get all cards for Username
     let cards = await Card.find({username: username});
+
+    if (cards.length === 0) {
+        return new Response(JSON.stringify({data: [null]}), { status: 200 } );
+    }
 
     return new Response(JSON.stringify({data: cards}), { status: 200 } );
 }

@@ -37,7 +37,7 @@ export default function RootLayout({
 
               <Nav></Nav>
 
-              <div className="pageContent">
+              <div className="pageContent customScroll">
                 {children}
               </div>
 

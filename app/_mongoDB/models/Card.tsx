@@ -6,10 +6,13 @@ const cardSchema = new Schema({
     cost: String,
     contribution: String,
     onSale: Boolean,
-    name: String, 
-    description: String,
     type: String,
-    alterations: String,
+
+    attack: Number,
+    defence: Number,
+    name: String, 
+    effect: String,
+    alteration: String,
 }, {
     timestamps: true
 })
