@@ -1,6 +1,5 @@
-'use client'
 
-const useObserver = () => {
+const addObservers = () => {
 
     const fadeInElements = document.getElementsByClassName('fade-in');
 
@@ -23,4 +22,4 @@ const useObserver = () => {
 
 }
 
-export default useObserver;
+export default addObservers;

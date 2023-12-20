@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link'
 import { useEffect, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
-import useObserver from "@/app/_hooks/useObserver";
+import useObserver from "@/app/_components/addObservers";
 
 const Page = () => {
 
