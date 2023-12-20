@@ -30,7 +30,7 @@ const Page = () => {
 
   const handleCreateCard = async () => {
     if (signal){
-      const response = await fetch("/api/cards/create/template", {signal});
+      const response = await fetch("/api/cards/create/template", {signal, cache: "no-store"});
       const data = await response.json();
       setCreatingCard(true);
       setTemplateData(data.data);
