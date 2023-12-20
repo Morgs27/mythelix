@@ -11,11 +11,10 @@ type cardProps = {
     type: string,
     contribution: number,
     cost: number,
-    style: any,
     effect: string,
 }   
 
-const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...props}: cardProps) => {
+const Card = ({imageSrc, effect, cost, name, contribution, type,special}: cardProps) => {
 
     const card = useRef<HTMLDivElement>(null);
 
@@ -113,7 +112,6 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...prop
         onMouseEnter={() => mouseEnter()} 
         onMouseLeave={() => mouseLeave()}
         onClick={() => focusCard()}
-        {...props}
         >
 
            
