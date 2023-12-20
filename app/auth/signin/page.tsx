@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import useObserver from "@/app/_hooks/useObserver";
 
-const page = () => {
+const Page = () => {
 
     const callBackUrl = 'http://localhost:3000/';
 
@@ -42,7 +42,6 @@ const page = () => {
     
     useEffect(() => {
 
-        useObserver();
         
         const url = window.location.href;
         const params = new URL(url).searchParams;
@@ -130,4 +129,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

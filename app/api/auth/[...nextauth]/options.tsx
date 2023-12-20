@@ -20,7 +20,8 @@ export const options = {
                     placeholder: "password",
                 },
             },
-            async authorize(credentials){
+            // @ts-ignore
+            async authorize(credentials: {username: string, password: string}){
 
                 let error = "server";
 
@@ -28,7 +29,7 @@ export const options = {
 
                     connectDB();
 
-                    const foundUser = await User.findOne({username: credentials.username}).lean().exec();
+                    const foundUser = await User.findOne({username: credentials.username}).lean().exec() as any;
 
                     if (foundUser){
 
@@ -62,11 +63,11 @@ export const options = {
         }),
     ],
     callbacks: {
-        async jwt({token, user}){
+        async jwt({token, user}: {token: any, user: any}){
             if (user) token.user = user;
             return token;
         },
-        async session({session, token}){
+        async session({session, token}: {session: any, token: any}){
             if (token) session.user = token.user;
             return session;
         }

@@ -1,32 +1,15 @@
 
 'use client';
 
-import React, {useEffect} from 'react';
-import {useSession} from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import React from 'react';
 
 const page = () => {
 
-  const {data:session} = useSession({
-    required: true,
-    onUnauthenticated(){
-      redirect("/api/auth/signin?callbackUrl=/ClientMember")
-    }
-  });
-
-  useEffect(() => {
-    if (session){
-        console.log(session.user.username)
-    }
-    else {
-      console.log('no session')
-    }
-  }, [session])
 
   return (
-    <div>You are a client member! Hooray
+    <div>Marketplace
 
-      {session?.user?.username}
+
     </div>
    
   )

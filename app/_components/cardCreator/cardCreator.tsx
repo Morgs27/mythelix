@@ -127,7 +127,7 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
                     
                     types.map((item: any, index: number) => {
                         return ( 
-                        <div onClick = {(e) => handleClick(e, {type: item.prompt, alteration: item.alterations, index})} className={`card ${item.alterations}`}>
+                        <div key={`${index}${item.type}`} onClick = {(e) => handleClick(e, {type: item.prompt, alteration: item.alterations, index})} className={`card ${item.alterations}`}>
                             <div className="top">
                                 <div className='title'>{item.prompt}</div>
                                 <div className = {'description'}>Contributes to {item.prompt} class</div>
@@ -152,7 +152,7 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
                     
                     types[cardData.typeIndex].imageOptions.map((item: any, index: number) => {
                         return ( 
-                            <div onClick = {(e) => handleClick(e, {index, imageSrc : item.photo})} className={`card ${cardData.alteration}`}>
+                            <div key={`${index}${item.photo}`} onClick = {(e) => handleClick(e, {index, imageSrc : item.photo})} className={`card ${cardData.alteration}`}>
                                 <LazyImage src = {item.photo} alt= {item.photo}></LazyImage>
                             </div>
                         )
@@ -168,7 +168,7 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
                     
                     statlines.map((item: any, index: number) => {
                         return ( 
-                            <div onClick = {(e) => handleClick(e, {index, contribution: item.stats.contribution, cost: item.stats.cost, attack: item.stats.attack, defence: item.stats.defence})} className={`card ${cardData.alteration}`}>
+                            <div key={`${index}${item.stats.cost}`} onClick = {(e) => handleClick(e, {index, contribution: item.stats.contribution, cost: item.stats.cost, attack: item.stats.attack, defence: item.stats.defence})} className={`card ${cardData.alteration}`}>
                                 <LazyImage src = {cardData.imageSrc} alt= {cardData.imageSrc}></LazyImage>
                                 <LazyImage src = {'/card-design.png'} alt= {cardData.imageSrc}></LazyImage>
 
@@ -212,7 +212,7 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
                     
                     types[cardData.typeIndex].cardEffects.map((item: any, index: number) => {
                         return ( 
-                            <div onClick = {(e) => handleClick(e, {index, effect: item})} className={`card ${cardData.alteration}`}>
+                            <div key={`${index}${item}`} onClick = {(e) => handleClick(e, {index, effect: item})} className={`card ${cardData.alteration}`}>
                                 <LazyImage src = {cardData.imageSrc} alt= {cardData.imageSrc}></LazyImage>
                                 <LazyImage src = {'/card-design.png'} alt= {cardData.imageSrc}></LazyImage>
 

@@ -1,8 +1,8 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import User from "@/app/_mongoDB/models/User";
 import bcrypt from "bcrypt";
 
-export async function POST(req){
+export async function POST(req: NextRequest){
     try{
         const body = await req.json()
         const userData = body.formData;

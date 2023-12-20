@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-const LazyImage = ({ src, alt, ...props}: {src: any, alt: string, props: any}) => {
+const LazyImage = ({ src, alt, ...props}: {src: any, alt: string, props?: any}) => {
   const [loading, setLoading] = useState(true);
 
   const handleLoad = () => {
