@@ -55,6 +55,9 @@ const Page = () => {
   const handleGetCollection = async () => {
 
     // @ts-ignore
+    if (!session || !session.user || !session.user.username) return;
+    
+    // @ts-ignore
     const response = await fetch("/api/cards/getCollection/" + session.user.username);
 
     const data = await response.json();
@@ -114,11 +117,11 @@ const Page = () => {
 
                   collection.map((card: any, index: number) => {
                     if (card.type.toLowerCase().includes(typeFilter.toLowerCase())){
+                      console.log(card);
                       return (
                       <div key = {card._id}  className = "card-locality-collection">
                         
-                        {/* @ts-ignore */}
-                        <Card effect={card.effect} name="Noctus" style={{ '--i': index }} cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                        <Card effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
   
                       </div>
                       )

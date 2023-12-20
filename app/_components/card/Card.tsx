@@ -15,7 +15,7 @@ type cardProps = {
     effect: string,
 }   
 
-const Card = ({imageSrc, effect, cost, name, contribution, type,special, style}: cardProps) => {
+const Card = ({imageSrc, effect, cost, name, contribution, type,special, ...props}: cardProps) => {
 
     const card = useRef<HTMLDivElement>(null);
 
@@ -61,8 +61,8 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, style}:
                     #0000000f
                 )
                 `;
+                }
             }
-
         }
     
     }
@@ -113,7 +113,7 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, style}:
         onMouseEnter={() => mouseEnter()} 
         onMouseLeave={() => mouseLeave()}
         onClick={() => focusCard()}
-        style={style}
+        {...props}
         >
 
            
@@ -153,8 +153,6 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, style}:
       
     )
 }
-}
-
 
 
 const renderContribution = (contribution: any) => {
@@ -236,6 +234,4 @@ const renderContribution = (contribution: any) => {
   
 }
 
-
-export default Card
-
+export default Card;
