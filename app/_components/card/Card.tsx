@@ -69,8 +69,7 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special}: cardPr
     const mouseEnter = () => {
         bounds = card.current?.getBoundingClientRect();
         document.addEventListener("mousemove", rotateToMouse);
-     
-        console.log('mouse enter')
+
     }
 
     const mouseLeave = () => {  
@@ -84,7 +83,6 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special}: cardPr
             }
         }
 
-        console.log('mouse leave')
     }
 
     const focusCard = () => {
@@ -92,12 +90,10 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special}: cardPr
     }
     
     const handleImageLoaded = () => {
-        console.log('handle image loaded')
         setImagesLoaded({...imagesLoaded, image: true})
     }
 
     const handleOverlayLoaded = () => {
-        console.log('hanle overlay loaded')
         setImagesLoaded({...imagesLoaded, overlay: true})
     }
 

@@ -10,6 +10,8 @@ import initCardStyles from "../_components/cardStylesInit";
 
 const Page = () => {
 
+  const signal = new AbortController();
+
   const [collection, setCollection] = useState([]) as any[];
 
   const [creatingCard, setCreatingCard] = useState(false);
@@ -26,11 +28,13 @@ const Page = () => {
   });
 
   const handleCreateCard = async () => {
-      const response = await fetch("/api/cards/create/template");
+    if (signal){
+      const response = await fetch("/api/cards/create/template", {signal});
       const data = await response.json();
       setCreatingCard(true);
       setTemplateData(data.data);
       console.log(data);
+    }
   }
 
   const createCard = async () => {
@@ -58,7 +62,7 @@ const Page = () => {
     if (!session || !session.user || !session.user.username) return;
     
     // @ts-ignore
-    const response = await fetch("/api/cards/getCollection/" + session.user.username);
+    const response = await fetch("/api/cards/getCollection/" + session.user.username, {signal});
 
     const data = await response.json();
     console.log(data.data);
