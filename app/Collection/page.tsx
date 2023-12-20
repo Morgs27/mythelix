@@ -8,9 +8,10 @@ import './collection.scss'
 import Card from '@/app/_components/card/Card'
 import initCardStyles from "../_components/cardStylesInit";
 
-const Page = () => {
+const abortController = new AbortController();
+const signal = abortController.signal;
 
-  const signal = new AbortController();
+const Page = () => {
 
   const [collection, setCollection] = useState([]) as any[];
 
