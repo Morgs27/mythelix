@@ -27,7 +27,7 @@ const Nav = async () => {
                         <Link className={'fade-in fade-time-10 fade-delay-6 '} href="/api/auth/signout?callbackUrl=/">Logout </Link> 
                         </>
                     )
-                    : <Link href="/auth/signin">Login / Register</Link>
+                    : <Link className={'fade-in fade-time-10 fade-delay-6 '} href="/auth/signin">Login / Register</Link>
                     }
                 </div>
         </nav>

@@ -12,10 +12,12 @@ type cardProps = {
     contribution: number,
     cost: number,
     effect: string,
+    attack: number,
+    defence: number,
     index: number
 }   
 
-const Card = ({imageSrc, effect, cost, name, contribution, type,special, index}: cardProps) => {
+const Card = ({imageSrc, effect, cost, attack, defence, name, contribution, type,special, index}: cardProps) => {
 
     const card = useRef<HTMLDivElement>(null);
 
@@ -99,7 +101,6 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, index}:
     }, [imageSrc, initialLoad]); //
     
     const handleImageLoaded = () => {
-        console.log('handle image loaded')
         setImagesLoaded({...imagesLoaded, image: true})
         setInitialLoad(false);
     }
@@ -109,7 +110,6 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, index}:
     }
 
     const handleImageError = (error: any) => {
-        console.log('handle image error', error)
         setImagesLoaded({...imagesLoaded, image: true})
     }
 
@@ -148,13 +148,13 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special, index}:
                 
                 <div className="description">{effect}</div>
                 <div className="bottom">
-                    <div className="defence">5</div>
+                    <div className="defence">{defence}</div>
                     <div className="class">
                         <img src={`/types/icons/${type}.png`} alt={type} />
                         <div>{type.toUpperCase()}</div>
                         
                     </div>
-                    <div className="attack">3</div>
+                    <div className="attack">{attack}</div>
                 </div>
             </div>
         </div>

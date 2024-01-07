@@ -1,0 +1,185 @@
+
+$secondary : #54577C;
+$correct: #00A300;
+$error: #ff3434;
+$background: rgb(40,40,40);
+
+
+.react-aria-Select {
+
+    .react-aria-Button {
+      color: var(--text-color);
+      background: $background;
+
+      height: 100%;
+      min-width: 70px;
+      border-radius: 2px;
+
+      font-size: 14px;
+
+      padding: 10px;
+      outline: none;
+
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+
+      img{
+        width: 20px;
+        height: 20px;
+      }
+  
+      &[data-focus-visible] {
+        outline: 2px solid var(--focus-ring-color);
+        outline-offset: -1px;
+      }
+  
+      &[data-pressed] {
+        background: $secondary;
+      }
+    }
+  
+    // Placeholder Styles
+    .react-aria-SelectValue {
+        flex-grow: 1;
+        justify-content: space-between;
+        align-items: center;
+        display: flex;
+        gap: 13px;
+        
+        &[data-placeholder] {
+            color: white;
+        }
+    }
+  
+    // Arrow Styles
+    span[aria-hidden] {
+      margin-left: 10px;
+      padding: 1px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: rgba(255,255,255,0.3);
+    }
+  }
+  
+  .react-aria-ListBox {
+    max-height: calc(100vh - 200px);
+    box-sizing: border-box;
+    overflow: auto;
+    outline: none;
+    background: $background;
+    border-radius: 6px;
+
+    &::-webkit-scrollbar{
+      width: 3px;
+    }
+
+    &::-webkit-scrollbar-track{
+      background: transparent; 
+      border-radius: 1px;
+      width: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb{
+      background: $secondary; 
+      border-radius: 10px;
+      width: 3px;
+    }
+
+    &:hover::-webkit-scrollbar{
+      width: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover{
+      cursor: pointer;
+      background: rgba($secondary, 0.8);
+    }
+  
+    .react-aria-ListBoxItem {
+        user-select: none;
+      margin: 2px;
+      padding: 10px;
+      border-radius: 6px;
+      outline: none;
+      cursor: default;
+      color: var(--text-color);
+      font-size: 1.072rem;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      forced-color-adjust: none;
+      gap: 10px;
+
+
+      img{
+        width: 20px;
+        height: 20px;
+
+      }
+  
+      
+      &[data-focused],
+      &[data-pressed] {
+          background: var(--highlight-background);
+          color: var(--highlight-foreground);
+        }
+        
+        &:hover{
+            background: $secondary;
+            cursor: pointer;
+        }
+
+        &[data-selected] {
+          opacity: 0.3;
+          &:hover{
+              background: $background;
+              cursor: auto;
+          }
+          
+        }
+     
+    }
+  }
+  
+  .react-aria-Popover {
+    border: 1px solid var(--gray-200);
+    box-shadow: 0 8px 20px rgba(0 0 0 / 0.1);
+    border-radius: 6px;
+    outline: none;
+    min-width: var(--trigger-width);
+    max-width: 250px;
+    box-sizing: border-box;
+    padding: 8px;
+    padding-left: 6px;
+    background: $background;
+  
+    &[data-placement=top] {
+      --origin: translateY(8px);
+    }
+  
+    &[data-placement=bottom] {
+      --origin: translateY(-8px);
+    }
+  
+    &[data-entering] {
+      animation: slide 200ms;
+    }
+  
+    &[data-exiting] {
+      animation: slide 200ms reverse ease-in;
+    }
+  }
+  
+  @keyframes slide {
+    from {
+      transform: var(--origin);
+      opacity: 0;
+    }
+  
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }

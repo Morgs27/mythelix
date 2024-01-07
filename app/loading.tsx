@@ -19,7 +19,7 @@ export default function  Loading() {
     }, 100)
 
     return (
-        <div className={`black-background full-screen top ${ displayLoader ? 'display': 'hide'}`}>
+        <div className={`${ displayLoader ? 'display': 'hide'}`}>
             <Loader/>
         </div>
     )
