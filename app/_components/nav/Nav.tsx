@@ -20,8 +20,8 @@ const Nav = async () => {
                     {session
                     ? (
                         <>
-                        <Link className={'fade-in fade-time-10  fade-delay-6'} href="/Collection">Collection </Link> 
                         <Link className={'fade-in fade-time-10 fade-delay-6 '} href="/Marketplace">Marketplace </Link> 
+                        <Link className={'fade-in fade-time-10  fade-delay-6'} href="/Collection">Collection </Link> 
                         <Link className={'fade-in fade-time-10 fade-delay-6 '} href="/Leaderboard">Leaderboard </Link> 
                         <Link className={'fade-in fade-time-10 fade-delay-6 '} href="/Store">Store  </Link> 
                         <Link className={'fade-in fade-time-10 fade-delay-6 '} href="/api/auth/signout?callbackUrl=/">Logout </Link> 

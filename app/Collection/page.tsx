@@ -7,6 +7,9 @@ import CardCreator from "../_components/cardCreator/cardCreator";
 import './collection.scss'
 import Card from '@/app/_components/card/Card'
 import initCardStyles from "../_components/cardStylesInit";
+import Loading from "../loading";
+import {Button, Label, ListBox, ListBoxItem, Popover, Select, SelectValue} from 'react-aria-components';
+
 
 const abortController = new AbortController();
 const signal = abortController.signal;
@@ -30,11 +33,10 @@ const Page = () => {
 
   const handleCreateCard = async () => {
     if (signal){
-      const response = await fetch("/api/cards/create/template", {signal, cache: "no-store"});
+      const response = await fetch("/api/cards/create/template");
       const data = await response.json();
       setCreatingCard(true);
       setTemplateData(data.data);
-      console.log(data);
     }
   }
 
@@ -51,30 +53,31 @@ const Page = () => {
 
     const data = await response.json();
 
-    handleGetCollection();
+    handleGetCollection(false);
 
-    console.log(data);
   }
 
   
-  const handleGetCollection = async () => {
+  const handleGetCollection = async (refresh: any) => {
 
     // @ts-ignore
     if (!session || !session.user || !session.user.username) return;
     
     // @ts-ignore
-    const response = await fetch("/api/cards/getCollection/" + session.user.username, {signal});
+    const response = await fetch("/api/cards/getCollection/" + session.user.username);
 
     const data = await response.json();
-    console.log(data.data);
+
     setCollection(data.data);
+
   }
+
 
   useEffect(() => {
 
     initCardStyles();
 
-    handleGetCollection()
+    handleGetCollection(true)
 
   }, [session])
 
@@ -106,27 +109,40 @@ const Page = () => {
                   <option key={type} value={type}>{type}</option>
                 ))}
               </select>
+
+              <Select>
+                <Label>Favorite Animal</Label>
+                <Button>
+                  <SelectValue />
+                  <span aria-hidden="true">▼</span>
+                </Button>
+                <Popover>
+                  <ListBox>
+                    <ListBoxItem>Cat</ListBoxItem>
+                    <ListBoxItem>Dog</ListBoxItem>
+                    <ListBoxItem>Kangaroo</ListBoxItem>
+                  </ListBox>
+                </Popover>
+              </Select>
             </div>
 
             <div className = 'cards_container customScroll'>
             {
               collection.length == 0 ? (
-              // <>No Cards Loaded</> 
-              <></>
+                <Loading></Loading>
               ) : (
                 collection[0] == null ? (
 
-                <>No Cards</>
+                <>Could Not fine any cards. Create a new card here</>
 
                 ) : (
 
                   collection.map((card: any, index: number) => {
                     if (card.type.toLowerCase().includes(typeFilter.toLowerCase())){
-                      console.log(card);
                       return (
                       <div key = {card._id}  className = "card-locality-collection">
                         
-                        <Card effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                        <Card index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
   
                       </div>
                       )

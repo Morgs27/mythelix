@@ -1,8 +1,8 @@
 'use client'
 
-import LazyImage from '../LazyImage'
 import './card.scss'
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
+import Image from 'next/image'
 
 type cardProps = {
     imageSrc : string,
@@ -12,15 +12,18 @@ type cardProps = {
     contribution: number,
     cost: number,
     effect: string,
+    index: number
 }   
 
-const Card = ({imageSrc, effect, cost, name, contribution, type,special}: cardProps) => {
+const Card = ({imageSrc, effect, cost, name, contribution, type,special, index}: cardProps) => {
 
     const card = useRef<HTMLDivElement>(null);
 
     let bounds: DOMRect | undefined;
 
     const [imagesLoaded, setImagesLoaded] = useState({image: false, overlay: false});
+
+    const [initialLoad, setInitialLoad] = useState(true);
     
     function rotateToMouse(e: any) {
 
@@ -88,9 +91,17 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special}: cardPr
     const focusCard = () => {
         card.current?.classList.add('focus')
     }
+
+    useEffect(() => {
+        if (!initialLoad) {
+          handleImageLoaded();
+        }
+    }, [imageSrc, initialLoad]); //
     
     const handleImageLoaded = () => {
+        console.log('handle image loaded')
         setImagesLoaded({...imagesLoaded, image: true})
+        setInitialLoad(false);
     }
 
     const handleOverlayLoaded = () => {
@@ -103,7 +114,10 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special}: cardPr
     }
 
     return(
-       
+        <>
+        <div className="placeholder">
+            <div className = "activity"></div>
+        </div>
         <div className={`card ${special} ${type} ${imagesLoaded.image && imagesLoaded.overlay ? '': 'loading'}`} ref={card} 
         onMouseEnter={() => mouseEnter()} 
         onMouseLeave={() => mouseLeave()}
@@ -144,6 +158,7 @@ const Card = ({imageSrc, effect, cost, name, contribution, type,special}: cardPr
                 </div>
             </div>
         </div>
+        </>
       
     )
 }

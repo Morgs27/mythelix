@@ -93,7 +93,7 @@ const Background  = ({ width, height, brightness,  style }: { width: number, hei
       {
           vec2 uv = gl_FragCoord.xy / vec2(iResolutionX, iResolutionY);
 
-          float time = iTime / 60.0;
+          float time = iTime / 30.0;
 
           mat2 rot = mat2(cos(time / 10.0), sin(time / 10.0),
             -sin(time / 10.0), cos(time / 10.0));
