@@ -12,52 +12,18 @@ import {Button, Label, ListBox, ListBoxItem, Popover, Select, SelectValue} from 
 import { FaChevronDown } from "react-icons/fa";
 import { FaFilter } from "react-icons/fa";
 import cardStyles from "@/app/_data/cardStyles.json"
-import { FaSortAmountDownAlt } from "react-icons/fa";
+import { FaSortAmountDown, FaSortAmountDownAlt } from "react-icons/fa";
+import SpinLoader from "../_components/SpinLoader";
+import { FaSortAmountUp } from "react-icons/fa";
 
 {/* <Card index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} /> */}
 
 const abortController = new AbortController();
 const signal = abortController.signal;
 
-const sortAttack = () => {
-  // Sort Attack
-  // setCollection((collection) => {
-  //   return collection.sort((a, b) => {
-  //     return b.attack - a.attack
-  //   })
-  // })
-}
-
-const sortDefence = () => {
-  // Sort Defence
-} 
-
-const sortCost = () => {
-  // Sort Cost
-}
-
-const sortContribution = () => {
-  // Sort Contribution
-}
-
-const sortType = () => {
-  // Sort Type
-}
-
-const sortAlteration = () => {
-  // Sort Alteration
-}
-
 const types = ['All Types', 'Dragon', 'Demon', 'Faerie', 'Giant', 'Goblin', 'Owl', 'Phoenix', 'Unicorn', 'Vampire', 'Warewolf', 'Wizard', 'Zombie']; // Replace with your actual types
 const alterations = ['All Alterations', 'Monochromatic', 'Fauvism', 'Pop Art', 'Ukiyo-e', 'Frost', 'Fire', 'Warrior', 'Evil', 'Voodoo', 'Golden', 'Necromancer', 'Fanged', 'Bugbear', 'Burglar', 'Druid', 'Oni', 'Magic', 'Yeti', 'Hecatoncheires', 'Ogre', 'Shapeshifter']
-const sorts = [
-  { name: 'Attack', method: sortAttack},
-  { name: 'Defence', method: sortDefence},
-  { name: 'Cost', method: sortCost},
-  { name: 'Contribution', method: sortContribution},
-  { name: 'Type', method: sortType},
-  { name: 'Alteration', method: sortAlteration}
-]
+
 const Page = () => {
 
   const [collection, setCollection] = useState([]) as any[];
@@ -68,7 +34,14 @@ const Page = () => {
 
   const [typeFilter, setTypeFilter] = useState('');
   const [alterationFilter, setAlterationFilter] = useState('');
+
   const [sort, setSort] = useState('');
+  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' or 'desc'
+
+  var prevType = null
+  var prevAlteration = null;
+
+  const sorts = ['Attack', 'Defence', 'Cost', 'Contribution', 'Type', 'Alteration']
 
   const {data:session} = useSession({
     required: true,
@@ -116,13 +89,45 @@ const Page = () => {
 
     setCollection(data.data);
 
+    if (sort != ''){
+      sortCollection()
+    }
+
+  }
+
+  const sortCollection = () => {
+    setCollection((collection) => {
+      return collection.slice().sort((a:any, b:any) => {
+        const aValue = a[sort.toLowerCase()]
+        const bValue = b[sort.toLowerCase()]
+
+        if (sort == 'Type' || sort == 'Alteration') {
+          if (aValue == 'null' && bValue == 'null') {
+            return 0;
+          } else if (aValue == 'null') {
+            return 1; // Place null values at the end
+          } else if (bValue == 'null') {
+            return -1; // Place null values at the end
+          } else {
+            return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+          }
+        } else {
+          if (sortOrder === 'asc') {
+            return aValue - bValue;
+          } else {
+            return bValue - aValue;
+          }
+        }
+
+      })
+    })
   }
 
   useEffect(() => {
-    // Get the sort from sorts with the name of sort
 
-  }, [sort])
-
+    sortCollection()
+      
+  }, [sort, sortOrder])
 
   useEffect(() => {
 
@@ -162,7 +167,7 @@ const Page = () => {
                       typeFilter == '' ? (
                          <>
                          Type 
-                         <FaFilter />
+                         <img src={`./types/icons/All Types.png`} width={'20px'} height={'20px'}/>
                          </>
                       ) : (
                         <>
@@ -177,8 +182,9 @@ const Page = () => {
                   <ListBox>
                     {types.map(type => (
                       <ListBoxItem id={type} key={type} >
-                        {type}
+                        {/* {type} */}
                         <img src={`./types/icons/${type}.png`}/>
+                        {type}
                       </ListBoxItem>
                     ))}
                   </ListBox>
@@ -224,24 +230,25 @@ const Page = () => {
                   <ListBox>
                     {alterations.map(alteration => (
                       <ListBoxItem id={alteration} key={alteration} >
-                        {alteration}
+                        
                         {
                           (alteration == 'All Alterations') ? (
-                            <div style = {{background: 'black'
+                            <div style = {{background: 'white'
                              , width: '15px', height: '15px', borderRadius: '2px' }}></div>
                           ) : (
-                            alterationFilter == 'Pop Art' ? (
+                            alteration == 'Pop Art' ? (
                                // @ts-ignore
                               <div style = {{background: `linear-gradient(45deg, ${cardStyles[0]['Pop.Art']['gradient'][0]}, ${cardStyles[0]['Pop.Art']['gradient'][1]} )
                               `, width: '15px', height: '15px', borderRadius: '2px' }}></div>
                             ) :
                             (
                               // @ts-ignore
-                              <div style = {{background: `linear-gradient(45deg, ${cardStyles[0][alterationFilter]['gradient'][0]}, ${cardStyles[0][alterationFilter]['gradient'][1]} )
+                              <div style = {{background: `linear-gradient(45deg, ${cardStyles[0][alteration]['gradient'][0]}, ${cardStyles[0][alteration]['gradient'][1]} )
                               `, width: '15px', height: '15px', borderRadius: '2px' }}></div>
                             )
                           )
                         }
+                        {alteration}
                       </ListBoxItem>
                     ))}
                   </ListBox>
@@ -255,22 +262,48 @@ const Page = () => {
                       sort == '' ? (
                          <>
                          Sort By 
-                         <FaSortAmountDownAlt />
+                         
+                         {sortOrder == 'desc' ? (
+                          <FaSortAmountDown  />
+                         ) : (
+                          sortOrder == 'asc' ? (
+                             <FaSortAmountUp/>
+                          ) : (<></>)
+                         )}
+                         {/* <FaSortAmountDownAlt /> */}
                          </>
                       ) : (
                         <>
                         {sort}
-                        {/* <img src={`./types/icons/${typeFilter}.png`}/> */}
+                        {sortOrder == 'desc' ? (
+                          <FaSortAmountDown  />
+                         ) : (
+                          sortOrder == 'asc' ? (
+                             <FaSortAmountDownAlt/>
+                          ) : (<></>)
+                         )}
                         </>
                         )
                     }
                   </SelectValue>
                 </Button>
                 <Popover>
+
+                  <div className = {`order-selector ${sort == '' ? 'not-active' : ''}`}>
+
+                    <div className = 'order' onClick = {(e) => setSortOrder('desc')}>
+                      <FaSortAmountDown  />
+                    </div>
+                    <div className = 'seperator'></div>
+                    <div className = 'order' onClick = {(e) => setSortOrder('asc')}>
+                      <FaSortAmountDownAlt/>
+                    </div>
+                  </div>
+                  
                   <ListBox>
                     {sorts.map(sort => (
-                      <ListBoxItem id={sort.name} key={sort.name} >
-                        {sort.name}
+                      <ListBoxItem id={sort} key={sort} >
+                        {sort}
                         {/* <img src={`./types/icons/${type}.png`}/> */}
                       </ListBoxItem>
                     ))}
@@ -283,7 +316,7 @@ const Page = () => {
             <div className = 'cards_container customScroll'>
             {
               collection.length == 0 ? (
-                <Loading></Loading>
+                <SpinLoader/>
               ) : (
                 collection[0] == null ? (
 
@@ -294,7 +327,49 @@ const Page = () => {
                   collection.map((card: any, index: number) => {
                     if ((typeFilter == 'All Types' || card.type.toLowerCase().includes(typeFilter.toLowerCase())) 
                     && (alterationFilter == 'All Alterations' || card.alteration.toLowerCase().includes(alterationFilter.toLowerCase()))){
+                      
+                      if (sort == 'Type'){
+
+                        if ( prevType != card.type){
+
+                          prevType = card.type
+
+                          return (
+                            <>
+                            <div className = 'collection-break'>{card.type}</div>
+
+                            <div key = {card._id}  className = "card-locality-collection">
+                        
+                            <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+      
+                            </div>
+                            </>
+                          )
+                        }
+                        prevType = card.type
+                      }
+                      else if (sort == 'Alteration'){
+                        if ( prevAlteration != card.alteration){
+
+                          prevAlteration = card.alteration
+
+                          return (
+                            <>
+                            <div className = 'collection-break'>{card.alteration == 'null' ? 'None' : card.alteration}</div>
+
+                            <div key = {card._id}  className = "card-locality-collection">
+                        
+                            <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+      
+                            </div>
+                            </>
+                          )
+                        }
+                        prevAlteration = card.alteration
+                      }
+
                       return (
+
                       <div key = {card._id}  className = "card-locality-collection">
                         
                         <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />

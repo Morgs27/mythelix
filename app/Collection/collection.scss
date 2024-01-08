@@ -36,6 +36,14 @@ $background: rgb(40,40,40);
     height: calc(100% - 50px);
 }
 
+.collection-break{
+    flex-basis: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .dropdown-select{
     background: $secondary;
     border: none;
@@ -56,4 +64,58 @@ $background: rgb(40,40,40);
         text-align: right;
         
     }
+}
+
+.order-selector{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    align-items: center;
+    position: relative;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba($secondary,0.2);
+
+    .seperator{
+        height: 100%;
+        // margin: 10% 0;
+        width: 1px;
+        border-radius: 10%;
+        background: $secondary;
+        background: rgba($secondary,0.2);
+    }
+
+    // :nth-child(1){
+    //     height: 100%;
+    //     background: $secondary;
+    //     flex-grow: 1;
+    // }
+
+    .order{
+        width: calc(50% - 13px);
+        margin: 6px;
+        
+        height: 100%;
+        background: $background;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+
+        &:hover{
+            background: $secondary;
+            cursor: pointer;
+        }
+    }
+
+    &.not-active{
+        user-select: none;
+        opacity: 0.2;
+        *{
+            user-select:none;
+            pointer-events: none;
+        }
+    }
+
+
 }
