@@ -38,8 +38,8 @@ const Page = () => {
   const [sort, setSort] = useState('');
   const [sortOrder, setSortOrder] = useState('desc'); // 'asc' or 'desc'
 
-  var prevType = null
-  var prevAlteration = null;
+  var prevType : null | any = null
+  var prevAlteration : null | any = null;
 
   const sorts = ['Attack', 'Defence', 'Cost', 'Contribution', 'Type', 'Alteration']
 
@@ -96,7 +96,7 @@ const Page = () => {
   }
 
   const sortCollection = () => {
-    setCollection((collection) => {
+    setCollection((collection: any) => {
       return collection.slice().sort((a:any, b:any) => {
         const aValue = a[sort.toLowerCase()]
         const bValue = b[sort.toLowerCase()]
