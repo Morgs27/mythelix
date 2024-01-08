@@ -204,8 +204,8 @@ const Page = () => {
                              , width: '15px', height: '15px', borderRadius: '2px' }}></div>
                           ) : (
                             alterationFilter == 'Pop Art' ? (
-                              <div style = {{background: `
-                                linear-gradient(45deg, ${cardStyles[0]?.['Pop.Art']?.['gradient']?.[0] ?? ''}, ${cardStyles[0]?.['Pop.Art']?.['gradient']?.[1] ?? ''} )
+                            // @ts-ignore
+                            <div style = {{background: `linear-gradient(45deg, ${cardStyles[0]['Pop.Art']['gradient'][0]}, ${cardStyles[0]['Pop.Art']['gradient'][1]} )
                               `, width: '15px', height: '15px', borderRadius: '2px' }}></div>
                             ) :
                             (
@@ -231,8 +231,8 @@ const Page = () => {
                              , width: '15px', height: '15px', borderRadius: '2px' }}></div>
                           ) : (
                             alterationFilter == 'Pop Art' ? (
-                              <div style = {{background: `
-                                linear-gradient(45deg, ${cardStyles[0]?.['Pop.Art']?.['gradient']?.[0] ?? ''}, ${cardStyles[0]?.['Pop.Art']?.['gradient']?.[1] ?? ''} )
+                               // @ts-ignore
+                              <div style = {{background: `linear-gradient(45deg, ${cardStyles[0]['Pop.Art']['gradient'][0]}, ${cardStyles[0]['Pop.Art']['gradient'][1]} )
                               `, width: '15px', height: '15px', borderRadius: '2px' }}></div>
                             ) :
                             (
