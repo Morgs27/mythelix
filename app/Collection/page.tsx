@@ -21,11 +21,11 @@ const signal = abortController.signal;
 
 const sortAttack = () => {
   // Sort Attack
-  setCollection((collection) => {
-    return collection.sort((a, b) => {
-      return b.attack - a.attack
-    })
-  })
+  // setCollection((collection) => {
+  //   return collection.sort((a, b) => {
+  //     return b.attack - a.attack
+  //   })
+  // })
 }
 
 const sortDefence = () => {
@@ -153,7 +153,9 @@ const Page = () => {
               <button className={'fade-in fade-time-10 fade-delay-0'} onClick = {handleGetCollection}>Refresh</button>
 
               {/* // Type Filter */}
-              <Select className={'fade-in fade-time-10 fade-delay-0 react-aria-Select'} selectedKey = {typeFilter} onSelectionChange={selected => setTypeFilter(selected)}>
+              <Select className={'fade-in fade-time-10 fade-delay-0 react-aria-Select'} selectedKey = {typeFilter} onSelectionChange={selected => {
+                  return setTypeFilter(String(selected));
+                }}>
                 <Button className='react-aria-Button'>
                   <SelectValue >
                     {
@@ -184,7 +186,7 @@ const Page = () => {
               </Select>
 
               {/* Alteration Filter */}
-              <Select className={'fade-in fade-time-10 fade-delay-0 react-aria-Select'} selectedKey = {alterationFilter} onSelectionChange={selected => setAlterationFilter(selected)}>
+              <Select className={'fade-in fade-time-10 fade-delay-0 react-aria-Select'} selectedKey = {alterationFilter} onSelectionChange={selected => setAlterationFilter(String(selected))}>
                 <Button>
                   <SelectValue >
                     {
@@ -203,12 +205,12 @@ const Page = () => {
                           ) : (
                             alterationFilter == 'Pop Art' ? (
                               <div style = {{background: `
-                                linear-gradient(45deg, ${cardStyles[0]['Pop.Art']['gradient'][0]}, ${cardStyles[0]['Pop.Art']['gradient'][1]} )
+                                linear-gradient(45deg, ${cardStyles[0]?.['Pop.Art']?.['gradient']?.[0] ?? ''}, ${cardStyles[0]?.['Pop.Art']?.['gradient']?.[1] ?? ''} )
                               `, width: '15px', height: '15px', borderRadius: '2px' }}></div>
                             ) :
                             (
-                              <div style = {{background: `
-                                linear-gradient(45deg, ${cardStyles[0][alterationFilter]['gradient'][0]}, ${cardStyles[0][alterationFilter]['gradient'][1]} )
+                              // @ts-ignore
+                              <div style = {{background: `linear-gradient(45deg, ${cardStyles[0][alterationFilter]['gradient'][0]}, ${cardStyles[0][alterationFilter]['gradient'][1]} )
                               `, width: '15px', height: '15px', borderRadius: '2px' }}></div>
                             )
                           )
@@ -228,14 +230,14 @@ const Page = () => {
                             <div style = {{background: 'black'
                              , width: '15px', height: '15px', borderRadius: '2px' }}></div>
                           ) : (
-                            alteration == 'Pop Art' ? (
+                            alterationFilter == 'Pop Art' ? (
                               <div style = {{background: `
-                                linear-gradient(45deg, ${cardStyles[0]['Pop.Art']['gradient'][0]}, ${cardStyles[0]['Pop.Art']['gradient'][1]} )
+                                linear-gradient(45deg, ${cardStyles[0]?.['Pop.Art']?.['gradient']?.[0] ?? ''}, ${cardStyles[0]?.['Pop.Art']?.['gradient']?.[1] ?? ''} )
                               `, width: '15px', height: '15px', borderRadius: '2px' }}></div>
                             ) :
                             (
-                              <div style = {{background: `
-                                linear-gradient(45deg, ${cardStyles[0][alteration]['gradient'][0]}, ${cardStyles[0][alteration]['gradient'][1]} )
+                              // @ts-ignore
+                              <div style = {{background: `linear-gradient(45deg, ${cardStyles[0][alterationFilter]['gradient'][0]}, ${cardStyles[0][alterationFilter]['gradient'][1]} )
                               `, width: '15px', height: '15px', borderRadius: '2px' }}></div>
                             )
                           )
@@ -246,7 +248,7 @@ const Page = () => {
                 </Popover>
               </Select>
 
-              <Select className={'fade-in fade-time-10 fade-delay-0  react-aria-Select'} selectedKey = {sort} onSelectionChange={selected => setSort(selected)}>
+              <Select className={'fade-in fade-time-10 fade-delay-0  react-aria-Select'} selectedKey = {sort} onSelectionChange={selected => setSort(String(selected))}>
                 <Button>
                   <SelectValue >
                     {
