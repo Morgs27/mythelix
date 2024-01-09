@@ -72,21 +72,21 @@ const Card = ({imageSrc, effect, cost, attack, defence, name, contribution, type
     }
 
     const mouseEnter = () => {
-        bounds = card.current?.getBoundingClientRect();
-        document.addEventListener("mousemove", rotateToMouse);
+        // bounds = card.current?.getBoundingClientRect();
+        // document.addEventListener("mousemove", rotateToMouse);
 
     }
 
     const mouseLeave = () => {  
-        document.removeEventListener("mousemove", rotateToMouse);
-        if (card.current){
-            card.current.style.transform = "";
-            card.current.style.background = "";
-            const glowElement = card.current?.querySelector(".glow") as HTMLDivElement;
-            if (glowElement) {
-                glowElement.style.backgroundImage = "";
-            }
-        }
+        // document.removeEventListener("mousemove", rotateToMouse);
+        // if (card.current){
+        //     card.current.style.transform = "";
+        //     card.current.style.background = "";
+        //     const glowElement = card.current?.querySelector(".glow") as HTMLDivElement;
+        //     if (glowElement) {
+        //         glowElement.style.backgroundImage = "";
+        //     }
+        // }
 
     }
 

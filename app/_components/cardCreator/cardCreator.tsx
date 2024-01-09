@@ -40,7 +40,9 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
 
 
         initCardStyles();
+
         setStage(0);
+
         
     }, [])
 

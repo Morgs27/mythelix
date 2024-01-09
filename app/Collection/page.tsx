@@ -15,6 +15,10 @@ import cardStyles from "@/app/_data/cardStyles.json"
 import { FaSortAmountDown, FaSortAmountDownAlt } from "react-icons/fa";
 import SpinLoader from "../_components/SpinLoader";
 import { FaSortAmountUp } from "react-icons/fa";
+import {SearchField , Input} from 'react-aria-components';
+import { FaSearch } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
+import { MdClear } from "react-icons/md";
 
 {/* <Card index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} /> */}
 
@@ -37,6 +41,8 @@ const Page = () => {
 
   const [sort, setSort] = useState('');
   const [sortOrder, setSortOrder] = useState('desc'); // 'asc' or 'desc'
+
+  const [search,setSearch] = useState('');
 
   var prevType : null | any = null
   var prevAlteration : null | any = null;
@@ -87,6 +93,8 @@ const Page = () => {
 
     const data = await response.json();
 
+    console.log(data)
+
     setCollection(data.data);
 
     if (sort != ''){
@@ -98,6 +106,21 @@ const Page = () => {
   const sortCollection = () => {
     setCollection((collection: any) => {
       return collection.slice().sort((a:any, b:any) => {
+
+        if (sort == ''){
+          console.log('sorting nothing', a.createdAt, b.createdAt);
+
+          const aDate = new Date(a.createdAt)
+          const bDate = new Date(b.createdAt)
+
+          if (sortOrder === 'asc'){
+            return aDate - bDate;
+          }
+          else {
+            return bDate - aDate;
+          }
+        }
+
         const aValue = a[sort.toLowerCase()]
         const bValue = b[sort.toLowerCase()]
 
@@ -123,6 +146,35 @@ const Page = () => {
     })
   }
 
+  const handleClear = () =>{
+    setSearch('')
+    setAlterationFilter('');
+    setTypeFilter('');
+    setSort('');
+    setSortOrder('desc');
+  }
+
+  const fadeElements = () => {
+    var fade_elements = document.querySelectorAll('.fade-in-normal');
+    fade_elements.forEach((element) => {
+      element.classList.add('fade-in-normal-active')
+    })
+  }
+
+  let searchTimeout;
+
+  const handleSearch = (e) => {
+
+    clearTimeout(searchTimeout);
+
+    searchTimeout = setTimeout(() => {
+
+      setSearch(e.target.value);
+      console.log('Here')
+
+    }, 1000)
+  }
+
   useEffect(() => {
 
     sortCollection()
@@ -142,7 +194,16 @@ const Page = () => {
     if (createCardData.imageSrc){
       createCard()
     }
+
+    fadeElements();
+    
   }, [createCardData])
+
+  useEffect(() => {
+
+    fadeElements();
+    
+  }, [])
 
 
   return (
@@ -154,11 +215,19 @@ const Page = () => {
         ) : (
         <>
             <div className="cardOptions">
-              <button className={'fade-in fade-time-10 fade-delay-0'} onClick = {handleCreateCard}>Create Card</button>
-              <button className={'fade-in fade-time-10 fade-delay-0'} onClick = {handleGetCollection}>Refresh</button>
+    
+          
+
+              {/* Search Filter */}
+              <div className = 'searchFilter fade-in-normal'> 
+                <input placeholder = "Search" onChange = {(e) => handleSearch(e)} />
+                <div class='searchIcon'>
+                  <FaSearch />
+                </div>
+              </div>
 
               {/* // Type Filter */}
-              <Select className={'fade-in fade-time-10 fade-delay-0 react-aria-Select'} selectedKey = {typeFilter} onSelectionChange={selected => {
+              <Select className={'fade-in-normal react-aria-Select'} selectedKey = {typeFilter} onSelectionChange={selected => {
                   return setTypeFilter(String(selected));
                 }}>
                 <Button className='react-aria-Button'>
@@ -192,7 +261,7 @@ const Page = () => {
               </Select>
 
               {/* Alteration Filter */}
-              <Select className={'fade-in fade-time-10 fade-delay-0 react-aria-Select'} selectedKey = {alterationFilter} onSelectionChange={selected => setAlterationFilter(String(selected))}>
+              <Select className={'fade-in-normal react-aria-Select'} selectedKey = {alterationFilter} onSelectionChange={selected => setAlterationFilter(String(selected))}>
                 <Button>
                   <SelectValue >
                     {
@@ -255,7 +324,8 @@ const Page = () => {
                 </Popover>
               </Select>
 
-              <Select className={'fade-in fade-time-10 fade-delay-0  react-aria-Select'} selectedKey = {sort} onSelectionChange={selected => setSort(String(selected))}>
+              {/* Order By  */}
+              <Select className={'fade-in-normal  react-aria-Select'} selectedKey = {sort} onSelectionChange={selected => setSort(String(selected))}>
                 <Button>
                   <SelectValue >
                     {
@@ -311,6 +381,16 @@ const Page = () => {
                 </Popover>
               </Select>
 
+
+              <button onClick={() => {handleClear()}} className = {`filterClear ${(search != '' || typeFilter != '' || alterationFilter != '' || sort != '' || sortOrder != 'desc') ? 'show' : ''}`}>
+                <MdClear />
+              </button>
+              
+              <div className = 'flex-seperator'></div>
+
+              <button className={'fade-in-normal'} onClick = {handleCreateCard}>Create Card</button>
+              {/* <button className={'fade-in-normal'} onClick = {handleGetCollection}>Refresh</button> */}
+
             </div>
 
             <div className = 'cards_container customScroll'>
@@ -325,8 +405,16 @@ const Page = () => {
                 ) : (
 
                   collection.map((card: any, index: number) => {
-                    if ((typeFilter == 'All Types' || card.type.toLowerCase().includes(typeFilter.toLowerCase())) 
-                    && (alterationFilter == 'All Alterations' || card.alteration.toLowerCase().includes(alterationFilter.toLowerCase()))){
+                    if ((typeFilter == 'All Types' 
+                    || card.type.toLowerCase().includes(typeFilter.toLowerCase())) 
+                    && (alterationFilter == 'All Alterations' 
+                    || card.alteration.toLowerCase().includes(alterationFilter.toLowerCase())
+                    && (search == '' || 
+                    (card.alteration.toLowerCase().includes(search.toLowerCase()) 
+                    || card.type.toLowerCase().includes(search.toLowerCase())
+                    || card.effect.toLowerCase().includes(search.toLowerCase())
+                    ))
+                    )){
                       
                       if (sort == 'Type'){
 

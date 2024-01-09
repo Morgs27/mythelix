@@ -12,9 +12,11 @@ export async function GET(request: NextRequest, params: {params: {username: stri
     // Get all cards for Username
     let cards = await Card.find({username: username});
 
-    if (cards.length === 0) {
+    let reversedData = cards.reverse();
+
+    if (reversedData.length === 0) {
         return new Response(JSON.stringify({data: [null]}), { status: 200 } );
     }
 
-    return new Response(JSON.stringify({data: cards}), { status: 200 } );
+    return new Response(JSON.stringify({data: reversedData}), { status: 200 } );
 }

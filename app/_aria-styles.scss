@@ -20,6 +20,8 @@ $background: rgb(40,40,40);
       padding: 10px;
       outline: none;
 
+      transition: 0.4s;
+
       display: flex;
       align-items: center;
       flex-direction: row;
@@ -184,3 +186,4 @@ $background: rgb(40,40,40);
       opacity: 1;
     }
   }
+

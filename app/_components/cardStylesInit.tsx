@@ -38,7 +38,18 @@ const initCardStyles = () => {
                 background-image: linear-gradient(var(--rotate), white 0%,  ${lighter} 30%, ${darker}  80%);
             }
             .card .alteration.${alterationType} {
-                color: ${item.solid[0]}
+                color: ${item.solid[0]};
+                position: relative;
+            }
+            .card .alteration.${alterationType}::after{
+                content: '';
+                width: 30%;
+                position: absolute;
+                left: 30%;
+                height: 1px;
+                bottom: -2px;
+                background: ${item.solid[0]};
+                opacity: 0.6;
             }
         `;
 
