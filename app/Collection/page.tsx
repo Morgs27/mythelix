@@ -168,7 +168,7 @@ const Page = () => {
 
   let searchTimeout : any;
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: any) => {
 
     clearTimeout(searchTimeout);
 
