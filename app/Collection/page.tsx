@@ -60,8 +60,13 @@ const Page = () => {
     if (signal){
       const response = await fetch("/api/cards/create/template");
       const data = await response.json();
-      setCreatingCard(true);
-      setTemplateData(data.data);
+      if (data == undefined || data == null || data == ''){
+        console.log('Error Geting Template');
+      }
+      else {
+        setCreatingCard(true);
+        setTemplateData(data.data);
+      }
     }
   }
 
@@ -110,8 +115,8 @@ const Page = () => {
         if (sort == ''){
           console.log('sorting nothing', a.createdAt, b.createdAt);
 
-          const aDate = new Date(a.createdAt)
-          const bDate = new Date(b.createdAt)
+          const aDate  : any = new Date(a.createdAt)
+          const bDate : any = new Date(b.createdAt)
 
           if (sortOrder === 'asc'){
             return aDate - bDate;
@@ -161,7 +166,7 @@ const Page = () => {
     })
   }
 
-  let searchTimeout;
+  let searchTimeout : any;
 
   const handleSearch = (e) => {
 
@@ -221,7 +226,7 @@ const Page = () => {
               {/* Search Filter */}
               <div className = 'searchFilter fade-in-normal'> 
                 <input placeholder = "Search" onChange = {(e) => handleSearch(e)} />
-                <div class='searchIcon'>
+                <div className='searchIcon'>
                   <FaSearch />
                 </div>
               </div>

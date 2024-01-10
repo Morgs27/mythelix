@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import './cardCreator.scss'
 import initCardStyles from '../cardStylesInit'
 import LazyImage from '../LazyImage'
+import { FaChevronRight } from "react-icons/fa";
 
 const CardCreator = ({data, setData, setState} : {data: any, setState: any, setData: any}) => {
 
@@ -16,9 +17,12 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
 
     useEffect(() => {
         
-        if (document.getElementsByClassName('cards__container_' + stage)[0]){
-            document.getElementsByClassName('cards__container_' + stage)[0].classList.remove('hide');
-        }
+        setTimeout((
+        ) => {
+            if (document.getElementsByClassName('cards__container_' + stage)[0]){
+                document.getElementsByClassName('cards__container_' + stage)[0].classList.remove('hide');
+            }
+        }, 300)
 
         if (stage == 4){
             handleConfirmCard();
@@ -121,8 +125,24 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
 
     return (
         <div className = "card__creator">
-            <div className = "title">Create Card</div>
-            <div className="timeline"></div>
+            <div className = "creation-title fade-in-normal-active">Create Card</div>
+            <div className="timeline fade-in-normal-active">
+                <div className = {`timeline-item ${stage == 0 ? 'active' : ''}`}>Type</div>
+                <div className = "timeline-seperator">
+                <FaChevronRight />
+                </div>
+                <div className = {`timeline-item ${stage == 1 ? 'active' : ''}`}>Image</div>
+                <div className = "timeline-seperator">
+                <FaChevronRight />
+                </div>
+                <div className = {`timeline-item ${stage == 2 ? 'active' : ''}`}>Statline</div>
+                <div className = "timeline-seperator">
+                <FaChevronRight />
+                </div>
+                <div className = {`timeline-item ${stage == 3 ? 'active' : ''}`}>Effect</div>
+
+            </div>
+
             <div className = "cards__container_0 hide">
             {
                 (stage === 0) ? (
@@ -299,7 +319,15 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
            
             </div>
 
-            {/* <button id = "card-create-button">Cancel</button> */}
+            {/* <div className = 'bottom-hint'>
+                Did you know that the unique alteration a card grants comes with its own powers?
+            </div> */}
+
+            <div className = 'seperator'> 
+                <div className = 'line fade-in-normal-active'></div>
+                <div className = 'line fade-in-normal-active'></div>
+                <div className = 'line fade-in-normal-active'></div>
+            </div>
               
         </div>
     )

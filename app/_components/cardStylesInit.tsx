@@ -45,9 +45,9 @@ const initCardStyles = () => {
                 content: '';
                 width: 30%;
                 position: absolute;
-                left: 30%;
+                left: 35%;
                 height: 1px;
-                bottom: -2px;
+                bottom: -3px;
                 background: ${item.solid[0]};
                 opacity: 0.6;
             }

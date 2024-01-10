@@ -10,6 +10,8 @@ export async function GET(request: NextRequest) {
 
         await connectDB();
 
+        console.log('1')
+
         const promptData = mainData.card_generation.promptWeights;
         const alterationChance = mainData.card_generation.alterChance;
         const statlines = mainData.card_generation.statlines;
@@ -23,6 +25,8 @@ export async function GET(request: NextRequest) {
             return new Response(JSON.stringify({'message': 'Issue Generating Types || Statlines'}), { status: 409 } );
         }
 
+        console.log('2')
+
         await Promise.all(randomTypes.map(async (type: any) => {
 
             type.alterations = "null";
@@ -30,18 +34,23 @@ export async function GET(request: NextRequest) {
             // wrap this in a promise so that we can use await
             
             if (Math.random() < alterationChance){
-                let alterations =  getWeightedRandom(type.alters, 1);
+                let alterations = await getWeightedRandom(type.alters, 1);
                 type.alterations = alterations[0].value;
             }
 
+            console.log('2.5')
 
             let imageOptions = await UnclaimedImage.find({type: type.prompt, alterations: type.alterations,   promptVersion: {
                 $in: ['1.12', '1.11']
             }}).limit(3);
+
+            console.log(imageOptions);
             
-            if (imageOptions[2].length < 5){
+            if (imageOptions.length < 3){
                 return new Response(JSON.stringify({'message': 'Issue Generating Image Options'}), { status: 409 } );
             }
+
+            console.log('2.6')
             
             type.imageOptions = imageOptions;
 
@@ -53,15 +62,21 @@ export async function GET(request: NextRequest) {
 
             type.cardEffects = cardEffects;
 
+            console.log('2.9')
+
         }));
 
+        console.log('3')
+
         const returnData = {randomTypes, randomStatlines};
+
+        console.log('4')
 
         return new Response(JSON.stringify({data: returnData}), { status: 200 } );
 
     }
-    catch {
-        return new Response(JSON.stringify({'message': 'Server Error'}), { status: 409 } );
+    catch(error) {
+        return new Response(JSON.stringify({'message': 'Server Error', 'error': error}), { status: 409 } );
         
     }
 
