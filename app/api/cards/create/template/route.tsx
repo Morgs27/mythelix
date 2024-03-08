@@ -72,7 +72,10 @@ export async function GET(request: NextRequest) {
 
         console.log('4')
 
-        return new Response(JSON.stringify({data: returnData}), { status: 200 } );
+        const headers = new Headers(request.headers)
+        headers.set('Cache-Control', 'no-cache');
+
+        return new NextResponse(JSON.stringify({data: returnData, headers: headers}), { status: 200 } );
 
     }
     catch(error) {
