@@ -74,7 +74,6 @@ export async function GET(request: NextRequest) {
 
         const headers = new Headers(request.headers)
         headers.set('Cache-Control', 'no-cache');
-
         return new NextResponse(JSON.stringify({data: returnData, headers: headers}), { status: 200 } );
 
     }
