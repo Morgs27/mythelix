@@ -7,6 +7,8 @@ export async function GET(request: NextRequest, params: {params: {username: stri
 
     await connectDB();
 
+    console.log('get collection')
+
     const { username } = params.params;
 
     // Get all cards for Username
@@ -14,8 +16,12 @@ export async function GET(request: NextRequest, params: {params: {username: stri
 
     // Change image access point
     cards = cards.map((card) => {
-        return {...card, imageSrc: card.imageSrc.replace("storage.cloud.google.com", "storage.googleapis.com")}
+        let new_card = card;
+        new_card.imageSrc = card.imageSrc.replace("storage.cloud.google.com", "storage.googleapis.com");
+        return new_card;
     })
+
+    console.log(cards[0]);
 
     let reversedData = cards.reverse();
 
