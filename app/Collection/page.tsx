@@ -58,7 +58,8 @@ const Page = () => {
 
   const handleCreateCard = async () => {
     if (signal){
-      const response = await fetch("/api/cards/create/template", {cache: 'no-store'});
+      const {signal} = new AbortController();
+      const response = await fetch("/api/cards/create/template", {cache: 'no-store', signal});
       const data = await response.json();
       if (data == undefined || data == null || data == ''){
         console.log('Error Geting Template');
