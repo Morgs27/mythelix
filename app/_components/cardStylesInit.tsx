@@ -1,5 +1,5 @@
 import cardStyles from "@/app/_data/cardStyles.json";
-import styles from "@/app/_data/cardStyles.tsx";
+import styles from "@/app/_data/cardStyles";
 
 const initCardStyles = () => {
 
