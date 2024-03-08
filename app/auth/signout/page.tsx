@@ -25,7 +25,8 @@ export default function SignOutPage() {
     return (
         <div className='logout'>
             <h1>Sign Out</h1>
-            <p>Are you sure you would like to log out of {session.user.username}?</p>
+            {/* @ts-ignore */}
+            <p>Are you sure you would like to log out of {session?.user?.username}?</p>
             <button onClick={handleSignOut}>Log Out</button>
         </div>
     );
