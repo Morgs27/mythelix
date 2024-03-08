@@ -12,7 +12,8 @@ export async function GET(request: NextRequest, params: {params: {username: stri
     // Get all cards for Username
     let cards = await Card.find({username: username});
 
-    cards.map((card) => {
+    // Change image access point
+    cards = cards.map((card) => {
         return {...card, imageSrc: card.imageSrc.replace("storage.cloud.google.com", "storage.googleapis.com")}
     })
 
