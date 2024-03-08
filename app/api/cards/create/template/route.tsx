@@ -45,6 +45,14 @@ export async function GET(request: NextRequest) {
             }}).limit(3);
 
             console.log(imageOptions);
+
+            imageOptions = imageOptions.map((image) => {
+                let new_image = image;
+                new_image.photo = image.photo.replace("storage.cloud.google.com", "storage.googleapis.com")
+                return new_image;
+            })
+
+            console.log(imageOptions);
             
             if (imageOptions.length < 3){
                 return new Response(JSON.stringify({'message': 'Issue Generating Image Options'}), { status: 409 } );
