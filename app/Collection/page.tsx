@@ -58,7 +58,7 @@ const Page = () => {
 
   const handleCreateCard = async () => {
     if (signal){
-      const response = await fetch("/api/cards/create/template");
+      const response = await fetch("/api/cards/create/template", {cache: 'no-store'});
       const data = await response.json();
       if (data == undefined || data == null || data == ''){
         console.log('Error Geting Template');
@@ -73,7 +73,7 @@ const Page = () => {
   const createCard = async () => {
 
     const response = await fetch("/api/cards/create/", {
-      method: 'POST', // or 'PUT'
+      method: 'POST', 
       headers: {
         'Content-Type': 'application/json',
       },
@@ -94,7 +94,7 @@ const Page = () => {
     if (!session || !session.user || !session.user.username) return;
     
     // @ts-ignore
-    const response = await fetch("/api/cards/getCollection/" + session.user.username);
+    const response = await fetch("/api/cards/getCollection/" + session.user.username, {cache: 'no-store'});
 
     const data = await response.json();
 
@@ -235,7 +235,7 @@ const Page = () => {
               <Select className={'fade-in-normal react-aria-Select'} selectedKey = {typeFilter} onSelectionChange={selected => {
                   return setTypeFilter(String(selected));
                 }}>
-                <Button className='react-aria-Button'>
+                <Button aria-label="Filter" className='react-aria-Button'>
                   <SelectValue >
                     {
                       typeFilter == '' ? (
@@ -267,7 +267,7 @@ const Page = () => {
 
               {/* Alteration Filter */}
               <Select className={'fade-in-normal react-aria-Select'} selectedKey = {alterationFilter} onSelectionChange={selected => setAlterationFilter(String(selected))}>
-                <Button>
+                <Button aria-label="Filter">
                   <SelectValue >
                     {
                       alterationFilter == '' ? (
@@ -331,7 +331,7 @@ const Page = () => {
 
               {/* Order By  */}
               <Select className={'fade-in-normal  react-aria-Select'} selectedKey = {sort} onSelectionChange={selected => setSort(String(selected))}>
-                <Button>
+                <Button aria-label="Sort">
                   <SelectValue >
                     {
                       sort == '' ? (
@@ -387,13 +387,15 @@ const Page = () => {
               </Select>
 
 
-              <button onClick={() => {handleClear()}} className = {`filterClear ${(search != '' || typeFilter != '' || alterationFilter != '' || sort != '' || sortOrder != 'desc') ? 'show' : ''}`}>
+              <button aria-label="clear-filter" onClick={() => {handleClear()}} className = {`filterClear ${(search != '' || typeFilter != '' || alterationFilter != '' || sort != '' || sortOrder != 'desc') ? 'show' : ''}`}>
                 <MdClear />
               </button>
               
               <div className = 'flex-seperator'></div>
 
-              <button className={'fade-in-normal'} onClick = {handleCreateCard}>Create Card</button>
+
+
+              <button aria-label='create-card' className={'fade-in-normal'} onClick = {handleCreateCard}>Create Card</button>
               {/* <button className={'fade-in-normal'} onClick = {handleGetCollection}>Refresh</button> */}
 
             </div>

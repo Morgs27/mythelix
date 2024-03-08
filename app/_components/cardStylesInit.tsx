@@ -1,5 +1,5 @@
 import cardStyles from "@/app/_data/cardStyles.json";
-
+import styles from "@/app/_data/cardStyles.ts";
 
 const initCardStyles = () => {
 
@@ -7,7 +7,33 @@ const initCardStyles = () => {
     if (document.getElementById("cardStyles")) {
         return;
     }
-    
+
+    let css;
+
+    // Next check whether the styles have been parsed
+    if(styles.length > 10){
+
+        css = styles;
+
+    }
+    else {
+
+        console.warn("Please Update Parsed Card Styles")
+        css = parseCardStyles(cardStyles);
+        console.log(css);
+
+    }
+
+    const style = document.createElement("style");
+    style.id = "cardStyles";
+    style.innerHTML = css;
+    document.head.appendChild(style);
+
+}
+
+
+const parseCardStyles = (cardStyles: any) => {
+
     // Generate CSS dynamically
     let css = "";
 
@@ -70,12 +96,7 @@ const initCardStyles = () => {
 
     }
 
-    // Create style element
-    const style = document.createElement("style");
-    style.id = "cardStyles";
-    style.innerHTML = css;
-    document.head.appendChild(style);
-
+    return css;
 }
 
 // Create a function to compare to colours to see which one is nearer white

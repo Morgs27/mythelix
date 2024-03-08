@@ -23,10 +23,10 @@ export default function SignOutPage() {
     }
 
     return (
-        <div>
-            <h1>Logout</h1>
-            <p>Welcome, {session?.user?.name}!</p>
-            <button onClick={handleSignOut}>Sign Out</button>
+        <div className='logout'>
+            <h1>Sign Out</h1>
+            <p>Are you sure you would like to log out of {session.user.username}?</p>
+            <button onClick={handleSignOut}>Log Out</button>
         </div>
     );
 }
