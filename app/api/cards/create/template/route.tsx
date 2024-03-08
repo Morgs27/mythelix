@@ -42,7 +42,25 @@ export async function GET(request: NextRequest) {
 
             let imageOptions = await UnclaimedImage.find({type: type.prompt, alterations: type.alterations,   promptVersion: {
                 $in: ['1.12', '1.11']
-            }}).limit(3);
+            }});
+
+            let number_of_images = imageOptions.length;
+            
+            if (imageOptions.length < 3){
+                return new Response(JSON.stringify({'message': 'Issue Generating Image Options'}), { status: 409 } );
+            }
+
+            let one; let two; let three;
+
+            while (one == two || two == three || three == one){
+                one = Math.floor(Math.random() * number_of_images);
+                two = Math.floor(Math.random() * number_of_images);
+                three = Math.floor(Math.random() * number_of_images);
+            }
+
+            console.log(one, two, three)
+
+            imageOptions = [imageOptions[one], imageOptions[two], imageOptions[3]]
 
             console.log(imageOptions);
 
@@ -54,9 +72,6 @@ export async function GET(request: NextRequest) {
 
             console.log(imageOptions);
             
-            if (imageOptions.length < 3){
-                return new Response(JSON.stringify({'message': 'Issue Generating Image Options'}), { status: 409 } );
-            }
 
             console.log('2.6')
             
