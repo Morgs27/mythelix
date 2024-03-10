@@ -2,7 +2,7 @@
 
 import './card.scss'
 import React, {useEffect, useRef, useState} from 'react'
-import Image from 'next/image'
+import Image from 'next/image';
 
 type cardProps = {
     imageSrc : string,
@@ -23,111 +23,42 @@ const Card = ({imageSrc, effect, cost, attack, defence, name, contribution, type
 
     let bounds: DOMRect | undefined;
 
-    const [imagesLoaded, setImagesLoaded] = useState({image: false, overlay: false});
+    const [overlayLoaded, setOverlayLoaded] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
 
-    const [initialLoad, setInitialLoad] = useState(true);
-    
-    function rotateToMouse(e: any) {
+    const [imagesLoaded, setImagesLoaded] = useState(false);
 
-        const mouseX = e.clientX;
-        const mouseY = e.clientY;
-
-        const leftX = bounds ? mouseX - bounds.x : 0;
-        const topY = bounds ? mouseY - bounds.y : 0;
-
-        const center = {
-        x: bounds ? leftX - bounds.width / 2 : 0,
-        y: bounds ? topY - bounds.height / 2 : 0
-        };
-
-        const distance = Math.sqrt(center.x ** 2 + center.y ** 2);
-        
-        if (card.current){
-            card.current.style.transform = `
-            scale3d(1.07, 1.07, 1.07)
-            rotate3d(
-                ${center.y / 100},
-                ${-center.x / 100},
-                0,
-                ${Math.log(distance) * 2}deg
-            )
-            `;
-            
-            const glowElement = card.current?.querySelector(".glow") as HTMLDivElement;
-            if (glowElement) {
-                if (glowElement) {
-                    glowElement.style.backgroundImage = `
-                radial-gradient(
-                    circle at
-                    ${center.x * 2 + (bounds ? bounds.width / 2 : 0)}px
-                    ${center.y * 2 + (bounds ? bounds.height / 2 : 0)}px,
-                    #ffffff20,
-                    #0000000f
-                )
-                `;
-                }
-            }
-        }
-    
-    }
-
-    const mouseEnter = () => {
-        // bounds = card.current?.getBoundingClientRect();
-        // document.addEventListener("mousemove", rotateToMouse);
-
-    }
-
-    const mouseLeave = () => {  
-        // document.removeEventListener("mousemove", rotateToMouse);
-        // if (card.current){
-        //     card.current.style.transform = "";
-        //     card.current.style.background = "";
-        //     const glowElement = card.current?.querySelector(".glow") as HTMLDivElement;
-        //     if (glowElement) {
-        //         glowElement.style.backgroundImage = "";
-        //     }
-        // }
-
-    }
-
-    const focusCard = () => {
-        card.current?.classList.add('focus')
-    }
-
-    useEffect(() => {
-        if (!initialLoad) {
-          handleImageLoaded();
-        }
-    }, [imageSrc, initialLoad]); //
-    
     const handleImageLoaded = () => {
-        setImagesLoaded({...imagesLoaded, image: true})
-        setInitialLoad(false);
+        setImageLoaded(true);
+        console.log('image loaded: ' , imageSrc)
     }
 
     const handleOverlayLoaded = () => {
-        setImagesLoaded({...imagesLoaded, overlay: true})
+        setOverlayLoaded(true);
+        console.log('overlay loaded')
     }
 
-    const handleImageError = (error: any) => {
-        setImagesLoaded({...imagesLoaded, image: true})
-    }
+    useEffect(() => {
+        if (imageLoaded && overlayLoaded){
+            setImagesLoaded(true);
+            console.log('both loaded')
+        }
+        else{
+            setImagesLoaded(false);
+        }
+    }, [overlayLoaded, imageLoaded, imageSrc])
 
     return(
         <>
         <div className="placeholder">
             <div className = "activity"></div>
         </div>
-        <div className={`card ${special} ${type} ${imagesLoaded.image && imagesLoaded.overlay ? '': 'loading'}`} ref={card} 
-        onMouseEnter={() => mouseEnter()} 
-        onMouseLeave={() => mouseLeave()}
-        onClick={() => focusCard()}
-        >
+        <div className={`card ${special} ${type} ${imagesLoaded ? '': 'loading'}`} ref={card}>
 
            
             <div className="border"></div>
-            <img onLoad={handleImageLoaded} onError={handleImageError} alt = 'Image Failed Loading' className = "image" src = {imageSrc} />
-            <img onLoad={handleOverlayLoaded} alt = "" className= 'imageOverlay' src = {'/card-design.png'}/>
+            <img onLoad={handleImageLoaded}  alt = 'Image Failed Loading' className = "image" src = {imageSrc} />
+            <img onLoad={handleOverlayLoaded}  alt = "" className= 'imageOverlay' src = {'/card-design.png'}/>
 
             <div className="glow"></div>
             <div className="overlay">

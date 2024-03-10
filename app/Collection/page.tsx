@@ -267,9 +267,9 @@ const Page = () => {
               </Select>
 
               {/* Alteration Filter */}
-              <Select className={'fade-in-normal react-aria-Select'} selectedKey = {alterationFilter} onSelectionChange={selected => setAlterationFilter(String(selected))}>
+              <Select aria-label="select" className={'fade-in-normal react-aria-Select'} selectedKey = {alterationFilter} onSelectionChange={selected => setAlterationFilter(String(selected))}>
                 <Button aria-label="Filter">
-                  <SelectValue >
+                  <SelectValue aria-label="value" >
                     {
                       alterationFilter == '' ? (
                          <>
