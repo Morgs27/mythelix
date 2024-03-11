@@ -21,8 +21,6 @@ export async function GET(request: NextRequest, params: {params: {username: stri
         return new_card;
     })
 
-    console.log(cards[0]);
-
     let reversedData = cards.reverse();
 
     if (reversedData.length === 0) {

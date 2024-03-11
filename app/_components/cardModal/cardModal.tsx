@@ -3,20 +3,38 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './cardModal.scss'
 
-const CardCreator = ({card, setCard} : {card: any, setCard: any}) => {
+const CardCreator = ({card, setCard, session} : {card: any, setCard: any, session: any}) => {
 
-    const cardModalRef = useRef('cardModalRef');
+    const cardModalRef = useRef<any>(null);
+
+    const deleteCard = async () => {
+
+        console.log(card);
+
+        const response = await fetch("/api/cards/delete/", {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            // @ts-ignore
+            body: JSON.stringify({username: session.user.username, id: card.id})
+        })
+        .then((res) => res.json())
+        .then((result) => console.log(result)); // meassage: "sucess"
+      
+    }
 
     useEffect(() => {
-        if (card != null){
+        if (card != null && cardModalRef != null){
 
-            cardModalRef.current.innerHTML = "";
+            // @ts-ignore
+            // cardModalRef.current.innerHTML = "";
 
             let clone = card.cloneNode(true);
 
             clone.classList.add('ignore');
-            // clone.parentElement = cardModalRef.current;
-
+        
+            // @ts-ignore
             cardModalRef.current.appendChild(clone);
         }
     }, [card])
@@ -24,7 +42,9 @@ const CardCreator = ({card, setCard} : {card: any, setCard: any}) => {
     return (
 
         <div ref={cardModalRef} className={`cardModal ${card == null ? 'hide' : ''}`}>
-            
+            <div className='cardOptions'>
+                <button className='deleteCard' onClick={() => deleteCard()}>Delete Card</button>
+            </div>
         </div>
     )
 }

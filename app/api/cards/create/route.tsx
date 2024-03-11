@@ -21,20 +21,17 @@ export async function POST(req: NextRequest) {
 
         const {username, imageSrc, type, alteration, cost, defence, attack, contribution, effect} = data;
 
-        console.log(data)
-        console.log(username, imageSrc, type, alteration, cost, defence, attack, contribution, effect)
-
         // Check if the request body contains all required fields
         if (!username || !imageSrc || !type || !alteration || !cost || !defence || !attack || !contribution || !effect) {
-            return new Response(JSON.stringify({'message': 'Missing Fields'}), { status: 408 });
+            return new Response(JSON.stringify({'message': 'Missing Fields'}), { status: 409 });
         }
+
+        console.log('here')
 
         // Create Card
         const card = await Card.create({
             username, imageSrc, type, alteration, cost, defence, attack, contribution, effect, onSale: false
         });
-
-        console.log(card);
 
         // Rest of your code...
         return new Response(JSON.stringify({'message': 'Sucess'}), { status: 200 });

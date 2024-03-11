@@ -46,11 +46,11 @@ export async function GET(request: NextRequest) {
 
             let number_of_images = imageOptions.length;
             
-            if (imageOptions.length < 3){
+            if (number_of_images < 3){
                 return new Response(JSON.stringify({'message': 'Issue Generating Image Options'}), { status: 409 } );
             }
 
-            let one; let two; let three;
+            let one = 0; let two = 0; let three = 0;
 
             while (one == two || two == three || three == one){
                 one = Math.floor(Math.random() * number_of_images);
@@ -58,11 +58,7 @@ export async function GET(request: NextRequest) {
                 three = Math.floor(Math.random() * number_of_images);
             }
 
-            console.log(one, two, three)
-
-            imageOptions = [imageOptions[one], imageOptions[two], imageOptions[3]]
-
-            console.log(imageOptions);
+            imageOptions = [imageOptions[one], imageOptions[two], imageOptions[three]]
 
             imageOptions = imageOptions.map((image) => {
                 let new_image = image;

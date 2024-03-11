@@ -64,7 +64,8 @@ export const options = {
     ],
     callbacks: {
         async jwt({token, user}: {token: any, user: any}){
-            if (user) token.user = user;
+            token.name = token.user.username;
+            token.image = token.user._id;
             return token;
         },
         async session({session, token}: {session: any, token: any}){

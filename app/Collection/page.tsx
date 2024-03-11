@@ -2,46 +2,43 @@
 
 import { useSession } from "next-auth/react";
 import { redirect } from 'next/navigation';
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState } from "react";
 import CardCreator from "../_components/cardCreator/cardCreator";
 import './collection.scss'
 import Card from '@/app/_components/card/Card'
 import initCardStyles from "../_components/cardStylesInit";
-import Loading from "../loading";
-import {Button, Label, ListBox, ListBoxItem, Popover, Select, SelectValue} from 'react-aria-components';
-import { FaChevronDown } from "react-icons/fa";
+import {Button, ListBox, ListBoxItem, Popover, Select, SelectValue} from 'react-aria-components';
 import { FaFilter } from "react-icons/fa";
 import cardStyles from "@/app/_data/cardStyles.json"
 import { FaSortAmountDown, FaSortAmountDownAlt } from "react-icons/fa";
 import SpinLoader from "../_components/SpinLoader";
 import { FaSortAmountUp } from "react-icons/fa";
-import {SearchField , Input} from 'react-aria-components';
 import { FaSearch } from "react-icons/fa";
-import { RxCross1 } from "react-icons/rx";
 import { MdClear } from "react-icons/md";
 import CardModal from "../_components/cardModal/cardModal";
-
-{/* <Card index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} /> */}
+import CardInterface from "@/app/_interfaces/Card";
+import UserInterface from "@/app/_interfaces/User";
+import CardTemplateInterface from "@/app/_interfaces/CardTemplate"
 
 const abortController = new AbortController();
 const signal = abortController.signal;
 
-const types = ['All Types', 'Dragon', 'Demon', 'Faerie', 'Giant', 'Goblin', 'Owl', 'Phoenix', 'Unicorn', 'Vampire', 'Warewolf', 'Wizard', 'Zombie']; // Replace with your actual types
-const alterations = ['All Alterations', 'Monochromatic', 'Fauvism', 'Pop Art', 'Ukiyo-e', 'Frost', 'Fire', 'Warrior', 'Evil', 'Voodoo', 'Golden', 'Necromancer', 'Fanged', 'Bugbear', 'Burglar', 'Druid', 'Oni', 'Magic', 'Yeti', 'Hecatoncheires', 'Ogre', 'Shapeshifter']
+const types: string[] = ['All Types', 'Dragon', 'Demon', 'Faerie', 'Giant', 'Goblin', 'Owl', 'Phoenix', 'Unicorn', 'Vampire', 'Warewolf', 'Wizard', 'Zombie']; // Replace with your actual types
+const alterations: string[] = ['All Alterations', 'Monochromatic', 'Fauvism', 'Pop Art', 'Ukiyo-e', 'Frost', 'Fire', 'Warrior', 'Evil', 'Voodoo', 'Golden', 'Necromancer', 'Fanged', 'Bugbear', 'Burglar', 'Druid', 'Oni', 'Magic', 'Yeti', 'Hecatoncheires', 'Ogre', 'Shapeshifter']
 
 const Page = () => {
 
-  const [collection, setCollection] = useState([]) as any[];
+  const [collection, setCollection] = useState<CardInterface[]>([]);
 
-  const [creatingCard, setCreatingCard] = useState(false);
-  const [templateData, setTemplateData] = useState({} as any);
-  const [createCardData, setCreateCardData] = useState({} as any);
+  const [creatingCard, setCreatingCard] = useState<boolean>(false);
+  const [templateData, setTemplateData] = useState<CardTemplateInterface | {}>({});
+  const [createCardData, setCreateCardData] = useState<any>({});
 
-  const [typeFilter, setTypeFilter] = useState('');
-  const [alterationFilter, setAlterationFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState<string>('');
+  const [alterationFilter, setAlterationFilter] = useState<string>('');
 
-  const [sort, setSort] = useState('');
-  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' or 'desc'
+  const [sort, setSort] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc'); // 'asc' or 'desc'
 
   const [search,setSearch] = useState('');
 
@@ -62,12 +59,13 @@ const Page = () => {
   const handleCreateCard = async () => {
     if (signal){
       const {signal} = new AbortController();
-      const response = await fetch("/api/cards/create/template", {cache: 'no-store', signal});
+      const response = await fetch("/api/cards/template", {cache: 'no-store', signal});
       const data = await response.json();
       if (data == undefined || data == null || data == ''){
         console.log('Error Geting Template');
       }
       else {
+        console.log(data.data)
         setCreatingCard(true);
         setTemplateData(data.data);
       }
@@ -102,7 +100,7 @@ const Page = () => {
 
     const data = await response.json();
 
-    console.log(data)
+    console.log(data.data)
 
     setCollection(data.data);
 
@@ -183,29 +181,21 @@ const Page = () => {
     }, 1000)
   }
 
-  const handleCardsClick = (e) => {
-    console.log(e);
+  const handleCardsClick = (e: any) => {
+
     let list = e.target.classList;
-    if (!list.contains('cardModal')){
-     
 
-      if (list.contains('glow')){
-        
-        let card = e.target.parentElement.parentElement;
+    if (list.contains('cards_container')){
+      
+      setCardModal(null);
+      
+    }
 
-        setCardModal(card)
-    
-      }
-      else {
-        setCardModal(null);
-      }
-
+    if (list.contains('glow')){
+      let card = e.target.parentElement.parentElement;
+      setCardModal(card)
     }
     
-  }
-
-  const handleCardClick = (e) => {
-    console.log('cardClick')
   }
 
   useEffect(() => {
@@ -431,7 +421,7 @@ const Page = () => {
             <div onClick={(e) => {handleCardsClick(e)}} className = {`cards_container customScroll ${cardModal == null ? '' : 'modal-active'}`}>
 
             {/* Card Modal */}
-            <CardModal card = {cardModal} setCard = {setCardModal}></CardModal>
+            <CardModal session={session} card = {cardModal} setCard = {setCardModal}></CardModal>
 
             {
               collection.length == 0 ? (
@@ -465,9 +455,9 @@ const Page = () => {
                             <>
                             <div className = 'collection-break'>{card.type}</div>
 
-                            <div key = {card._id}  className = "card-locality-collection">
+                            <div id={card._id}  key = {card._id}  className = "card-locality-collection">
                         
-                            <Card clickFunction={handleCardClick} attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                            <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
       
                             </div>
                             </>
@@ -484,9 +474,9 @@ const Page = () => {
                             <>
                             <div className = 'collection-break'>{card.alteration == 'null' ? 'None' : card.alteration}</div>
 
-                            <div key = {card._id}  className = "card-locality-collection">
+                            <div id={card._id}  key = {card._id}  className = "card-locality-collection">
                         
-                            <Card clickFunction={handleCardClick} attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                            <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
       
                             </div>
                             </>
@@ -497,9 +487,9 @@ const Page = () => {
 
                       return (
 
-                      <div key = {card._id}  className = "card-locality-collection">
+                      <div id={card._id} key = {card._id}  className = "card-locality-collection">
                         
-                        <Card clickFunction={handleCardClick}  attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                        <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
   
                       </div>
                       )
