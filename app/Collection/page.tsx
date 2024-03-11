@@ -19,6 +19,7 @@ import {SearchField , Input} from 'react-aria-components';
 import { FaSearch } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { MdClear } from "react-icons/md";
+import CardModal from "../_components/cardModal/cardModal";
 
 {/* <Card index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} /> */}
 
@@ -43,6 +44,8 @@ const Page = () => {
   const [sortOrder, setSortOrder] = useState('desc'); // 'asc' or 'desc'
 
   const [search,setSearch] = useState('');
+
+  const [cardModal, setCardModal] = useState<any>(null);
 
   var prevType : null | any = null
   var prevAlteration : null | any = null;
@@ -176,9 +179,33 @@ const Page = () => {
     searchTimeout = setTimeout(() => {
 
       setSearch(e.target.value);
-      console.log('Here')
 
     }, 1000)
+  }
+
+  const handleCardsClick = (e) => {
+    console.log(e);
+    let list = e.target.classList;
+    if (!list.contains('cardModal')){
+     
+
+      if (list.contains('glow')){
+        
+        let card = e.target.parentElement.parentElement;
+
+        setCardModal(card)
+    
+      }
+      else {
+        setCardModal(null);
+      }
+
+    }
+    
+  }
+
+  const handleCardClick = (e) => {
+    console.log('cardClick')
   }
 
   useEffect(() => {
@@ -401,7 +428,11 @@ const Page = () => {
 
             </div>
 
-            <div className = 'cards_container customScroll'>
+            <div onClick={(e) => {handleCardsClick(e)}} className = {`cards_container customScroll ${cardModal == null ? '' : 'modal-active'}`}>
+
+            {/* Card Modal */}
+            <CardModal card = {cardModal} setCard = {setCardModal}></CardModal>
+
             {
               collection.length == 0 ? (
                 <SpinLoader/>
@@ -436,7 +467,7 @@ const Page = () => {
 
                             <div key = {card._id}  className = "card-locality-collection">
                         
-                            <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                            <Card clickFunction={handleCardClick} attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
       
                             </div>
                             </>
@@ -455,7 +486,7 @@ const Page = () => {
 
                             <div key = {card._id}  className = "card-locality-collection">
                         
-                            <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                            <Card clickFunction={handleCardClick} attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
       
                             </div>
                             </>
@@ -468,7 +499,7 @@ const Page = () => {
 
                       <div key = {card._id}  className = "card-locality-collection">
                         
-                        <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                        <Card clickFunction={handleCardClick}  attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
   
                       </div>
                       )

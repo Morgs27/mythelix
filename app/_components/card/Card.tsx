@@ -14,7 +14,7 @@ type cardProps = {
     effect: string,
     attack: number,
     defence: number,
-    index: number
+    index: number,
 }   
 
 const Card = ({imageSrc, effect, cost, attack, defence, name, contribution, type,special, index}: cardProps) => {
@@ -30,18 +30,15 @@ const Card = ({imageSrc, effect, cost, attack, defence, name, contribution, type
 
     const handleImageLoaded = () => {
         setImageLoaded(true);
-        console.log('image loaded: ' , imageSrc)
     }
 
     const handleOverlayLoaded = () => {
         setOverlayLoaded(true);
-        console.log('overlay loaded')
     }
 
     useEffect(() => {
         if (imageLoaded && overlayLoaded){
             setImagesLoaded(true);
-            console.log('both loaded')
         }
         else{
             setImagesLoaded(false);
@@ -53,7 +50,7 @@ const Card = ({imageSrc, effect, cost, attack, defence, name, contribution, type
         <div className="placeholder">
             <div className = "activity"></div>
         </div>
-        <div className={`card ${special} ${type} ${imagesLoaded ? '': 'loading'}`} ref={card}>
+        <div  className={`card ${special} ${type} ${imagesLoaded ? '': 'loading'}`} ref={card}>
 
            
             <div className="border"></div>

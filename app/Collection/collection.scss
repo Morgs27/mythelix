@@ -62,7 +62,28 @@ $background: rgb(40,40,40);
     overflow-x: hidden;
     justify-content: center;
     height: calc(100% - 50px);
+    position: relative;
+
+    &.modal-active{
+
+        .card-locality-collection{
+            opacity: 0.3;
+            user-select: none;
+            pointer-events: none;
+
+            &.ignore{
+                opacity: 1;
+                user-select: unset;
+                pointer-events: unset;
+
+                .card{
+                    transform: scale(1.3);
+                }
+            }
+        }
+    }
 }
+
 
 .collection-break{
     flex-basis: 100%;
