@@ -67,7 +67,8 @@ $background: rgb(40,40,40);
     &.modal-active{
 
         .card-locality-collection{
-            opacity: 0.3;
+            opacity: 0.5;
+            filter: blur(3px) brightness(0.5);
             user-select: none;
             pointer-events: none;
 

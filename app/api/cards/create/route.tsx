@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
             return new Response(JSON.stringify({'message': 'Missing Fields'}), { status: 409 });
         }
 
-        console.log('here')
+        console.log('creating card')
 
         // Create Card
         const card = await Card.create({

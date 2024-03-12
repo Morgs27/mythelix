@@ -1,6 +1,8 @@
 import cardStyles from "@/app/_data/cardStyles.json";
 import styles from "@/app/_data/cardStyles";
 
+const generate = true;
+
 const initCardStyles = () => {
 
     // First check to see if the css is already generated
@@ -11,14 +13,13 @@ const initCardStyles = () => {
     let css;
 
     // Next check whether the styles have been parsed
-    if(styles.length > 10){
+    if(generate == false){
 
         css = styles;
 
     }
     else {
 
-        console.warn("Please Update Parsed Card Styles")
         css = parseCardStyles(cardStyles);
         console.log(css);
 
@@ -42,6 +43,27 @@ const parseCardStyles = (cardStyles: any) => {
     console.log(alterationStyles)
 
     let typeStyles = cardStyles[1];
+
+    for (const cardType in typeStyles) {
+
+        // @ts-ignore
+        var colour = typeStyles[cardType];
+
+        css += `
+            .card.${cardType}:hover {
+                box-shadow: 0 2px 0 0 ${colour};
+            }
+            .cardModal.${cardType}{
+                --type-colour: ${colour};
+                box-shadow: 0px 0px 0px 1px ${colour}, 0px 0px 30px 50px rgba(0,0,0,0.5);
+            }
+            .cardModal.${cardType} button{
+                border: 1px solid ${colour};
+            }
+
+        `;
+
+    }
 
     for (const alterationType in alterationStyles) {
 
@@ -77,24 +99,27 @@ const parseCardStyles = (cardStyles: any) => {
                 background: ${item.solid[0]};
                 opacity: 0.6;
             }
+            .cardModal.${alterationType}::before {
+                background-image: linear-gradient(var(--rotate), ${gradient});
+            }
+            .cardModal.${alterationType}{
+                --main-colour: ${lighter};
+                --secondary-colour: ${darker};
+            }
+            .cardModal.${alterationType} button{
+                border: 1px solid ${lighter};
+            }
+            .cardModal.${alterationType} .cardAlteration{
+                color: ${lighter};
+            }
+            .cardModal.null .cardAlteration{
+                color: rgba(255,255,255,0.6);
+            }
         `;
 
         
     }
 
-    for (const cardType in typeStyles) {
-
-        // @ts-ignore
-        var colour = typeStyles[cardType];
-
-        css += `
-            .card.${cardType}:hover {
-                box-shadow: 0 2px 0 0 ${colour};
-            }
-
-        `;
-
-    }
 
     return css;
 }

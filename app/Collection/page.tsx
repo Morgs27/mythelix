@@ -19,6 +19,7 @@ import CardModal from "../_components/cardModal/cardModal";
 import CardInterface from "@/app/_interfaces/Card";
 import UserInterface from "@/app/_interfaces/User";
 import CardTemplateInterface from "@/app/_interfaces/CardTemplate"
+import Status from "../_components/status/status"
 
 const abortController = new AbortController();
 const signal = abortController.signal;
@@ -44,6 +45,8 @@ const Page = () => {
 
   const [cardModal, setCardModal] = useState<any>(null);
 
+  const [status, setStatus] = useState({message: '', type: '', active: false})
+
   var prevType : null | any = null
   var prevAlteration : null | any = null;
 
@@ -65,9 +68,9 @@ const Page = () => {
         console.log('Error Geting Template');
       }
       else {
-        console.log(data.data)
         setCreatingCard(true);
         setTemplateData(data.data);
+        handleClear();
       }
     }
   }
@@ -87,10 +90,14 @@ const Page = () => {
 
     handleGetCollection(false);
 
+    setStatus({message: 'Card Created', type: 'sucess', active: true})
+
   }
 
   
   const handleGetCollection = async (refresh: any) => {
+
+    // setStatus({message: 'Collection Fetched', type: 'sucess', active: true})
 
     // @ts-ignore
     if (!session || !session.user || !session.user.username) return;
@@ -231,6 +238,12 @@ const Page = () => {
 
   return (
     <div className = 'collection__page'>
+
+      {/* Status Message */}
+      <Status setState={setStatus} message={status.message} active={status.active} type={status.type}/>
+
+      {/* Card Modal */}
+      <CardModal setStatus={setStatus} session={session} card = {cardModal} setCard = {setCardModal}></CardModal>
 
       {
         creatingCard ? (
@@ -420,8 +433,6 @@ const Page = () => {
 
             <div onClick={(e) => {handleCardsClick(e)}} className = {`cards_container customScroll ${cardModal == null ? '' : 'modal-active'}`}>
 
-            {/* Card Modal */}
-            <CardModal session={session} card = {cardModal} setCard = {setCardModal}></CardModal>
 
             {
               collection.length == 0 ? (

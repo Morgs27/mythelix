@@ -132,8 +132,10 @@ $card-width: calc($card-height / 1.5);
     .imageOverlay{
         position: absolute;
         z-index: 3;
-        width: 100%;
-        height: 100%;
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        left: -1px;
+        top: -1px;
     }
     
     .card .border{

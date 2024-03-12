@@ -1,9 +1,10 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './cardCreator.scss'
 import initCardStyles from '../cardStylesInit'
 import LazyImage from '../LazyImage'
 import { FaChevronRight } from "react-icons/fa";
+import {SpinLoader} from '../SpinLoader'
 
 const CardCreator = ({data, setData, setState} : {data: any, setState: any, setData: any}) => {
 
@@ -15,27 +16,26 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
     const [types, setTypes] = useState(data.randomTypes);
     const [statlines, setStatlines] = useState(data.randomStatlines);
 
-    useEffect(() => {
-        
-        setTimeout((
-        ) => {
-            if (document.getElementsByClassName('cards__container_' + stage)[0]){
-                document.getElementsByClassName('cards__container_' + stage)[0].classList.remove('hide');
-            }
-        }, 300)
+    const seperator = useRef(null);
 
+    useEffect(() => {
+       
+        
         if (stage == 4){
             handleConfirmCard();
-            
-            const cardNameInput = document.getElementById('card-name-input');
-            if (cardNameInput) {
-                cardNameInput.focus();
-            }
-            const cardCreateButton = document.getElementById('card-create-button');
-            if (cardCreateButton) {
-                cardCreateButton.innerHTML = 'Create Card';
-            }
+
         }
+        else {
+             
+            setTimeout((
+            ) => {
+                if (document.getElementsByClassName('cards__container_' + stage)[0]){
+                    document.getElementsByClassName('cards__container_' + stage)[0].classList.remove('hide');
+                }
+                
+            }, 300)
+        }
+    
 
     }, [stage])
     
@@ -105,9 +105,19 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
             document.getElementsByClassName('cards__container_3')[0].classList.add('hide');
             document.getElementsByClassName('cards__container_3')[0].classList.add('away');
 
+            // setTimeout(() => {
+            //     handleConfirmCard();
+            // }, 400)
             
             setTimeout(() => {
+
+                if (seperator != null){
+                    seperator.current.style.transition = 'opacity 0.5s';
+                    seperator.current.style.opacity = '0';
+                }
+
                 setStage(4);
+                
             }, 1000);
 
         }
@@ -278,7 +288,7 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
             {
                 (stage === 4) ? (
                     <>
-                    <input id = 'card-name-input' onChange={handleNameChange} type = "text" placeholder="Card Name"/>
+                    {/* <input id = 'card-name-input' onChange={handleNameChange} type = "text" placeholder="Card Name"/> */}
                     <div className={`card ${cardData.alteration}`}>
                         <LazyImage src = {cardData.imageSrc} alt= {cardData.imageSrc}></LazyImage>
                         <LazyImage src = {'/card-design.png'} alt= {cardData.imageSrc}></LazyImage>
@@ -314,6 +324,7 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
                         </div>
                     </div>
                     </>
+                   
                 ) : null
             }
            
@@ -323,7 +334,7 @@ const CardCreator = ({data, setData, setState} : {data: any, setState: any, setD
                 Did you know that the unique alteration a card grants comes with its own powers?
             </div> */}
 
-            <div className = 'seperator'> 
+            <div ref={seperator} className = 'seperator'> 
                 <div className = 'line fade-in-normal-active'></div>
                 <div className = 'line fade-in-normal-active'></div>
                 <div className = 'line fade-in-normal-active'></div>
