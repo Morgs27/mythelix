@@ -66,6 +66,13 @@ $background: rgb(40,40,40);
 
     &.modal-active{
 
+        .collection-break{
+            opacity: 0.5;
+            filter: blur(3px) brightness(0.5);
+            user-select: none;
+            pointer-events: none;
+        }
+
         .card-locality-collection{
             opacity: 0.5;
             filter: blur(3px) brightness(0.5);
@@ -101,7 +108,52 @@ $background: rgb(40,40,40);
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    margin-inline: 30px;
+    margin-top: 50px;
+    margin-bottom: 10px;
+
+    img{
+        width: 35px;
+        height: 35px;
+    }
+
+    $side-height: 2px;
+
+    &::before{
+        width: 45%;
+        content: '';
+        background: $secondary;
+        height: $side-height;
+        left: 0;
+        top: calc(50% - ($side-height / 2));
+        position: absolute;
+        // animation: spin 8s linear infinite;
+    }
+
+    &::after{
+        width: 45%;
+        content: '';
+        background: $secondary;
+        height: $side-height;
+        right: 0;
+        top: calc(50% - ($side-height / 2));
+        position: absolute;
+        // animation: spin 8s linear infinite;
+    }
 }
+
+
+@keyframes spin {
+    0%{
+        --rotate: 0deg;
+    }
+    100%{
+        --rotate: 360deg;
+    }
+}
+
+
 
 .dropdown-select{
     background: $secondary;

@@ -61,6 +61,10 @@ const parseCardStyles = (cardStyles: any) => {
                 border: 1px solid ${colour};
             }
 
+            .collection-break.${cardType}::before, .collection-break.${cardType}::after{
+                background: ${colour};
+            }
+
         `;
 
     }
@@ -114,6 +118,9 @@ const parseCardStyles = (cardStyles: any) => {
             }
             .cardModal.null .cardAlteration{
                 color: rgba(255,255,255,0.6);
+            }
+            .collection-break.${alterationType}::before, .collection-break.${alterationType}::after{
+                background-image: linear-gradient(var(--rotate), ${gradient});
             }
         `;
 

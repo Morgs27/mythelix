@@ -47,7 +47,7 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
 
             setStatus({message: "Card Deleted", type: "sucess", active: true});
             
-            card.remove();
+            card.style.display = 'none';
 
             setCard(null);
 

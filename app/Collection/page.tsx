@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { redirect } from 'next/navigation';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CardCreator from "../_components/cardCreator/cardCreator";
 import './collection.scss'
 import Card from '@/app/_components/card/Card'
@@ -31,6 +31,8 @@ const Page = () => {
 
   const [collection, setCollection] = useState<CardInterface[]>([]);
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   const [creatingCard, setCreatingCard] = useState<boolean>(false);
   const [templateData, setTemplateData] = useState<CardTemplateInterface | {}>({});
   const [createCardData, setCreateCardData] = useState<any>({});
@@ -42,6 +44,9 @@ const Page = () => {
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc'); // 'asc' or 'desc'
 
   const [search,setSearch] = useState('');
+  const searchInput = useRef<HTMLInputElement>();
+
+  const cardsContainer = useRef<HTMLDivElement>();
 
   const [cardModal, setCardModal] = useState<any>(null);
 
@@ -68,14 +73,18 @@ const Page = () => {
         console.log('Error Geting Template');
       }
       else {
+
         setCreatingCard(true);
         setTemplateData(data.data);
         handleClear();
+        setLoading(true);
       }
     }
   }
 
   const createCard = async () => {
+
+    setLoading(true);
 
     const response = await fetch("/api/cards/create/", {
       method: 'POST', 
@@ -90,7 +99,14 @@ const Page = () => {
 
     handleGetCollection(false);
 
-    setStatus({message: 'Card Created', type: 'sucess', active: true})
+    setTimeout(() => {
+      
+      setLoading(false);
+  
+      setStatus({message: 'Card Created', type: 'sucess', active: true})
+
+    }, 500);
+
 
   }
 
@@ -117,7 +133,16 @@ const Page = () => {
 
   }
 
+  const checkCardsExist = () => {
+    console.log('Checking Cards Exist', cardsContainer.current.innerHTML)
+    if (cardsContainer.current.innerHTML == ''){
+      setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
+    }
+  }
+
   const sortCollection = () => {
+
+
     setCollection((collection: any) => {
       return collection.slice().sort((a:any, b:any) => {
 
@@ -158,14 +183,23 @@ const Page = () => {
 
       })
     })
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 200)
   }
 
   const handleClear = () =>{
     setSearch('')
+    searchInput.current.value = '';
     setAlterationFilter('');
     setTypeFilter('');
     setSort('');
     setSortOrder('desc');
+
+    setTimeout(() => {
+      setLoading(false);
+    },200)
   }
 
   const fadeElements = () => {
@@ -174,6 +208,10 @@ const Page = () => {
       element.classList.add('fade-in-normal-active')
     })
   }
+
+  useEffect(() => {
+    checkCardsExist();
+  }, [search, typeFilter, alterationFilter, sort, sortOrder, collection])
 
   let searchTimeout : any;
 
@@ -184,8 +222,9 @@ const Page = () => {
     searchTimeout = setTimeout(() => {
 
       setSearch(e.target.value);
+      setLoading(false);
 
-    }, 1000)
+    }, 2000)
   }
 
   const handleCardsClick = (e: any) => {
@@ -207,6 +246,8 @@ const Page = () => {
 
   useEffect(() => {
 
+    setLoading(true);
+
     sortCollection()
       
   }, [sort, sortOrder])
@@ -218,6 +259,12 @@ const Page = () => {
     handleGetCollection(true)
 
   }, [session])
+
+  useEffect(() => {
+
+    handleGetCollection(true);
+
+  }, [cardModal])
 
 
   useEffect(() => {
@@ -256,7 +303,11 @@ const Page = () => {
 
               {/* Search Filter */}
               <div className = 'searchFilter fade-in-normal'> 
-                <input placeholder = "Search" onChange = {(e) => handleSearch(e)} />
+                <input placeholder = "Search" ref={searchInput} onChange = {(e) => {
+                  setLoading(true);
+                  handleSearch(e)
+                }
+                } />
                 <div className='searchIcon'>
                   <FaSearch />
                 </div>
@@ -361,7 +412,11 @@ const Page = () => {
               </Select>
 
               {/* Order By  */}
-              <Select className={'fade-in-normal  react-aria-Select'} selectedKey = {sort} onSelectionChange={selected => setSort(String(selected))}>
+              <Select className={'fade-in-normal  react-aria-Select'} selectedKey = {sort} onSelectionChange={selected => {
+                setLoading(true);
+                setSort(String(selected))
+              }
+              }>
                 <Button aria-label="Sort">
                   <SelectValue >
                     {
@@ -418,7 +473,7 @@ const Page = () => {
               </Select>
 
 
-              <button aria-label="clear-filter" onClick={() => {handleClear()}} className = {`filterClear ${(search != '' || typeFilter != '' || alterationFilter != '' || sort != '' || sortOrder != 'desc') ? 'show' : ''}`}>
+              <button aria-label="clear-filter" onClick={() => {setLoading(true);handleClear()}} className = {`filterClear ${(search != '' || typeFilter != '' || alterationFilter != '' || sort != '' || sortOrder != 'desc') ? 'show' : ''}`}>
                 <MdClear />
               </button>
               
@@ -426,16 +481,16 @@ const Page = () => {
 
 
 
-              <button aria-label='create-card' className={'fade-in-normal'} onClick = {handleCreateCard}>Create Card</button>
+              <button aria-label='create-card' className={'fade-in-normal'} onClick = {() => {setLoading(true);handleCreateCard()}}>Create Card</button>
               {/* <button className={'fade-in-normal'} onClick = {handleGetCollection}>Refresh</button> */}
 
             </div>
 
-            <div onClick={(e) => {handleCardsClick(e)}} className = {`cards_container customScroll ${cardModal == null ? '' : 'modal-active'}`}>
+            <div onClick={(e) => {handleCardsClick(e)}} ref={cardsContainer} className = {`cards_container customScroll ${cardModal == null ? '' : 'modal-active'}`}>
 
 
             {
-              collection.length == 0 ? (
+              (collection.length == 0 | loading) ? (
                 <SpinLoader/>
               ) : (
                 collection[0] == null ? (
@@ -464,7 +519,9 @@ const Page = () => {
 
                           return (
                             <>
-                            <div className = 'collection-break'>{card.type}</div>
+                            <div className = {`collection-break ${card.type}`}>
+                              <img src={`/types/icons/${card.type}.png`} alt={card.type} />
+                            </div>
 
                             <div id={card._id}  key = {card._id}  className = "card-locality-collection">
                         
@@ -483,7 +540,7 @@ const Page = () => {
 
                           return (
                             <>
-                            <div className = 'collection-break'>{card.alteration == 'null' ? 'None' : card.alteration}</div>
+                            <div className = {`collection-break ${card.alteration}`}>{card.alteration == 'null' ? 'None' : card.alteration}</div>
 
                             <div id={card._id}  key = {card._id}  className = "card-locality-collection">
                         
