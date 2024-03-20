@@ -79,7 +79,7 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
             </div>
             <div className='cardDetails'>
                 <div className = 'top'>
-                    <div calssName='text'>
+                    <div className='text'>
                         <div className = 'cardType'>{cardType}</div>
                         <div className = 'cardAlteration'>{cardAlteration == 'null' ? 'No Alteration' : cardAlteration}</div>
                     </div>
