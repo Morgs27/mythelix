@@ -4,7 +4,7 @@ import { IoWarningOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
 
 
-const Status = ({message, type, active, setState} : {message: string, type: string, setState: any}) => {
+const Status = ({message, type, active, setState} : {message: string, type: string, setState: any,active:any}) => {
     
     useEffect(() => {
         setTimeout(() => {
