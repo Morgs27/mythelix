@@ -134,11 +134,11 @@ const Page = () => {
   }
 
   const checkCardsExist = () => {
-    if (cardsContainer.current){
-      if (cardsContainer.current.innerHTML == ''){
-        setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
-      }
-    }
+    // if (cardsContainer.current){
+    //   if (cardsContainer.current.innerHTML == ''){
+    //     setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
+    //   }
+    // }
   }
 
   const sortCollection = () => {
