@@ -192,7 +192,9 @@ const Page = () => {
 
   const handleClear = () =>{
     setSearch('')
-    searchInput.current.value = '';
+    if (searchInput.current){
+          searchInput.current.value = '';
+    }
     setAlterationFilter('');
     setTypeFilter('');
     setSort('');
