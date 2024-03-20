@@ -493,7 +493,7 @@ const Page = () => {
 
 
             {
-              (collection.length == 0 | loading) ? (
+              (loading) ? (
                 <SpinLoader/>
               ) : (
                 collection[0] == null ? (
