@@ -14,6 +14,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         return new Response(JSON.stringify({'message': 'Method Not Allowed'}), { status: 409 });
     }
 
+    // @ts-ignore
     const session = await getServerSession({req, res, options});
 
     if (!session) {
