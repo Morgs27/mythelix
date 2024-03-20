@@ -44,9 +44,9 @@ const Page = () => {
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc'); // 'asc' or 'desc'
 
   const [search,setSearch] = useState('');
-  const searchInput = useRef();
+  const searchInput = useRef<any>();
 
-  const cardsContainer = useRef();
+  const cardsContainer = useRef<any>();
 
   const [cardModal, setCardModal] = useState<any>(null);
 
