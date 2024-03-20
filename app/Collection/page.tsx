@@ -134,9 +134,10 @@ const Page = () => {
   }
 
   const checkCardsExist = () => {
-    console.log('Checking Cards Exist', cardsContainer.current.innerHTML)
-    if (cardsContainer.current.innerHTML == ''){
-      setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
+    if (cardsContainer.current){
+      if (cardsContainer.current.innerHTML == ''){
+        setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
+      }
     }
   }
 
