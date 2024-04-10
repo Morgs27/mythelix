@@ -45,9 +45,9 @@ const Page = () => {
   const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc'); // 'asc' or 'desc'
 
   const [search,setSearch] = useState('');
-  const searchInput = useRef<HTMLInputElement>();
+  const searchInput = useRef<any>();
 
-  const cardsContainer = useRef<HTMLDivElement>();
+  const cardsContainer = useRef<any>();
 
   const [cardModal, setCardModal] = useState<any>(null);
 
@@ -138,10 +138,11 @@ const Page = () => {
   }
 
   const checkCardsExist = () => {
-    console.log('Checking Cards Exist', cardsContainer.current.innerHTML)
-    if (cardsContainer.current.innerHTML == ''){
-      setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
-    }
+    // if (cardsContainer.current){
+    //   if (cardsContainer.current.innerHTML == ''){
+    //     setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
+    //   }
+    // }
   }
 
   const sortCollection = () => {
@@ -195,7 +196,9 @@ const Page = () => {
 
   const handleClear = () =>{
     setSearch('')
-    searchInput.current.value = '';
+    if (searchInput.current){
+          searchInput.current.value = '';
+    }
     setAlterationFilter('');
     setTypeFilter('');
     setSort('');
@@ -511,7 +514,7 @@ const Page = () => {
 
 
             {
-              (collection.length == 0 | loading) ? (
+              (loading) ? (
                 <SpinLoader/>
               ) : (
                 collection[0] == null ? (

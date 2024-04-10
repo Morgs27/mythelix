@@ -4,7 +4,7 @@ import './cardCreator.scss'
 import initCardStyles from '../cardStylesInit'
 import LazyImage from '../LazyImage'
 import { FaChevronRight } from "react-icons/fa";
-import {SpinLoader} from '../SpinLoader'
+import SpinLoader from '../SpinLoader'
 
 const CardCreator = ({data, setData, setState} : {data: any, setState: any, setData: any}) => {
 

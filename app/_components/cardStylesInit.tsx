@@ -13,17 +13,17 @@ const initCardStyles = () => {
     let css;
 
     // Next check whether the styles have been parsed
-    if(generate == false){
+    // if(generate == false){
 
-        css = styles;
+    //     css = styles;
 
-    }
-    else {
+    // }
+    // else {
 
         css = parseCardStyles(cardStyles);
         console.log(css);
 
-    }
+    // }
 
     const style = document.createElement("style");
     style.id = "cardStyles";
