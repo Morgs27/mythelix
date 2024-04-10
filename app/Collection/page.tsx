@@ -20,6 +20,7 @@ import CardInterface from "@/app/_interfaces/Card";
 import UserInterface from "@/app/_interfaces/User";
 import CardTemplateInterface from "@/app/_interfaces/CardTemplate"
 import Status from "../_components/status/status"
+import ConfirmModal from "../_components/confirmModal/confirmModal";
 
 const abortController = new AbortController();
 const signal = abortController.signal;
@@ -51,6 +52,9 @@ const Page = () => {
   const [cardModal, setCardModal] = useState<any>(null);
 
   const [status, setStatus] = useState({message: '', type: '', active: false})
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalInfo, setModalInfo] = useState({message: '', onConfirm: () => {}})
 
   var prevType : null | any = null
   var prevAlteration : null | any = null;
@@ -292,6 +296,9 @@ const Page = () => {
       {/* Card Modal */}
       <CardModal setStatus={setStatus} session={session} card = {cardModal} setCard = {setCardModal}></CardModal>
 
+      {/* Confirm Modal */}
+      <ConfirmModal isOpen = {modalOpen} setIsOpen = {setModalOpen} onConfirm = {modalInfo.onConfirm} message = {modalInfo.message} />
+
       {
         creatingCard ? (
           <CardCreator data = {templateData} setState = {setCreatingCard} setData = {setCreateCardData} />
@@ -481,7 +488,21 @@ const Page = () => {
 
 
 
-              <button aria-label='create-card' className={'fade-in-normal'} onClick = {() => {setLoading(true);handleCreateCard()}}>Create Card</button>
+              <button aria-label='create-card' className={'fade-in-normal'} onClick = {() => {
+                const modalInfo = {
+                  message: 'Are you sure you would like to create a card?', 
+                  onConfirm: () => {
+                    setLoading(true)
+                    handleCreateCard()
+                    setModalOpen(false);
+                  }
+                }
+                setModalInfo(modalInfo); 
+                setModalOpen(true)
+                }}>
+                Create Card
+              </button>
+
               {/* <button className={'fade-in-normal'} onClick = {handleGetCollection}>Refresh</button> */}
 
             </div>
@@ -520,7 +541,9 @@ const Page = () => {
                           return (
                             <>
                             <div className = {`collection-break ${card.type}`}>
-                              <img src={`/types/icons/${card.type}.png`} alt={card.type} />
+                              <div className = 'center'> 
+                                <img src={`/types/icons/${card.type}.png`} alt={card.type} />
+                              </div>
                             </div>
 
                             <div id={card._id}  key = {card._id}  className = "card-locality-collection">
@@ -540,7 +563,11 @@ const Page = () => {
 
                           return (
                             <>
-                            <div className = {`collection-break ${card.alteration}`}>{card.alteration == 'null' ? 'None' : card.alteration}</div>
+                            <div className = {`collection-break ${card.alteration}`}>
+                              <div className = 'center'> 
+                                {card.alteration == 'null' ? 'None' : card.alteration}
+                              </div>
+                            </div>
 
                             <div id={card._id}  key = {card._id}  className = "card-locality-collection">
                         

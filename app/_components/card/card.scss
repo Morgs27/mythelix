@@ -82,9 +82,9 @@ $card-width: calc($card-height / 1.5);
         cursor: pointer;
         font-family: cursive;
         
-        transition-duration: .5s;
+        transition-duration: 300ms;
         transition-property: transform, box-shadow, opacity;
-        transition-timing-function: ease-out;
+        transition-timing-function: ease-in-out;
         transform: rotate3d(0);
         transform-origin: center center;
 
@@ -99,7 +99,6 @@ $card-width: calc($card-height / 1.5);
 
     
     .card:hover {
-        transition: 0.5s;
         transform: scale(1.05);
         box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
         // z-index: 1000;

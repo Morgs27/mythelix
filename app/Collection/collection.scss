@@ -110,8 +110,13 @@ $background: rgb(40,40,40);
     align-items: center;
     position: relative;
     margin-inline: 30px;
-    margin-top: 50px;
-    margin-bottom: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    flex-direction: row;
+
+    .center{
+        margin: 20px;
+    }
 
     img{
         width: 35px;
@@ -121,24 +126,20 @@ $background: rgb(40,40,40);
     $side-height: 2px;
 
     &::before{
-        width: 45%;
+        flex-grow: 1;
         content: '';
-        background: $secondary;
+        background: rgba(255,255,255,0.6);
         height: $side-height;
-        left: 0;
-        top: calc(50% - ($side-height / 2));
-        position: absolute;
+        
         // animation: spin 8s linear infinite;
     }
 
     &::after{
-        width: 45%;
+        flex-grow: 1;
         content: '';
-        background: $secondary;
+        background: rgba(255,255,255,0.6);
         height: $side-height;
-        right: 0;
-        top: calc(50% - ($side-height / 2));
-        position: absolute;
+        
         // animation: spin 8s linear infinite;
     }
 }

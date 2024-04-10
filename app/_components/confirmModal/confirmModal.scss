@@ -1,0 +1,31 @@
+$secondary : #54577C;
+$correct: #00A300;
+$error: #ff3434;
+$background: rgb(40,40,40);
+
+.confirm-modal{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100000;
+    background: $background;
+    border: 1px solid $secondary;
+    padding: 20px;
+    transition: 1s;
+    opacity: 1;
+
+    &.hide{
+        opacity: 0;
+        filter: blur(5px);
+        transform: translate(-50%, -50%) scale(0);
+    }
+
+    .modal-actions{
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+    }
+}

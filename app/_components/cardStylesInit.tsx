@@ -61,9 +61,7 @@ const parseCardStyles = (cardStyles: any) => {
                 border: 1px solid ${colour};
             }
 
-            .collection-break.${cardType}::before, .collection-break.${cardType}::after{
-                background: ${colour};
-            }
+            
 
         `;
 
