@@ -33,11 +33,11 @@ export default function RootLayout({
 
               <Loading></Loading>
 
-              <Background width={0} height={0} brightness={0.06} style={{position: 'absolute', top: '0', left: '0', zIndex: '-1'}}/>
+              <Background width={0} height={0} brightness={0.1} style={{position: 'absolute', top: '0', left: '0', zIndex: '-1'}}/>
 
               <Nav></Nav>
 
-              <div className="pageContent customScroll">
+              <div className="pageContent globalScroll">
                 {children}
               </div>
 

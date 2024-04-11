@@ -115,12 +115,17 @@ $background: rgb(40,40,40);
         .bottom{
             display: flex;
             gap: 10px;
-
+            width: 100%;
+            
             button{
                 background: $background;
                 // border: 1px solid var(--type-colour);
                 // border: 1px solid var(--main-colour);
-                
+                &.closeCard{
+                    color: white;
+                    // place-self: flex-end;
+                    border: 1px solid white;
+                }
             }
         }
     }

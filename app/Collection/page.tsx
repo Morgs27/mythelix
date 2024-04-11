@@ -21,6 +21,7 @@ import UserInterface from "@/app/_interfaces/User";
 import CardTemplateInterface from "@/app/_interfaces/CardTemplate"
 import Status from "../_components/status/status"
 import ConfirmModal from "../_components/confirmModal/confirmModal";
+import {useRouter} from 'next/navigation'
 
 const abortController = new AbortController();
 const signal = abortController.signal;
@@ -56,6 +57,14 @@ const Page = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalInfo, setModalInfo] = useState({message: '', onConfirm: () => {}})
 
+  const [crystals, setCrystals] = useState<number>(0);
+
+  const showCardAnimations = false;
+
+  const router = useRouter();
+
+  var cardGap = 0;
+
   var prevType : null | any = null
   var prevAlteration : null | any = null;
 
@@ -67,6 +76,23 @@ const Page = () => {
       redirect("/api/auth/signin?callbackUrl=/ClientMember")
     }
   });
+
+  const updateCrystals = async () => {
+    // @ts-ignore
+    if (!session || !session.user || !session.user.username) {
+      setLoading(false);
+      return;
+    };
+    
+    // @ts-ignore
+    const response = await fetch("/api/user/" + session.user.username, {cache: 'no-store'});
+
+    const data = await response.json();
+
+    console.log('Updating crystals', data)
+
+    setCrystals(data.returnUser.crystals);
+  }
 
   const handleCreateCard = async () => {
     if (signal){
@@ -104,6 +130,8 @@ const Page = () => {
     handleGetCollection(false);
 
     setTimeout(() => {
+
+      cardGap = 0;
       
       setLoading(false);
   
@@ -120,7 +148,11 @@ const Page = () => {
     // setStatus({message: 'Collection Fetched', type: 'sucess', active: true})
 
     // @ts-ignore
-    if (!session || !session.user || !session.user.username) return;
+    if (!session || !session.user || !session.user.username) {
+      // setStatus({message: 'No User Found', type: 'error', active: true})
+      setLoading(false);
+      return;
+    };
     
     // @ts-ignore
     const response = await fetch("/api/cards/getCollection/" + session.user.username, {cache: 'no-store'});
@@ -138,11 +170,11 @@ const Page = () => {
   }
 
   const checkCardsExist = () => {
-    // if (cardsContainer.current){
-    //   if (cardsContainer.current.innerHTML == ''){
-    //     setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
-    //   }
-    // }
+    if (cardsContainer.current){
+      if (cardsContainer.current.innerHTML == ''){
+        setStatus(({message: `No cards matching "${search}"`, type: 'error', active: true}))
+      }
+    }
   }
 
   const sortCollection = () => {
@@ -247,9 +279,9 @@ const Page = () => {
     if (list.contains('glow')){
       let card = e.target.parentElement.parentElement;
       setCardModal(card)
-    }
-    
+    } 
   }
+
 
   useEffect(() => {
 
@@ -285,9 +317,20 @@ const Page = () => {
 
   useEffect(() => {
 
+    updateCrystals();
+
+    // calculate the gap for cards based off of the width of the cards container
+    if (cardsContainer.current){
+      let containerWidth = cardsContainer.current.offsetWidth;
+      let cardWidth = 230;
+      let gap = (containerWidth % cardWidth) / (containerWidth / cardWidth);
+      cardGap = gap;
+      cardsContainer.current.style.gap = `${gap}px`;
+    }
+
     fadeElements();
     
-  }, [])
+  }, [collection])
 
 
   return (
@@ -489,11 +532,19 @@ const Page = () => {
               
               <div className = 'flex-seperator'></div>
 
-
+              <button aria-label='refresh' className = 'crystal' onClick = {() => router.push('/Store?crystals')} >
+                {crystals} <img src="/crystal.png" alt="crystal" />
+              </button>
 
               <button aria-label='create-card' className={'fade-in-normal'} onClick = {() => {
                 const modalInfo = {
-                  message: 'Are you sure you would like to create a card?', 
+                  message: (
+                    <>
+                        <p style={{fontSize: '20px'}}>Are you sure you want to create a new card? </p>
+                        <p style={{fontSize: '14px', opacity: 0.9}}>Creating a new card will cost you</p>
+                        <div className = "crystal-cost">100 <img className = "crystal" src = "./crystal.png"></img></div>
+                    </>
+                  ), 
                   onConfirm: () => {
                     setLoading(true)
                     handleCreateCard()
@@ -510,11 +561,11 @@ const Page = () => {
 
             </div>
 
-            <div onClick={(e) => {handleCardsClick(e)}} ref={cardsContainer} className = {`cards_container customScroll ${cardModal == null ? '' : 'modal-active'}`}>
+            <div onClick={(e) => {handleCardsClick(e)}} ref={cardsContainer} className = {`cards_container customScroll ${cardModal == null ? '' : 'modal-active'} ${modalOpen ? 'modal-active' : ''}`}>
 
 
             {
-              (loading) ? (
+              (collection.length == 0 | loading) ? (
                 <SpinLoader/>
               ) : (
                 collection[0] == null ? (
@@ -551,7 +602,7 @@ const Page = () => {
 
                             <div id={card._id}  key = {card._id}  className = "card-locality-collection">
                         
-                            <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                            <Card animate = {showCardAnimations} attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
       
                             </div>
                             </>
@@ -574,7 +625,7 @@ const Page = () => {
 
                             <div id={card._id}  key = {card._id}  className = "card-locality-collection">
                         
-                            <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                            <Card animate = {showCardAnimations} attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
       
                             </div>
                             </>
@@ -587,7 +638,7 @@ const Page = () => {
 
                       <div id={card._id} key = {card._id}  className = "card-locality-collection">
                         
-                        <Card attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
+                        <Card animate = {showCardAnimations} attack={card.attack} defence={card.defence} index={index} effect={card.effect} name="Noctus" cost={card.cost} contribution={card.contribution} imageSrc={card.imageSrc} type={card.type} special={card.alteration} />
   
                       </div>
                       )

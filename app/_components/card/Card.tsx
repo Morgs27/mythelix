@@ -15,9 +15,10 @@ type cardProps = {
     attack: number,
     defence: number,
     index: number,
+    animate: boolean
 }   
 
-const Card = ({imageSrc, effect, cost, attack, defence, name, contribution, type,special, index}: cardProps) => {
+const Card = ({imageSrc, animate, effect, cost, attack, defence, name, contribution, type,special, index}: cardProps) => {
 
     const card = useRef<HTMLDivElement>(null);
 
@@ -50,7 +51,7 @@ const Card = ({imageSrc, effect, cost, attack, defence, name, contribution, type
         <div className="placeholder">
             <div className = "activity"></div>
         </div>
-        <div  className={`card ${special} ${type} ${imagesLoaded ? '': 'loading'}`} ref={card}>
+        <div  className={`card ${special} ${type} ${animate ? 'animateBorder' : ''} ${imagesLoaded ? '': 'loading'}`} ref={card}>
 
            
             <div className="border"></div>

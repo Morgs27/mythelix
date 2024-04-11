@@ -5,6 +5,7 @@ import Card from '@/app/_mongoDB/models/Card';
 import mainData from '@/app/_data/mainData.json';
 import {getServerSession} from 'next-auth/next';
 import {options} from '../../auth/[...nextauth]/options'
+import User from '@/app/_mongoDB/models/User';
 
 export async function POST(req: NextRequest, res: NextResponse) {
 
@@ -14,18 +15,24 @@ export async function POST(req: NextRequest, res: NextResponse) {
         return new Response(JSON.stringify({'message': 'Method Not Allowed'}), { status: 409 });
     }
 
-    // @ts-ignore
-    const session = await getServerSession({req, res, options});
-
-    if (!session) {
-        return new Response(JSON.stringify({'message': 'Unauthorized'}), {status: 409});
-    }
-
     try {
 
-        // Connect To MongoDB
-        await connectDB();
+         // @ts-ignore
+        const session = await getServerSession({req, res, options});
 
+        console.log(session);
+
+        if (!session) {
+            return new Response(JSON.stringify({'message': 'Unauthorized'}), {status: 409});
+        }
+
+        // Get user email from session
+        const sessionEmail = session.user.email;
+
+        await connectDB();
+          
+        const sessionUser = await User.findOne({email: sessionEmail});
+          
         // Get data from request body
         const data = await req.json();
 
@@ -33,8 +40,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         const card_details = await Card.findOne({_id: id});
 
+        console.log(card_details, session, username)
+
         if (card_details){
-            if (card_details.username != session.user.name || card_details.username != username){
+            if (card_details.username != sessionUser.username || card_details.username != username){
                 return new Response(JSON.stringify({'message': 'Username Error'}), { status: 409 } );
             }
         }
@@ -48,6 +57,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
         // Check if the card was found and deleted
         if (result.deletedCount === 1) {
             console.log('Card deleted successfully.');
+
+            // Update the users crystals
+            const cardUser = await User.findOne({username: card_details.username});
+
+            cardUser.crystals = parseInt(cardUser.crystals) + mainData.crystals_per_deletion;
+
+            await cardUser.save();
+            
             return new Response(JSON.stringify({'message': 'Sucess'}), { status: 200 } );
         } else {
             console.log('No card found with the given ID.');

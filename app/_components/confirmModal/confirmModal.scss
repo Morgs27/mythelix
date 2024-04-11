@@ -5,20 +5,52 @@ $background: rgb(40,40,40);
 
 .confirm-modal{
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     z-index: 100000;
-    background: $background;
-    border: 1px solid $secondary;
-    padding: 20px;
-    transition: 1s;
-    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &.hide{
         opacity: 0;
         filter: blur(5px);
         transform: translate(-50%, -50%) scale(0);
+
+        .modal-content{
+            transform: translateY(0px);
+            opacity: 0;
+        }
+    }
+
+    .modal-content{
+        width: 300px;
+        padding: 20px;
+        background: $background;
+        border-radius: 5px;
+        transform: translateY(-100px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+        transition: all 0.5s ease;
+        color: white;
+        line-height: 1.5;
+        gap: 2px;
+
+
+        p {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            opacity: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: white;
+
+        }
     }
 
     .modal-actions{

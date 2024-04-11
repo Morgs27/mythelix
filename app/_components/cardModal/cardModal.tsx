@@ -8,8 +8,6 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
     const cardModalRef = useRef<any>(null);
     const cardContainerRef = useRef<any>(null);
 
-    console.log(card);
-
     let cardType = '';
     let cardAlteration = '';
 
@@ -42,8 +40,15 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
             // @ts-ignore
             body: JSON.stringify({username: session.user.username, id: card.id})
         })
-        .then((res) => res.json())
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error("Network response was not ok");
+            }
+            res.json()
+        })
         .then((result) => {
+
+            console.log(result);
 
             setStatus({message: "Card Deleted", type: "sucess", active: true});
             
@@ -51,6 +56,8 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
 
             setCard(null);
 
+        }).catch((error) => {
+            setStatus({message: "Error Deleting Card", type: "error", active: true});
         }); // meassage: "sucess"
       
     }
@@ -91,6 +98,8 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
                 <div className = 'bottom'>
                     <button className='deleteCard' onClick={() => deleteCard()}>Sell Card</button>
                     <button className='deleteCard' onClick={() => deleteCard()}>Delete Card</button>
+                    <div className = 'flex-seperator' style={{flexGrow: 1}}></div>
+                    <button className='closeCard' onClick={() => setCard(null)}>Close</button>
                 </div>
             </div>
         </div>

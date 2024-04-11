@@ -40,8 +40,9 @@ $card-width: calc($card-height / 1.5);
     position: relative;
     width: $card-width;
     height: $card-height;
-    margin-top: 25px;
-    margin-bottom: 25px;
+    // margin-top: 25px;
+    // margin-bottom: 25px;
+    margin: 15px;
 
     .placeholder{
         position: absolute;
@@ -80,7 +81,7 @@ $card-width: calc($card-height / 1.5);
         font-size: 1.5em;
         color: rgb(88 199 250 / 0%);
         cursor: pointer;
-        font-family: cursive;
+        // font-family: cursive;
         
         transition-duration: 300ms;
         transition-property: transform, box-shadow, opacity;
@@ -272,7 +273,7 @@ $card-width: calc($card-height / 1.5);
         transform: rotate(45deg) scale(calc( $card-height / 350px));
         display:flex;
         justify-content: center;
-        font-family: Arial, Helvetica, sans-serif;
+        // font-family: Arial, Helvetica, sans-serif;
         color: white;
         align-items: center;
         
@@ -362,8 +363,12 @@ $card-width: calc($card-height / 1.5);
         z-index: 0;
         top: calc( -1 * var(--border-width));
         left: calc( -1 * var(--border-width));
-        animation: spin 4s linear infinite;
+        // animation: spin 4s linear infinite;
         opacity: 0.6;
+    }
+
+    .card.animateBorder::before{
+        animation: spin 4s linear infinite;
     }
     
     .card.null::before{

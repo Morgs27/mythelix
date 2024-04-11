@@ -49,20 +49,33 @@ $background: rgb(40,40,40);
             cursor: pointer;
             background: $secondary;
         }
+
+        &.crystal{
+            font-family: "Arial", sans-serif;
+            img{
+                max-height: 25px;
+                margin-left: 10px;
+            }
+        }
     }
+
+
 }
 
 .cards_container{
     display: flex;
     flex-wrap: wrap;
     list-style-type: none;
-    gap: 50px;
+    gap: 20px;
     row-gap: 0px;
     overflow-y: scroll;
     overflow-x: hidden;
     justify-content: center;
     height: calc(100% - 50px);
     position: relative;
+    row-gap: 20px;
+    width: calc(95% + 2px);
+    margin: 0 auto;
 
     &.modal-active{
 
