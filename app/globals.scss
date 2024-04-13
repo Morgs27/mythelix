@@ -182,8 +182,8 @@ $colours: (
 
 .pageContent{
   width: calc(100% - 20px);
-  height: calc(100vh - 130px);
-  height: calc((100 * var(--vh)) - 130px);
+  height: calc(100vh - 160px);
+  height: calc((100 * var(--vh)) - 160px);
   // border: 1px solid white;
   margin: 10px auto;
   padding-right: 5px;
