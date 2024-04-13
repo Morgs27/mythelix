@@ -187,9 +187,9 @@ $background: rgb(40,40,40);
 @media screen and (max-width: 800px){
     .cardModal{
        width: 90%;
-       height: calc(95% - 110px);
+       height: calc(90% - 130px);
        top: unset;
-       bottom: 5%;
+       bottom: 20px;
        transform: unset;
        left: 5%;
        border: none;
