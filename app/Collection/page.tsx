@@ -551,6 +551,7 @@ const Page = () => {
                     setModalOpen(false);
                   }
                 }
+                // @ts-ignore
                 setModalInfo(modalInfo); 
                 setModalOpen(true)
                 }}>
@@ -565,7 +566,7 @@ const Page = () => {
 
 
             {
-              (collection.length == 0 | loading) ? (
+              (collection.length == 0 || loading) ? (
                 <SpinLoader/>
               ) : (
                 collection[0] == null ? (

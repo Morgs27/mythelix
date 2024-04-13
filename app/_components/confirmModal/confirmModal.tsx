@@ -1,12 +1,12 @@
-import React, {userRef} from 'react';
+import React, {useRef} from 'react';
 
 import './confirmModal.scss';
 
 interface ConfirmModalProps {
     isOpen: boolean;
-    message: JSX.Element | string;
-    onConfirm: () => void;
-    setIsOpen: () => void;
+    message: any;
+    onConfirm: any;
+    setIsOpen: any;
 }
 
 const ConfirmModal = ({isOpen,message,setIsOpen,onConfirm} : ConfirmModalProps) => {

@@ -126,6 +126,20 @@ $background: rgb(40,40,40);
                     // place-self: flex-end;
                     border: 1px solid white;
                 }
+
+                img, svg{
+                    width: 20px;
+                    height: 20px;
+                    margin-left: 8px;
+                
+                }
+
+                svg{
+                    width: 18px;
+                    height: 18px;
+                }
+
+            
             }
         }
     }
@@ -150,6 +164,11 @@ $background: rgb(40,40,40);
             transition-delay: 0s;
         }
 
+    }
+
+    &.fade{
+        pointer-events: none;
+        opacity: 0.5;
     }
 
    

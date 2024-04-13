@@ -2,11 +2,17 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import './cardModal.scss'
+import ConfirmModal from '../confirmModal/confirmModal'
+import { BsShop } from "react-icons/bs";
+
 
 const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: any, session: any, setStatus : any}) => {
 
     const cardModalRef = useRef<any>(null);
     const cardContainerRef = useRef<any>(null);
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalInfo, setModalInfo] = useState({message: '', onConfirm: () => {}})
 
     let cardType = '';
     let cardAlteration = '';
@@ -70,6 +76,9 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
             cardContainerRef.current.innerHTML = "";
 
             clone.classList.add('ignore');
+
+
+            clone.querySelector('.card').classList.add('animateBorder')
         
             // @ts-ignore
             cardContainerRef.current.appendChild(clone);
@@ -77,8 +86,10 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
     }, [card])
 
     return (
+        <>
+        <ConfirmModal isOpen = {modalOpen} setIsOpen = {setModalOpen} onConfirm = {modalInfo.onConfirm} message = {modalInfo.message} />
 
-        <div ref={cardModalRef} className={`cardModal ${cardType} ${cardAlteration} ${card == null ? 'hide' : ''}`}>
+        <div ref={cardModalRef} className={`cardModal ${cardType} ${cardAlteration} ${modalOpen == true ? 'fade' : ''} ${card == null ? 'hide' : ''}`}>
             <div className='modalOverlay'></div>
             <div className='background'></div>
             <div ref={cardContainerRef} className = 'cardContainer'>
@@ -96,13 +107,31 @@ const CardCreator = ({card, setCard, session, setStatus} : {card: any, setCard: 
                     Lorem   ipsum   dolor   sit   amet,   consectetur   adipiscing   elit.   Sed   do   eiusmod   tempor   incididunt   ut   labore   et   dolore   magna   aliqua.   Ut   enim   ad   minim   veniam,   quis   nostrud   exercitation   ullamco   laboris   nisi   ut   aliquip   ex   ea   commodo   consequat.   Duis   aute   irure   dolor   in   reprehenderit   in   voluptate   velit   esse   cillum   dolore   eu   fugiat   nulla   pariatur.   Excepteur   sint   occaecat   cupidatat   non   proident,   sunt   in   culpa   qui   officia   deserunt   mollit   anim   id   est   laborum.
                 </div>
                 <div className = 'bottom'>
-                    <button className='deleteCard' onClick={() => deleteCard()}>Sell Card</button>
-                    <button className='deleteCard' onClick={() => deleteCard()}>Delete Card</button>
+                    <button className='deleteCard' onClick = {() => {
+                    const modalInfo = {
+                    message: (
+                        <>
+                            <p style={{fontSize: '20px'}}>Are you sure you want to disenchant this card?</p>
+                            <p style={{fontSize: '14px', opacity: 0.9}}>Disenchanting this card will give you</p>
+                            <div className = "crystal-cost">{cardAlteration == 'null' ? '20' : '50'}<img className = "crystal" src = "./crystal.png"></img></div>
+                        </>
+                    ), 
+                    onConfirm: () => {
+                        deleteCard();
+                        setModalOpen(false);
+                    }
+                    }
+                    // @ts-ignore
+                    setModalInfo(modalInfo); 
+                    setModalOpen(true)
+                    }}>Disenchant <img src = './crystal.png'></img></button>
+                    <button className='deleteCard' onClick={() => deleteCard()}>Sell <BsShop /> </button>
                     <div className = 'flex-seperator' style={{flexGrow: 1}}></div>
                     <button className='closeCard' onClick={() => setCard(null)}>Close</button>
                 </div>
             </div>
         </div>
+        </>
     )
 }
 

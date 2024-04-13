@@ -38,6 +38,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
         const {username, id} = data;
 
+        console.log("Got", username, id)
+
         const card_details = await Card.findOne({_id: id});
 
         console.log(card_details, session, username)
@@ -54,6 +56,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
         // Delete Card
         const result = await Card.deleteOne({ _id: id });
 
+        console.log('deleting')
+
         // Check if the card was found and deleted
         if (result.deletedCount === 1) {
             console.log('Card deleted successfully.');
@@ -61,7 +65,22 @@ export async function POST(req: NextRequest, res: NextResponse) {
             // Update the users crystals
             const cardUser = await User.findOne({username: card_details.username});
 
-            cardUser.crystals = parseInt(cardUser.crystals) + mainData.crystals_per_deletion;
+            console.log('here')
+
+            let crystalChange = 0;
+
+            console.log(card_details.alteration)
+
+            if (card_details.alteration == 'null'){
+                crystalChange = mainData.crystals.deletion_normal;
+            }
+            else {
+                crystalChange = mainData.crystals.deletion_alteration;
+            }
+
+            console.log(crystalChange)
+
+            cardUser.crystals = parseInt(cardUser.crystals) + crystalChange;
 
             await cardUser.save();
             

@@ -80,15 +80,16 @@ $background: rgb(40,40,40);
     &.modal-active{
 
         .collection-break{
-            opacity: 0.5;
-            filter: blur(3px) brightness(0.5);
+            opacity: 0.9;
+            filter: blur(3px) brightness(0.2);
             user-select: none;
             pointer-events: none;
         }
 
         .card-locality-collection{
-            opacity: 0.5;
-            filter: blur(3px) brightness(0.5);
+            // opacity: 0.5;
+            opacity: 0.9;
+            filter: blur(3px) brightness(0.2);
             user-select: none;
             pointer-events: none;
 

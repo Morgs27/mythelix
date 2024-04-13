@@ -2,7 +2,11 @@
   "version": {
     "image": "1.12"
   },
-  "crystals_per_deletion" : 10,
+  "crystals" : {
+    "deletion_alteration": 50,
+    "deletion_normal": 20,
+    "creation": 100
+  },
   "account_setup": {
     "starting_tokens": 10,
     "starting_crystals": 600

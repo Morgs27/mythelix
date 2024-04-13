@@ -17,7 +17,6 @@ export default function  Loading() {
             clearInterval(interval)
         }
     }, 100)
-    // }, 10000)
 
     return (
         <div className={`${ displayLoader ? 'display': 'hide'}`}>
