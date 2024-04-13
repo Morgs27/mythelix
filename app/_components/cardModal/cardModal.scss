@@ -188,8 +188,8 @@ $background: rgb(40,40,40);
     .cardModal{
        width: 90%;
        height: calc(90% - 130px);
-       top: unset;
-       bottom: 20px;
+       top: 0;
+    //    bottom: 20px;
        transform: unset;
        left: 5%;
        border: none;
