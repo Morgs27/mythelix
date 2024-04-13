@@ -187,7 +187,7 @@ $background: rgb(40,40,40);
 @media screen and (max-width: 800px){
     .cardModal{
        width: 90%;
-       height: calc(90% - 130px);
+       height: calc(90% - 110px);
        top: 100px;
     //    bottom: 20px;
        transform: unset;
@@ -195,11 +195,11 @@ $background: rgb(40,40,40);
        border: none;
 
        .cardContainer{
-        margin-top: 20px;
+        margin-top: 10px;
         margin-bottom: 10px;
            .card-locality-collection{
-                transform: scale(1);
-                margin: 20px;
+                transform: scale(0.9);
+                margin: 10px;
            }
        }
 
