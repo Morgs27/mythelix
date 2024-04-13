@@ -20,6 +20,7 @@ body {
   max-height: calc(100 * #{$vh});
   overflow: hidden;
   overflow-y: hidden;
+  position: relative;
 }
 
 a {
