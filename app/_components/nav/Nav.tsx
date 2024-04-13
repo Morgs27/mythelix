@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 
 const Nav = () => {
 
-    const {data:session} = useSession({});
+    const {data:session} = useSession();
 
     const [menu, setMenu] = useState(false);
 
