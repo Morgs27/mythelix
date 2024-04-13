@@ -237,6 +237,13 @@ $colours: (
   z-index: 10000;
 }
 
+@media screen and (max-width: 600px){
+  .loader{
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
 .spinnerContainer{
   width: 100%;
   height: 100%;
