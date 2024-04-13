@@ -161,6 +161,12 @@
 
 @media screen and (max-width: 1000px){
   .navbar{
+    padding: 0px;
+    .home__link{
+      img{
+        margin-left: 0;
+      }
+    }
     .menu__icon{
       display: block;
     }
