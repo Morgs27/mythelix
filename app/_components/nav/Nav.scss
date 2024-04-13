@@ -40,11 +40,11 @@
       }
 
       span:nth-child(2), span:nth-child(3) {
-        top: 18px;
+        top: 15px;
       }
 
       span:nth-child(4) {
-        top: 36px;
+        top: 30px;
       }
 
       &.active{
@@ -178,8 +178,10 @@
       a{
         width: auto;
         padding-inline: 20px;
-        font-size: 1.5rem;
         margin: 20px;
+        font-size: 24px;
+        font-family: 'Raleway', sans-serif;
+        transition: 0.5s;
       }
 
       &.show{

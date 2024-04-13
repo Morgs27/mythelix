@@ -11,6 +11,8 @@ export default function  Loading() {
     let interval = setInterval(() => {
         if ((global as any).background_rendered){
 
+            document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+
             addObservers();
 
             setDisplayLoader(false)

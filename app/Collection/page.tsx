@@ -532,7 +532,7 @@ const Page = () => {
               
               <div className = 'flex-seperator'></div>
 
-              <button aria-label='refresh' className = 'crystal' onClick = {() => router.push('/Store?crystals')} >
+              <button aria-label='refresh' className = 'crystal fade-in-normal' onClick = {() => router.push('/Store?crystals')} >
                 {crystals} <img src="/crystal.png" alt="crystal" />
               </button>
 
