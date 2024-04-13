@@ -183,6 +183,7 @@ $colours: (
 .pageContent{
   width: calc(100% - 20px);
   height: calc(100vh - 150px);
+  height: calc(100 * #{$vh} - 150px);
   // border: 1px solid white;
   margin: 10px auto;
   padding-right: 5px;
