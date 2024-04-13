@@ -22,6 +22,7 @@ import CardTemplateInterface from "@/app/_interfaces/CardTemplate"
 import Status from "../_components/status/status"
 import ConfirmModal from "../_components/confirmModal/confirmModal";
 import {useRouter} from 'next/navigation'
+import { VscNewFile } from "react-icons/vsc";
 
 const abortController = new AbortController();
 const signal = abortController.signal;
@@ -323,9 +324,26 @@ const Page = () => {
     if (cardsContainer.current){
       let containerWidth = cardsContainer.current.offsetWidth;
       let cardWidth = 230;
+      let verticalGap = 25;
+      if (document.body.offsetWidth < 600){
+        cardWidth = 200;
+        verticalGap = 15;
+      }
+      if (document.body.offsetWidth < 450){
+        cardWidth = 180;
+        verticalGap = 0;
+      }
+      if (document.body.offsetWidth < 407){
+        cardWidth = 170;
+      }
+      if (document.body.offsetWidth < 385){
+        cardWidth = 160;
+      }
       let gap = (containerWidth % cardWidth) / (containerWidth / cardWidth);
-      cardGap = gap;
       cardsContainer.current.style.gap = `${gap}px`;
+      if (gap > 25 || cardWidth < 600){
+        cardsContainer.current.style.rowGap = `${verticalGap}px`;
+      }
     }
 
     fadeElements();
@@ -556,6 +574,7 @@ const Page = () => {
                 setModalOpen(true)
                 }}>
                 Create Card
+                <VscNewFile />
               </button>
 
               {/* <button className={'fade-in-normal'} onClick = {handleGetCollection}>Refresh</button> */}

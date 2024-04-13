@@ -25,9 +25,7 @@ $background: rgb(40,40,40);
     align-items: stretch;
     border-left: 1px solid $secondary;
     border-right: 1px solid $secondary;
-
-    max-height: 50px;
-    overflow-x: scroll;
+    
 
     .flex-seperator{
         flex-grow: 1;
@@ -74,7 +72,7 @@ $background: rgb(40,40,40);
     overflow-y: scroll;
     overflow-x: hidden;
     justify-content: center;
-    height: calc(100% - 50px);
+    height: calc(100% - 80px);
     position: relative;
     row-gap: 20px;
     width: calc(95% + 2px);
@@ -295,4 +293,88 @@ $background: rgb(40,40,40);
     // }
 
 
+}
+
+@media screen and (min-width: 1000px){
+    .cardOptions{
+        [aria-label="create-card"]{
+            svg{
+                display: none;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1000px){
+    .cardOptions{
+        gap: 5px;
+        .filterClear{
+            padding-inline: 6px !important;
+
+            svg{
+                width: 20px;
+                height: 20px;
+            }
+        }
+        button{
+            min-width: 0px !important;
+            font-size: 0px !important;
+            span{
+                gap: 0px !important;
+
+                svg{
+                    width: 15px;
+                    height: 15px;
+                }
+            }
+        }
+        .crystal{
+            padding-inline: 8px !important;
+            font-size: 14px !important;
+        }
+        [aria-label="create-card"]{
+            padding-inline: 13px !important;
+            svg{
+                width: 20px;
+                height: 20px;
+                color: white;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px){
+    .cardOptions{
+        .searchFilter{
+            display: none;
+        }
+    }
+
+    .card-locality-collection{
+        width: unset !important;
+        transform: scale(0.9);
+        margin: 0px !important;
+    }
+}
+
+@media screen and (max-width: 450px){
+    .card-locality-collection{
+        transform: scale(0.8);
+        margin: -15px -10px !important;
+    }
+}
+
+@media screen and (max-width: 407px){
+    .card-locality-collection{
+        transform: scale(0.7);
+        margin: -30px -15px  !important;
+
+    }
+}
+
+@media screen and (max-width: 385px){
+    .card-locality-collection{
+        transform: scale(0.6);
+        margin: -40px -20px !important;
+    }
 }

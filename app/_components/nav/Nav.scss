@@ -11,6 +11,7 @@
     font-family: 'Raleway', sans-serif;
 
     .menu__icon{
+      display: none;
 
       margin-right: 30px;
       width: 40px;
@@ -160,6 +161,9 @@
 
 @media screen and (max-width: 1000px){
   .navbar{
+    .menu__icon{
+      display: block;
+    }
     .navbar__links{
       display: none;
       position: absolute;
