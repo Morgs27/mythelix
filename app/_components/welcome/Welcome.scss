@@ -1,0 +1,42 @@
+$secondary: #54577c;
+$correct: #00a300;
+$error: #ff3434;
+$background: rgb(40, 40, 40);
+
+.modal-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000000;
+  //   pointer-events: none;
+  //   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  max-width: 600px;
+  height: auto;
+  background-color: $background;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  animation: fade-in-2 0.01s ease forwards;
+  z-index: 1000000;
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+}

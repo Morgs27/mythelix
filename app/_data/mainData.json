@@ -2,7 +2,7 @@
   "version": {
     "image": "1.12"
   },
-  "crystals" : {
+  "crystals": {
     "deletion_alteration": 50,
     "deletion_normal": 20,
     "creation": 100
@@ -14,9 +14,18 @@
   "card_generation": {
     "alterChance": 0.3,
     "statlines": [
-        {"probability": 1, "stats": {"cost": 2, "attack": 2, "defence": 2, "contribution": 2}},
-        {"probability": 1, "stats": {"cost": 3, "attack": 3, "defence": 3, "contribution": 3}},
-        {"probability": 1, "stats": {"cost": 4, "attack": 4, "defence": 4, "contribution": 4}}
+      {
+        "probability": 1,
+        "stats": { "cost": 2, "attack": 2, "defence": 2, "contribution": 2 }
+      },
+      {
+        "probability": 1,
+        "stats": { "cost": 3, "attack": 3, "defence": 3, "contribution": 3 }
+      },
+      {
+        "probability": 1,
+        "stats": { "cost": 4, "attack": 4, "defence": 4, "contribution": 4 }
+      }
     ],
     "promptWeights": [
       {

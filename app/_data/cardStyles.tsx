@@ -626,6 +626,6 @@ background-image: linear-gradient(var(--rotate), rgba(40,40,40), rgba(255,255,25
 }
 
 
-`
+`;
 
-export default styles
+export default styles;
