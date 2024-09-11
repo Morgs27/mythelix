@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-aria-components";
-import "./Welcome.scss";
+import "./WelcomeModal.scss";
 
 interface WelcomeProps {
   username: string;
@@ -8,15 +8,22 @@ interface WelcomeProps {
   setWelcome: (welcome: boolean) => void;
 }
 
-const Welcome: React.FC<WelcomeProps> = ({
+const WelcomeModal: React.FC<WelcomeProps> = ({
   username,
   setIsOpen,
   setWelcome,
 }) => {
+
+  const handleStartTour = () => {
+    setIsOpen(true);
+    setWelcome(false);
+    localStorage.setItem("tutorialStarted", "true");
+  }
+
   return (
     <div className="modal-background">
       <div className="welcome-modal">
-        Welcome //{" "}
+        Welcome {username}
         <div className="buttons">
           <button
             onClick={() => {
@@ -26,7 +33,7 @@ const Welcome: React.FC<WelcomeProps> = ({
           >
             Start Tutorial
           </button>
-          <button onClick={() => setWelcome(false)}>Close</button>
+          <button onClick={() => handleStartTour()}>Close</button>
         </div>
       </div>
     </div>
@@ -34,4 +41,4 @@ const Welcome: React.FC<WelcomeProps> = ({
   );
 };
 
-export default Welcome;
+export default WelcomeModal;

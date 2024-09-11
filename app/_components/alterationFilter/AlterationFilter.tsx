@@ -48,7 +48,6 @@ const AlterationFilter = ({
                   }}
                 ></div>
               ) : alterationFilter == "Pop Art" ? (
-                // @ts-ignore
                 <div
                   style={{
                     background: `linear-gradient(45deg, ${cardStyles[0]["Pop.Art"]?.["gradient"][0]}, ${cardStyles[0]["Pop.Art"]?.["gradient"][1]} )
@@ -59,7 +58,6 @@ const AlterationFilter = ({
                   }}
                 ></div>
               ) : (
-                // @ts-ignore
                 <div
                   style={{
                     background: `linear-gradient(45deg, ${cardStyles[0][alterationFilter]["gradient"][0]}, ${cardStyles[0][alterationFilter]["gradient"][1]} )

@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
-import { SessionProvider } from "next-auth/react"
+import { SessionProvider } from "next-auth/react";
 
 // CLient side auth
-const AuthProvider = ({ children }: {children: any}) => {
-    
-    return (
-        <SessionProvider>{children}</SessionProvider>
-    )
-}
+const AuthProvider = ({ children }: { children: any }) => {
+  return <SessionProvider>{children}</SessionProvider>;
+};
 
-export default AuthProvider
+export default AuthProvider;

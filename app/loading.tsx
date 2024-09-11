@@ -1,28 +1,31 @@
-'use client' 
+"use client";
 
 import { useState } from "react";
 import Loader from "./_components/loader/Loader";
-import addObservers from "./_components/addObservers";
+import useAddObservers from "./_hooks/useAddObservers";
 
-export default function  Loading() {
+export default function Loading() {
+  const [displayLoader, setDisplayLoader] = useState(true);
 
-    const [displayLoader, setDisplayLoader] = useState(true)
+  const addObservers = useAddObservers();
 
-    let interval = setInterval(() => {
-        if ((global as any).background_rendered){
+  let interval = setInterval(() => {
+    if ((global as any).background_rendered) {
+      document.documentElement.style.setProperty(
+        "--vh",
+        `${window.innerHeight * 0.01}px`
+      );
 
-            document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+      addObservers();
 
-            addObservers();
+      setDisplayLoader(false);
+      clearInterval(interval);
+    }
+  }, 100);
 
-            setDisplayLoader(false)
-            clearInterval(interval)
-        }
-    }, 100)
-
-    return (
-        <div className={`${ displayLoader ? 'display': 'hide'}`}>
-            <Loader/>
-        </div>
-    )
+  return (
+    <div className={`${displayLoader ? "display" : "hide"}`}>
+      <Loader />
+    </div>
+  );
 }
