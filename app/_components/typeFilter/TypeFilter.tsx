@@ -22,7 +22,7 @@ const TypeFilter = ({
 }: TypeFilterProps) => {
   return (
     <Select
-      className={"fade-in-normal react-aria-Select"}
+      className={"fade-in-normal react-aria-Select type-filter"}
       selectedKey={typeFilter}
       onSelectionChange={(selected) => {
         return setTypeFilter(String(selected));

@@ -1,8 +1,139 @@
-.tutorial {
-  position: absolute;
+$secondary : #54577C;
+$correct: #00A300;
+$error: #ff3434;
+$background: rgb(40,40,40);
+
+.tutorial-overlay {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 200px;
-  height: 200px;
-  background-color: red;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.tutorial {
+  position: absolute;
+  width: 260px;
+  background-color: $background;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  z-index: 1001;
+  transition: all 0.3s ease;
+  font-family: 'Raleway', sans-serif;
+
+  .tutorial-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      margin-bottom: 10px;
+      font-family: "Roboto", sans-serif;
+      font-weight: 100;
+      font-style: normal;
+      font-size: 15px;
+      // border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 5px;
+      // color: rgba(255, 255, 255, 0.9);
+    }
+
+    .step-counter {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 8px;
+      align-self: flex-start;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+      button {
+        padding: 8px 16px;
+        background-color: $secondary;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+
+        &.previous-button {
+          background-color: transparent;
+          opacity: 0.6;
+          position: relative;
+          padding-inline: 0px;
+          transition: all 0.3s ease;
+
+          &::before {
+            content: '<<';
+            font-size: 8px;
+            color: #fff;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY( -50%);
+            transition: all 0.3s ease;
+            opacity: 0;
+          }
+
+          &:hover {
+            background-color: transparent;
+            opacity: 0.4;
+            padding-left: 15px;
+            &::before {
+              left: 2px;
+              opacity: 0.4;
+
+            }
+          }
+        }
+
+        &:hover {
+          background-color: darken($secondary, 10%);
+        }
+
+        &:disabled {
+          opacity: 0;
+          cursor: not-allowed;
+          pointer-events: none;
+        }
+
+        &:first-child {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .tutorial-arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 15px solid transparent;
+
+    &.top {
+      border-top-color: $background;
+      bottom: -20px;
+    }
+
+    &.right {
+      border-right-color: $background;
+      left: -20px;
+    }
+
+    &.bottom {
+      border-bottom-color: $background;
+      top: -20px;
+    }
+
+    &.left {
+      border-left-color: $background;
+      right: -20px;
+    }
+
+  }
 }

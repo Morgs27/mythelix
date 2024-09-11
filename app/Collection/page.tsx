@@ -17,7 +17,7 @@ import { useFilters } from "../_hooks/useFilters";
 import { useCardCreation } from "../_hooks/useCardCreation";
 import { useCollection } from "../_hooks/useCollection";
 import useCardGaps from "../_hooks/useCardGaps";
-import { steps, useTutorial } from "../_hooks/useTutorial";
+import { useTutorial } from "../_hooks/useTutorial";
 import TypeFilter from "../_components/typeFilter/TypeFilter";
 import AlterationFilter from "../_components/alterationFilter/AlterationFilter";
 import SearchFilter from "../_components/searchFilter/SearchFilter";
@@ -25,6 +25,7 @@ import OrderSelector from "../_components/orderSelector/OrderSelector";
 import CardList from "../_components/cardList/CardList";
 import useFadeElements from "../_hooks/useFadeElements";
 import useCardStyles from "../_hooks/useCardStyles";
+import Tutorial from "../_components/tutorial/Tutorial";
 
 const abortController = new AbortController();
 const signal = abortController.signal;
@@ -106,13 +107,11 @@ const Page = () => {
 
   const updateGaps = useCardGaps({ cardsContainer });
 
-  const { showTutorial } = useTutorial({ session });
+  const { showTutorial, setShowTutorial, shouldShowTutorial, shouldShowWelcome } = useTutorial({ session });
 
   const fadeElements = useFadeElements();
 
   const generateStyles = useCardStyles();
-
-  const { isOpen, setIsOpen } = useTour();
 
   useEffect(() => {
     setLoading(true);
@@ -153,35 +152,24 @@ const Page = () => {
   }, [collection]);
 
   useEffect(() => {
-    // if (showTutorial()) {
-    //   setWelcome(true);
-    // }
-    // const tutorialStarted = localStorage.getItem("tutorialStarted");
-    // if (tutorialStarted === "true") {
-
-    //   setIsOpen(true);
-    //   localStorage.removeItem("tutorialStarted");
-    // }
-    console.warn('Initially Is Open: ', isOpen)
-    setIsOpen(true);
-  }, []);
-
-  // const closeTour = () => {
-  //   setIsOpen(false);
-  //   localStorage.setItem("tutorialCompleted", "true");
-  // };
-
-  useEffect(() => {
-    console.warn('Is Open: ', isOpen)
-  }, [isOpen])
+    if (shouldShowWelcome) {
+      setWelcome(true);
+    }
+    if(shouldShowTutorial) {
+      setShowTutorial(true);
+    }
+  }, [shouldShowTutorial, collection]);
 
   return (
-    <TourProvider steps={steps}>
       <div className="collection__page">
+        {
+          showTutorial && <Tutorial setShowTutorial={setShowTutorial} />
+        }
+
         {welcome && (
           <WelcomeModal
             username={session?.user?.username}
-            setIsOpen={setIsOpen}
+            setIsOpen={setShowTutorial}
             setWelcome={setWelcome}
           />
         )}
@@ -327,7 +315,6 @@ const Page = () => {
           </>
         )}
       </div>
-    </TourProvider>
   );
 };
 
