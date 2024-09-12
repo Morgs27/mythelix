@@ -24,8 +24,6 @@ export const useCollection = ({ setLoading, session }: UseCollectionProps) => {
 
     const data = await response.json();
 
-    console.log("Updating crystals", data);
-
     setCrystals(data.returnUser.crystals);
   };
 

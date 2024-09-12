@@ -35,8 +35,6 @@ const parseCardStyles = (cardStyles: any) => {
 
   let alterationStyles = cardStyles[0];
 
-  console.log(alterationStyles);
-
   let typeStyles = cardStyles[1];
 
   for (const cardType in typeStyles) {

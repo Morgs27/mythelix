@@ -8,8 +8,6 @@ export async function GET(
 ) {
   await connectDB();
 
-  console.log("get collection");
-
   const { username } = params.params;
 
   let cards = await Card.find({ username: username });
@@ -23,7 +21,7 @@ export async function GET(
     return new_card;
   });
 
-  let reversedData = cards.toReversed();
+  let reversedData = cards.reverse();
 
   if (reversedData.length === 0) {
     return new Response(JSON.stringify({ data: [null] }), { status: 200 });

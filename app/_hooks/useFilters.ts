@@ -50,8 +50,6 @@ export const useFilters = ({
     setCollection((collection: any) => {
       return collection.slice().sort((a: any, b: any) => {
         if (sort == "") {
-          console.log("sorting nothing", a.createdAt, b.createdAt);
-
           const aDate: any = new Date(a.createdAt);
           const bDate: any = new Date(b.createdAt);
 

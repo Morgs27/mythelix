@@ -17,8 +17,6 @@ const useAddObservers = () => {
     Array.from(fadeInElements).forEach((element) => {
       observer.observe(element);
     });
-
-    console.log(`Observing ${fadeInElements.length} elements`);
   };
 
   return addObservers;

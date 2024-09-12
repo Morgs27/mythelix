@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./cardModal.scss";
 import ConfirmModal from "../confirmModal/confirmModal";
 import { BsShop } from "react-icons/bs";
-import cardDescriptions from "@/app/_data/descriptions.json"
+import cardDescriptions from "@/app/_data/descriptions.json";
 
 const CardCreator = ({
   card,
@@ -62,8 +62,6 @@ const CardCreator = ({
         res.json();
       })
       .then((result) => {
-        console.log(result);
-
         setStatus({ message: "Card Deleted", type: "sucess", active: true });
 
         card.style.display = "none";
@@ -76,7 +74,7 @@ const CardCreator = ({
           type: "error",
           active: true,
         });
-      }); 
+      });
   };
 
   useEffect(() => {
@@ -124,7 +122,11 @@ const CardCreator = ({
           </div>
           <div className="desctiption">
             {/* @ts-ignore */}
-            {cardDescriptions[cardAlteration] ? cardDescriptions[cardAlteration] : cardDescriptions[cardType]}
+            {cardDescriptions[cardAlteration]
+              ? // @ts-ignore
+                cardDescriptions[cardAlteration]
+              : // @ts-ignore
+                cardDescriptions[cardType]}
           </div>
           <div className="bottom">
             <button
