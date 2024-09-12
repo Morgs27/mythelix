@@ -1,6 +1,15 @@
 # Mythelix
+###### A Digital Bestiary
 
-Mythelix is a digital card game where every card is a unique AI-generated masterpiece. Dive into a world of AI-crafted artistry and strategy, where you can collect, create, and soon battle with your digital bestiary.
+Mythelix is intendet to be a card game where every card is unique. This can be done by using a image generation model with unique prompts to create the images. 
+![image](https://github.com/user-attachments/assets/a247d571-3fe3-47af-82d8-50defcde85fa)
+
+This repo contains the public facing website for the game allowing users to view their collection and create cards.
+
+Here are the other repositories linked to this project:
+ - [Admin Client](https://github.com/Morgs27/mythelix-admin-client)
+ - [Image Generator](https://github.com/Morgs27/mythelix-image-generator)
+ - [Admin Server](https://github.com/Morgs27/mythelix-admin-server)
 
 ## Features
 
@@ -33,3 +42,8 @@ Mythelix is a digital card game where every card is a unique AI-generated master
 - `/app/_components`: Reusable React components
 - `/app/_hooks`: Custom React hooks
 - `/app/_mongoDB`: MongoDB models and utilities
+
+## Next Steps
+- Add a marketplace for users to sell cards
+- Improve the home page to give more context about the app
+- Add a deck creation feature
