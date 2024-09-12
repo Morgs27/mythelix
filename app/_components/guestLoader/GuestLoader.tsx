@@ -17,9 +17,8 @@ const GuestLoader = () => {
   useEffect(() => {
     const createGuestAccount = async () => {
       try {
-        // Create guest account
         setStatus("Creating guest account...");
-        await delay(2000); // 2 second delay
+        await delay(2000);
         const accountResponse = await fetch("/api/auth/guest", {
           method: "POST",
         });
@@ -28,9 +27,8 @@ const GuestLoader = () => {
         }
         const accountData = await accountResponse.json();
 
-        // Sign in with the new guest account
         setStatus("Signing in...");
-        await delay(1500); // 1.5 second delay
+        await delay(1500);
         const signInResult = await signIn("credentials", {
           username: accountData.username,
           password: accountData.password,
@@ -41,9 +39,8 @@ const GuestLoader = () => {
           throw new Error("Failed to sign in with guest account");
         }
 
-        // Create random cards for the guest user
         setStatus("Creating your starter cards...");
-        await delay(2000); // 2 second delay
+        await delay(2000);
         const createRandomCardsResponse = await fetch(
           "/api/cards/createRandom",
           {
@@ -53,7 +50,7 @@ const GuestLoader = () => {
             },
             body: JSON.stringify({
               username: accountData.username,
-              numberOfCards: 5,
+              numberOfCards: 10,
             }),
           }
         );
@@ -61,17 +58,16 @@ const GuestLoader = () => {
         if (!createRandomCardsResponse.ok) {
           console.error("Failed to create random cards for guest user");
           setStatus("Failed to create starter cards, but continuing...");
-          await delay(2000); // 2 second delay
+          await delay(2000);
         }
 
-        // Redirect to the collection page
         setStatus("Redirecting to your collection...");
-        await delay(2000); // 2 second delay
+        await delay(2000);
         router.push("/Collection");
       } catch (error) {
         console.error("Error in guest account creation process:", error);
         setStatus("An error occurred. Redirecting to home...");
-        await delay(2000); // 2 second delay
+        await delay(2000);
         router.push("/");
       } finally {
         setLoading(false);
