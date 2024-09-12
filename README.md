@@ -1,5 +1,5 @@
 # Mythelix
-###### Live at [mythelix.com](https://mythelix.com)
+###### Live at [mythelix.com](https://mythelix.com/Guest)
 
 Mythelix is intendet to be a card game where every card is unique. This can be done by using a image generation model with unique prompts to create the images. 
 ![image](https://github.com/user-attachments/assets/a247d571-3fe3-47af-82d8-50defcde85fa)
