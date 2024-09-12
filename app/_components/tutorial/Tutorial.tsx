@@ -26,7 +26,7 @@ const steps: Step[] = [
   },
   {
     selector: ".crystal",
-    content: "This shows your current crystal balance.",
+    content: "Here is where your crystal balance is displayed.",
     position: 'left',
   },
   {
@@ -136,10 +136,14 @@ const Tutorial = ({ setShowTutorial }: TutorialProps) => {
       setStep(step + 1);
     } else {
       // End tutorial
-      setShowTutorial(false);
-      localStorage.setItem("tutorialCompleted", "true");
+      endTutorial();
     }
   };
+
+  const endTutorial = () => {
+    setShowTutorial(false);
+    localStorage.setItem("tutorialCompleted", "true");
+  }
 
   return (
     <div className="tutorial-overlay">
@@ -153,7 +157,7 @@ const Tutorial = ({ setShowTutorial }: TutorialProps) => {
           <p>{steps[step].content}</p>
           <div className="button-container">
             {
-              step === 0 ? <button className="previous-button" onClick={() => setShowTutorial(false)}>Skip Tutorial</button> :  <button className="previous-button" onClick={handlePrevious} >Previous</button> 
+              step === 0 ? <button className="previous-button" onClick={endTutorial}>Skip Tutorial</button> :  <button className="previous-button" onClick={handlePrevious} >Previous</button> 
             }
             <button className="next-button" onClick={handleNext}>
               {step < steps.length - 1 ? "Next" : "Finish"}

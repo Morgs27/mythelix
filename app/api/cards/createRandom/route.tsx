@@ -3,6 +3,7 @@ import { connectDB } from "@/app/_mongoDB/connect";
 import UnclaimedImage from "@/app/_mongoDB/models/UnclaimedImage";
 import Card from "@/app/_mongoDB/models/Card";
 import mainData from "@/app/_data/mainData.json";
+import cardEffects from "@/app/_data/cardEffects.json";
 
 export async function POST(req: NextRequest) {
   try {
@@ -51,16 +52,15 @@ async function generateRandomCard(username: string) {
 
   const randomType = getWeightedRandom(promptData, 1)[0];
   const randomStatline = getWeightedRandom(statlines, 1)[0];
-  console.log(randomStatline);
 
-  let alteration = "null";
+  let alteration = "Base";
   if (Math.random() < alterationChance) {
     alteration = getWeightedRandom(randomType.alters, 1)[0].value;
   }
 
   const imageOptions = await UnclaimedImage.find({
     type: randomType.prompt,
-    alterations: alteration,
+    alterations: alteration === "Base" ? "null" : alteration,
     promptVersion: { $in: ["1.12", "1.11"] },
   });
 
@@ -74,13 +74,30 @@ async function generateRandomCard(username: string) {
     );
   }
 
-  const cardEffect = "This is a random effect for " + randomType.prompt;
+  // Get effects for the card
+  const creatureType = randomType.prompt;
+  // @ts-ignore
+  let availableEffects = cardEffects[creatureType]?.[alteration]?.effects || [];
+
+  // If no effects found for the alteration, use Base effects
+  if (availableEffects.length === 0 && alteration !== "Base") {
+    // @ts-ignore
+    availableEffects = cardEffects[creatureType]?.Base?.effects || [];
+  }
+
+  // Ensure we have at least one effect
+  if (availableEffects.length === 0) {
+    availableEffects = ["No effect"];
+  }
+
+  // Randomly select one effect
+  const cardEffect = availableEffects[Math.floor(Math.random() * availableEffects.length)];
 
   return {
     username,
     imageSrc,
     type: randomType.prompt,
-    alteration,
+    alteration: alteration === "Base" ? "null" : alteration,
     cost: randomStatline.stats.cost,
     defence: randomStatline.stats.defence,
     attack: randomStatline.stats.attack,

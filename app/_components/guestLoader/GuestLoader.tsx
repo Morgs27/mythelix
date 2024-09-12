@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Loader from "../loader/Loader";
-import styles from "./GuestLoader.scss";
+import "./GuestLoader.scss";
 
 const GuestLoader = () => {
   const router = useRouter();
@@ -53,7 +53,7 @@ const GuestLoader = () => {
             },
             body: JSON.stringify({
               username: accountData.username,
-              numberOfCards: 3,
+              numberOfCards: 5,
             }),
           }
         );
@@ -82,7 +82,7 @@ const GuestLoader = () => {
   }, [router]);
 
   return (
-    <div className={styles.guestLoader}>
+    <div className="guestLoader">
       <Loader customText={status} />
     </div>
   );

@@ -3,6 +3,7 @@ import UnclaimedImage from '@/app/_mongoDB/models/UnclaimedImage';
 import Card from '@/app/_mongoDB/models/Card';
 import mainData from '@/app/_data/mainData.json';
 import { connectDB } from '@/app/_mongoDB/connect';
+import cardEffects from '@/app/_data/cardEffects.json'
 
 export async function GET(request: NextRequest) { 
 
@@ -80,15 +81,36 @@ export async function GET(request: NextRequest) {
     
             // Generate Effects
             await Promise.all(randomTypes.map(async (type: any) => {
-    
-                let cardEffects = ["This is effect 1", "This is effect 2", "This is effect 3"];
-    
-                if (cardEffects.length < 3){
-                    return new Response(JSON.stringify({'message': 'Issue Generating Image Options'}), { status: 409 } );
+                console.log(type)
+                const creatureType = type.prompt;
+                const alteration = type.alterations === "null" ? "Base" : type.alterations;
+
+                // @ts-ignore
+                let availableEffects = cardEffects[creatureType]?.[alteration]?.effects || [];
+
+                console.log(availableEffects)
+
+                if (availableEffects.length === 0 && alteration !== "Base") {
+                    // @ts-ignore
+                    availableEffects = cardEffects[creatureType]?.Base?.effects || [];
                 }
-    
-                type.cardEffects = cardEffects;
-    
+
+                while (availableEffects.length < 3) {
+                    availableEffects.push("No effect");
+                }
+
+                const selectedEffects = [];
+                for (let i = 0; i < 3; i++) {
+                    if (availableEffects.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * availableEffects.length);
+                        selectedEffects.push(availableEffects[randomIndex]);
+                        availableEffects.splice(randomIndex, 1);
+                    } else {
+                        selectedEffects.push("No effect");
+                    }
+                }
+
+                type.cardEffects = selectedEffects;
             }));
 
         }
@@ -110,16 +132,12 @@ export async function GET(request: NextRequest) {
 
 const getWeightedRandom = (input: any, number: number) => {
     
-    // get 3 weighted random statlines based on their probability
     const array = [];
-    let items = [...input]; // create a copy of the input array
-
+    let items = [...input]; 
     for (let i = 0; i < number; i++){
 
-        // Calculate total weight
         const totalWeight = items.reduce((total: number, item: any) => total + parseFloat(item.probability), 0);
 
-        // Get a random value between 0 and total weight
         const randomValue = Math.random() * totalWeight;
 
         let weightSum = 0;
@@ -130,7 +148,7 @@ const getWeightedRandom = (input: any, number: number) => {
 
             if (randomValue <= weightSum) {
                 array.push(item);
-                items.splice(j, 1); // remove the selected item from the array
+                items.splice(j, 1); 
                 break;
             }
         }

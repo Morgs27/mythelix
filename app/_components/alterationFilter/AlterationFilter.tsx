@@ -1,4 +1,4 @@
-import cardStyles from "@/app/_data/cardStyles";
+import cardStyles from "@/app/_data/cardStyles.json";
 import {
   Select,
   Button,
@@ -60,6 +60,7 @@ const AlterationFilter = ({
               ) : (
                 <div
                   style={{
+                    // @ts-ignore
                     background: `linear-gradient(45deg, ${cardStyles[0][alterationFilter]["gradient"][0]}, ${cardStyles[0][alterationFilter]["gradient"][1]} )
                        `,
                     width: "15px",
@@ -108,6 +109,7 @@ const AlterationFilter = ({
               ) : (
                 <div
                   style={{
+                    // @ts-ignore
                     background: `linear-gradient(45deg, ${cardStyles[0][alteration]?.["gradient"][0]}, ${cardStyles[0][alteration]?.["gradient"][1]})`,
                     width: "15px",
                     height: "15px",

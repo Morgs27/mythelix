@@ -1,80 +1,79 @@
-$secondary : #54577C;
-$correct: #00A300;
+$secondary: #54577c;
+$correct: #00a300;
 $error: #ff3434;
-$background: rgb(40,40,40);
+$background: rgb(40, 40, 40);
 
-.status{
-    min-width: 200px;
-    padding: 10px;
-    background: blue;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    z-index: 10000;
-    background: $background;
-    border: 1px solid $secondary;
+.status-message {
+  min-width: 200px;
+  padding: 10px;
+  background: blue;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  z-index: 10000;
+  background: $background;
+  border: 1px solid $secondary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 5px;
+  bottom: 100px;
+  box-shadow: 0 0 200px 100px black;
+  transition: 1s;
+
+  // &:before{
+  //     content: '';
+  //     position: absolute;
+  //     bottom: -30px;
+  //     width: 300px;
+  //     height: 200px;
+  //     background: linear-gradient(180deg, rgba(0,0,0,0.5), transparent);
+  //     z-index: -1;
+  // }
+
+  .mark {
+    border-radius: 50%;
+    // background: red;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    border-radius: 5px;
-    bottom: 100px;
-    box-shadow: 0 0 200px 100px black;
-    transition: 1s;
+    margin-left: 10px;
+  }
 
-    // &:before{
-    //     content: '';
-    //     position: absolute;
-    //     bottom: -30px;
-    //     width: 300px;
-    //     height: 200px;
-    //     background: linear-gradient(180deg, rgba(0,0,0,0.5), transparent);
-    //     z-index: -1;
-    // }
+  &.hide {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-50%) translateY(calc(100% + 30px));
+    box-shadow: 0 0 10px 10px black;
+  }
 
-    .mark{
-        border-radius: 50%;
-        // background: red;
-        width: 20px;
-        height: 20px;
-        padding: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 10px;
+  &.error {
+    border: 1px solid red;
+    background: 1px solid rgba(255, 0, 0, 0.5);
+
+    .mark {
+      background: red;
     }
+  }
 
+  &.warning {
+    border: 1px solid orange;
 
-    &.hide{
-        opacity: 0;
-        filter: blur(5px);
-        transform: translateX(-50%) translateY(calc(100% + 30px));
-        box-shadow: 0 0 10px 10px black;
+    .mark {
+      background: orange;
     }
+  }
 
-    &.error{
-        border: 1px solid red;
-        background: 1px solid rgba(255, 0, 0, 0.5);
+  &.sucess {
+    border: 1px solid green;
 
-        .mark{
-            background: red;
-        }
+    .mark {
+      background: green;
     }
-
-    &.warning{
-        border: 1px solid orange;
-
-        .mark{
-            background: orange;
-        }
-    }
-
-    &.sucess{
-        border: 1px solid green;
-
-        .mark{
-            background: green;
-        }
-    }
+  }
 }

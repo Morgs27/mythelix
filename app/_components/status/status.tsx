@@ -13,7 +13,7 @@ const Status = ({message, type, active, setState} : {message: string, type: stri
     }, [active])
     
     return (
-        <div className = {`status ${active == '' ? 'hide' : ''} ${type == "error" ? 'error': type == "warning" ? 'warning': type == "sucess" ? 'sucess': ''}`} >
+        <div className = {`status-message ${active == '' ? 'hide' : ''} ${type == "error" ? 'error': type == "warning" ? 'warning': type == "sucess" ? 'sucess': ''}`} >
 
             {message}
             <div className = 'mark'>

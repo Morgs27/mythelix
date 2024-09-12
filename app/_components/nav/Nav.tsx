@@ -6,27 +6,18 @@ import { options } from "@/app/api/auth/[...nextauth]/options";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import useAddObservers from "@/app/_hooks/useAddObservers";
 
 const Nav = () => {
   const { data: session } = useSession();
 
   const [menu, setMenu] = useState(false);
 
+  const addObservers = useAddObservers();
+
   useEffect(() => {
-    let links = document.querySelectorAll(".navbar__links a");
-    if (menu) {
-      links.forEach((link, index) => {
-        link.classList.add("visible");
-      });
-    } else {
-      links.forEach((link, index) => {
-        link.classList.remove("visible");
-        setTimeout(() => {
-          link.classList.add("visible");
-        }, 1000);
-      });
-    }
-  }, [menu]);
+    addObservers();
+  }, [session]);
 
   return (
     <nav className={"navbar"}>
@@ -47,7 +38,7 @@ const Nav = () => {
         </div>
       ) : (
         <Link
-          className={"fade-in fade-time-10 fade-delay-6 login-mobile"}
+          className={"fade-in fade-time-10 fade-delay-6 login-mobile "}
           style={{ marginRight: "30px" }}
           href="/auth/signin"
         >

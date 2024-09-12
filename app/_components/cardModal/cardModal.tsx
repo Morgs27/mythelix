@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./cardModal.scss";
 import ConfirmModal from "../confirmModal/confirmModal";
 import { BsShop } from "react-icons/bs";
+import cardDescriptions from "@/app/_data/descriptions.json"
 
 const CardCreator = ({
   card,
@@ -32,12 +33,12 @@ const CardCreator = ({
     const innerCard = card.querySelector(".card");
     let classList = innerCard.classList.value.split(" ");
 
-    classList = classList.filter((item) => {
+    classList = classList.filter((item: any) => {
       return item != "";
     });
 
     if (classList[1] == "Pop") {
-      cardAlteration = "Pop Art";
+      cardAlteration = "PopArt";
       cardType = classList[3];
     } else {
       cardType = classList[2];
@@ -122,13 +123,8 @@ const CardCreator = ({
             <img src={`/types/icons/${cardType}.png`} alt={cardType} />
           </div>
           <div className="desctiption">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            {/* @ts-ignore */}
+            {cardDescriptions[cardAlteration] ? cardDescriptions[cardAlteration] : cardDescriptions[cardType]}
           </div>
           <div className="bottom">
             <button

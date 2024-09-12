@@ -1,380 +1,415 @@
-$secondary : #54577C;
-$correct: #00A300;
+$secondary: #54577c;
+$correct: #00a300;
 $error: #ff3434;
-$background: rgb(40,40,40);
+$background: rgb(40, 40, 40);
 
-.collection__page{
-    width: 100%;
-    height: 100%;
-    // position: relative;
-    overflow: hidden;
+.collection__page {
+  width: 100%;
+  height: 100%;
+  // position: relative;
+  overflow: hidden;
 }
 
-.cardOptions{
-    justify-content: center;
-    width: 95%;
-    margin: 0 auto;
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 20px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin-bottom: 20px;
-    align-items: stretch;
-    border-left: 1px solid $secondary;
-    border-right: 1px solid $secondary;
-    
+.cardOptions {
+  justify-content: center;
+  width: 95%;
+  margin: 0 auto;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 20px;
+  align-items: stretch;
+  border-left: 1px solid $secondary;
+  border-right: 1px solid $secondary;
 
-    .flex-seperator{
-        flex-grow: 1;
-    }
+  .flex-seperator {
+    flex-grow: 1;
+  }
 
-    .filterClear{
-        opacity: 0;
-        pointer-events: none;
-        user-select: none;
+  .filterClear {
+    opacity: 0;
+    pointer-events: none;
+    user-select: none;
 
-        &.show{
-            opacity: 1;
-            pointer-events: unset;
-            user-select: unset;
-        }
-    }
-
-    button{
-        background: $background;
-        transition: 0.4s;
-        &:hover{
-            cursor: pointer;
-            background: $secondary;
-        }
-
-        &.crystal{
-            font-family: "Arial", sans-serif;
-            img{
-                max-height: 25px;
-                margin-left: 10px;
-            }
-        }
-    }
-
-
-}
-
-.cards_container{
-    display: flex;
-    flex-wrap: wrap;
-    list-style-type: none;
-    gap: 20px;
-    row-gap: 0px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    justify-content: center;
-    height: calc(100% - 60px);
-    position: relative;
-    row-gap: 20px;
-    width: calc(95% + 2px);
-    margin: 0 auto;
-
-    &.modal-active{
-
-        .collection-break{
-            opacity: 0.9;
-            filter: blur(3px) brightness(0.2);
-            user-select: none;
-            pointer-events: none;
-        }
-
-        .card-locality-collection{
-            // opacity: 0.5;
-            opacity: 0.9;
-            filter: blur(3px) brightness(0.2);
-            user-select: none;
-            pointer-events: none;
-
-            .card::before{
-                animation: none;
-            }
-
-            &.ignore{
-                opacity: 1;
-                user-select: unset;
-                pointer-events: unset;
-                transform: scale(1.3);
-
-                .card{
-                    
-
-                    &:before{
-                        animation: spin 4s linear infinite;
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-.collection-break{
-    flex-basis: 100%;
-    height: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    margin-inline: 30px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    flex-direction: row;
-
-    .center{
-        margin: 20px;
-    }
-
-    img{
-        width: 35px;
-        height: 35px;
-    }
-
-    $side-height: 2px;
-
-    &::before{
-        flex-grow: 1;
-        content: '';
-        background: rgba(255,255,255,0.6);
-        height: $side-height;
-        
-        // animation: spin 8s linear infinite;
-    }
-
-    &::after{
-        flex-grow: 1;
-        content: '';
-        background: rgba(255,255,255,0.6);
-        height: $side-height;
-        
-        // animation: spin 8s linear infinite;
-    }
-}
-
-
-@keyframes spin {
-    0%{
-        --rotate: 0deg;
-    }
-    100%{
-        --rotate: 360deg;
-    }
-}
-
-
-
-.dropdown-select{
-    background: $secondary;
-    border: none;
-    outline: none;
-    border-radius: 3px;
-    padding-inline: 5px;
-    gap: 5px;
-
-    option{
-        background: $background;
-        padding: 10px;
-        margin: 10px;
-        // height: 30px;
-        // max-height: 30px;
-        border: none;
-        outline: none;
-        font-size: 16px;
-        text-align: right;
-        
-    }
-}
-
-
-.searchFilter{
-    position: relative;
-    display: flex;
-    align-items: center;
-  
-    input{
-      background: $background;
-      width: 100%;
-      height: 100%;
-      border-radius: 2px;
-      outline: none;
-      border: none;
-      padding-left: 10px;
-      padding-right: 42px;
-      width: 150px;
-      transition:  0.4s;
-      font-family: "Raleway", sans-serif;
-      font-size: 14px;
-
-      &:focus{
-        background: $secondary;
-        width: 160px;
-      }
-  
-      &::placeholder{
-        color: white;
-      }
-  
-    }
-  
-    .searchIcon{
-      background: transparent;
-      position: absolute;
-      color: $secondary;
-      height: 70%;
-      right: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-  
-    //   &:hover{
-    //     background: $secondary;
-    //   }
-  
+    &.show {
+      opacity: 1;
+      pointer-events: unset;
+      user-select: unset;
     }
   }
 
-.order-selector{
+  button {
+    background: $background;
+    transition: 0.4s;
+    &:hover {
+      cursor: pointer;
+      background: $secondary;
+    }
+
+    &.crystal {
+      font-family: "Arial", sans-serif;
+      img {
+        max-height: 25px;
+        margin-left: 10px;
+      }
+    }
+  }
+}
+
+.cards_container {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  gap: 20px;
+  row-gap: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  justify-content: center;
+  height: calc(100% - 60px);
+  position: relative;
+  row-gap: 20px;
+  width: calc(95% + 2px);
+  margin: 0 auto;
+
+  &.modal-active {
+    .collection-break {
+      opacity: 0.9;
+      filter: blur(3px) brightness(0.2);
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .card-locality-collection {
+      // opacity: 0.5;
+      opacity: 0.9;
+      filter: blur(3px) brightness(0.2);
+      user-select: none;
+      pointer-events: none;
+
+      .card::before {
+        animation: none;
+      }
+
+      &.ignore {
+        opacity: 1;
+        user-select: unset;
+        pointer-events: unset;
+        transform: scale(1.3);
+
+        .card {
+          &:before {
+            animation: spin 4s linear infinite;
+          }
+        }
+      }
+    }
+  }
+}
+
+.collection-break {
+  flex-basis: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-inline: 30px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  flex-direction: row;
+
+  .center {
+    margin: 20px;
+  }
+
+  img {
+    width: 35px;
+    height: 35px;
+  }
+
+  $side-height: 2px;
+
+  &::before {
+    flex-grow: 1;
+    content: "";
+    background: rgba(255, 255, 255, 0.6);
+    height: $side-height;
+
+    // animation: spin 8s linear infinite;
+  }
+
+  &::after {
+    flex-grow: 1;
+    content: "";
+    background: rgba(255, 255, 255, 0.6);
+    height: $side-height;
+
+    // animation: spin 8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
+.dropdown-select {
+  background: $secondary;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  padding-inline: 5px;
+  gap: 5px;
+
+  option {
+    background: $background;
+    padding: 10px;
+    margin: 10px;
+    // height: 30px;
+    // max-height: 30px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    text-align: right;
+  }
+}
+
+.searchFilter {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    background: $background;
     width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    padding-right: 42px;
+    width: 150px;
+    transition: 0.4s;
+    font-family: "Raleway", sans-serif;
+    font-size: 14px;
+
+    &:focus {
+      background: $secondary;
+      width: 160px;
+    }
+
+    &::placeholder {
+      color: white;
+    }
+  }
+
+  .searchIcon {
+    background: transparent;
+    position: absolute;
+    color: $secondary;
+    height: 70%;
+    right: 10px;
     display: flex;
-    flex-direction: row;
-    height: 40px;
     align-items: center;
-    position: relative;
-    padding-bottom: 5px;
-    border-bottom: 1px solid rgba($secondary,0.2);
+    justify-content: center;
 
-    .seperator{
-        height: 100%;
-        // margin: 10% 0;
-        width: 1px;
-        border-radius: 10%;
-        background: $secondary;
-        background: rgba($secondary,0.2);
-    }
-
-    // :nth-child(1){
-    //     height: 100%;
+    //   &:hover{
     //     background: $secondary;
-    //     flex-grow: 1;
-    // }
-
-    .order{
-        width: calc(50% - 13px);
-        margin: 6px;
-        
-        height: 100%;
-        background: $background;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 6px;
-
-        &:hover{
-            background: $secondary;
-            cursor: pointer;
-        }
-    }
-
-    // &.not-active{
-    //     user-select: none;
-    //     opacity: 0.2;
-    //     *{
-    //         user-select:none;
-    //         pointer-events: none;
-    //     }
-    // }
-
-
+    //   }
+  }
 }
 
-@media screen and (min-width: 1000px){
-    .cardOptions{
-        [aria-label="create-card"]{
-            svg{
-                display: none;
-            }
-        }
+.order-selector {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 40px;
+  align-items: center;
+  position: relative;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba($secondary, 0.2);
+
+  .seperator {
+    height: 100%;
+    // margin: 10% 0;
+    width: 1px;
+    border-radius: 10%;
+    background: $secondary;
+    background: rgba($secondary, 0.2);
+  }
+
+  // :nth-child(1){
+  //     height: 100%;
+  //     background: $secondary;
+  //     flex-grow: 1;
+  // }
+
+  .order {
+    width: calc(50% - 13px);
+    margin: 6px;
+
+    height: 100%;
+    background: $background;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+
+    &:hover {
+      background: $secondary;
+      cursor: pointer;
     }
+  }
+
+  // &.not-active{
+  //     user-select: none;
+  //     opacity: 0.2;
+  //     *{
+  //         user-select:none;
+  //         pointer-events: none;
+  //     }
+  // }
 }
 
-@media screen and (max-width: 1000px){
-    .cardOptions{
-        gap: 5px;
-        .filterClear{
-            padding-inline: 6px !important;
-
-            svg{
-                width: 20px;
-                height: 20px;
-            }
-        }
-        button{
-            min-width: 0px !important;
-            font-size: 0px !important;
-            span{
-                gap: 0px !important;
-
-                svg{
-                    width: 15px;
-                    height: 15px;
-                }
-            }
-        }
-        .crystal{
-            padding-inline: 8px !important;
-            font-size: 14px !important;
-        }
-        [aria-label="create-card"]{
-            padding-inline: 13px !important;
-            svg{
-                width: 20px;
-                height: 20px;
-                color: white;
-            }
-        }
+@media screen and (min-width: 1000px) {
+  .cardOptions {
+    [aria-label="create-card"] {
+      // svg{
+      //     display: none;
+      // }
+      gap: 10px;
+      svg {
+        width: 20px;
+        height: 20px;
+      }
     }
+  }
 }
 
-@media screen and (max-width: 600px){
-    .cardOptions{
-        .searchFilter{
-            display: none;
+@media screen and (max-width: 1000px) {
+  .cardOptions {
+    gap: 5px;
+    .filterClear {
+      padding-inline: 6px !important;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    button {
+      min-width: 0px !important;
+      font-size: 0px !important;
+      span {
+        gap: 0px !important;
+
+        svg {
+          width: 15px;
+          height: 15px;
         }
+      }
     }
-
-    .card-locality-collection{
-        width: unset !important;
-        transform: scale(0.9);
-        margin: 0px !important;
+    .crystal {
+      padding-inline: 8px !important;
+      font-size: 14px !important;
     }
+    [aria-label="create-card"] {
+      gap: 10px;
+      padding-inline: 12px !important;
+      font-size: 14px !important;
+      svg {
+        width: 20px;
+        height: 20px;
+        color: white;
+      }
+    }
+  }
 }
 
-@media screen and (max-width: 450px){
-    .card-locality-collection{
-        transform: scale(0.8);
-        margin: -15px -10px !important;
+@media screen and (max-width: 600px) {
+  .cardOptions {
+    .searchFilter {
+      display: none;
     }
+  }
+
+  .card-locality-collection {
+    width: unset !important;
+    transform: scale(0.9);
+    margin: 0px !important;
+  }
 }
 
-@media screen and (max-width: 407px){
-    .card-locality-collection{
-        transform: scale(0.7);
-        margin: -30px -15px  !important;
-
+@media screen and (max-width: 450px) {
+  .card-locality-collection {
+    transform: scale(0.8);
+    margin: -15px -10px !important;
+  }
+  .cardOptions {
+    .crystal {
+      gap: 0px;
+      padding-inline: 8px !important;
+      font-size: 12px !important;
+      img {
+        width: 15px;
+        height: 15px;
+        color: white;
+      }
     }
+    [aria-label="create-card"] {
+      gap: 3px;
+      padding-inline: 8px !important;
+      font-size: 12px !important;
+      svg {
+        width: 15px;
+        height: 15px;
+        color: white;
+      }
+    }
+  }
 }
 
-@media screen and (max-width: 385px){
-    .card-locality-collection{
-        transform: scale(0.6);
-        margin: -40px -20px !important;
+@media screen and (max-width: 407px) {
+  .card-locality-collection {
+    transform: scale(0.7);
+    margin: -30px -15px !important;
+  }
+}
+
+@media screen and (max-width: 385px) {
+  .card-locality-collection {
+    transform: scale(0.6);
+    margin: -40px -20px !important;
+  }
+
+  .cardOptions {
+    .crystal {
+      gap: 0px;
+      padding-inline: 8px !important;
+      font-size: 12px !important;
+      img {
+        width: 15px;
+        height: 15px;
+        color: white;
+      }
     }
+    [aria-label="create-card"] {
+      gap: 3px;
+      padding-inline: 8px !important;
+      font-size: 0px !important;
+      svg {
+        width: 15px;
+        height: 15px;
+        color: white;
+      }
+    }
+  }
 }

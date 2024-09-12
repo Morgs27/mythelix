@@ -24,7 +24,11 @@ const CardCreator = ({
 
   const seperator = useRef<HTMLDivElement | null>(null);
 
+  const [currentCard, setCurrentCard] = useState(1);
+
   const generateStyles = useCardStyles();
+
+  const isMobile = screen.width < 735;
 
   useEffect(() => {
     if (stage == 4) {
@@ -47,6 +51,12 @@ const CardCreator = ({
   }, []);
 
   const handleClick = (e: any, data: any) => {
+    let selectedIndex = data.index;
+    if (selectedIndex != currentCard && isMobile) {
+      setCurrentCard(selectedIndex);
+      return;
+    }
+
     if (stage == 0) {
       const { type, alteration, index } = data;
 
@@ -171,7 +181,9 @@ const CardCreator = ({
                       index,
                     })
                   }
-                  className={`card ${item.alterations}`}
+                  className={`card ${item.alterations} ${
+                    currentCard == index ? "selected" : ""
+                  }`}
                 >
                   <div className="top">
                     <div className="title">{item.prompt}</div>
@@ -213,7 +225,9 @@ const CardCreator = ({
                     onClick={(e) =>
                       handleClick(e, { index, imageSrc: item.photo })
                     }
-                    className={`card ${cardData.alteration}`}
+                    className={`card ${cardData.alteration} ${
+                      currentCard == index ? "selected" : ""
+                    }`}
                   >
                     <LazyImage src={item.photo} alt={item.photo}></LazyImage>
                   </div>
@@ -238,7 +252,9 @@ const CardCreator = ({
                       defence: item.stats.defence,
                     })
                   }
-                  className={`card ${cardData.alteration}`}
+                  className={`card ${cardData.alteration} ${
+                    currentCard == index ? "selected" : ""
+                  }`}
                 >
                   <LazyImage
                     src={cardData.imageSrc}
@@ -294,7 +310,9 @@ const CardCreator = ({
                   <div
                     key={`${index}${item}`}
                     onClick={(e) => handleClick(e, { index, effect: item })}
-                    className={`card ${cardData.alteration}`}
+                    className={`card ${cardData.alteration} ${
+                      currentCard == index ? "selected" : ""
+                    }`}
                   >
                     <LazyImage
                       src={cardData.imageSrc}
@@ -346,7 +364,7 @@ const CardCreator = ({
       <div className="cards__container_4 hide">
         {stage === 4 ? (
           <>
-            <div className={`card ${cardData.alteration}`}>
+            <div className={`card ${cardData.alteration} `}>
               <LazyImage
                 src={cardData.imageSrc}
                 alt={cardData.imageSrc}
@@ -398,6 +416,21 @@ const CardCreator = ({
         <div className="line fade-in-normal-active"></div>
         <div className="line fade-in-normal-active"></div>
         <div className="line fade-in-normal-active"></div>
+
+        <div className="selection-indicator">
+          <div
+            onClick={() => setCurrentCard(0)}
+            className={`circle ${currentCard == 0 ? "active" : ""}`}
+          ></div>
+          <div
+            onClick={() => setCurrentCard(1)}
+            className={`circle ${currentCard == 1 ? "active" : ""}`}
+          ></div>
+          <div
+            onClick={() => setCurrentCard(2)}
+            className={`circle ${currentCard == 2 ? "active" : ""}`}
+          ></div>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import CardCreator from "../_components/cardCreator/cardCreator";
 import "./collection.scss";
-import { MdClear } from "react-icons/md";
+import { MdClear, MdOutlineCreate } from "react-icons/md";
 import CardModal from "../_components/cardModal/cardModal";
 import Status from "../_components/status/status";
 import ConfirmModal from "../_components/confirmModal/confirmModal";
@@ -26,6 +26,8 @@ import CardList from "../_components/cardList/CardList";
 import useFadeElements from "../_hooks/useFadeElements";
 import useCardStyles from "../_hooks/useCardStyles";
 import Tutorial from "../_components/tutorial/Tutorial";
+import { IoMdAddCircle } from "react-icons/io";
+import { RiUserAddLine } from "react-icons/ri";
 
 const abortController = new AbortController();
 const signal = abortController.signal;
@@ -51,6 +53,7 @@ const Page = () => {
   });
 
   const router = useRouter();
+  
 
   // @ts-ignore
   const { data: session } = useSession({
@@ -142,10 +145,6 @@ const Page = () => {
 
     updateAvailableFilters(collection);
 
-    if (sort != "") {
-      sortCollection();
-    }
-
     updateGaps();
 
     fadeElements();
@@ -219,7 +218,7 @@ const Page = () => {
               <AlterationFilter
                 setAlterationFilter={setAlterationFilter}
                 alterationFilter={alterationFilter}
-                availableAlterations={availableAlterations}
+                availableAlterations={availableAlterations.map((alteration) => alteration.trimEnd())}
               />
 
               <OrderSelector
@@ -292,8 +291,10 @@ const Page = () => {
                   setModalOpen(true);
                 }}
               >
-                Create Card
-                <VscNewFile />
+                Create <RiUserAddLine />
+
+
+
               </button>
             </div>
 

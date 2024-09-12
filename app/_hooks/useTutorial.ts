@@ -9,7 +9,8 @@ export const useTutorial = ({ session }: UseTutorialProps) => {
 
   const shouldShowTutorial =
     session?.user?.username?.startsWith("guest_") &&
-    localStorage.getItem("tutorialStarted");
+    localStorage.getItem("tutorialStarted") &&
+    !localStorage.getItem("tutorialCompleted");
 
   const shouldShowWelcome =
     session?.user?.username?.startsWith("guest_") &&

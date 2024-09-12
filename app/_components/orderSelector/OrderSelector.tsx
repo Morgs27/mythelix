@@ -7,7 +7,7 @@ import {
   ListBox,
   ListBoxItem,
 } from "react-aria-components";
-import {
+import { 
   FaSortAmountDown,
   FaSortAmountUp,
   FaSortAmountDownAlt,

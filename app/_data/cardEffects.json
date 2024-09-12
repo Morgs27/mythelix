@@ -1,0 +1,255 @@
+{
+  "Dragon": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Gain +1 Attack if facing a Fire-type card."
+      ]
+    },
+    "Frost": {
+      "effects": [
+        "Freeze an opponent's card for 1 turn.",
+        "Reduce an opponent's card's attack by 2 for 1 turn.",
+        "Double freeze duration of other freeze effects."
+      ]
+    },
+    "Fire": {
+      "effects": [
+        "Deal 1 damage to an opponent's card.",
+        "Inflict 'Burn', causing 1 damage per turn for 2 turns.",
+        "Double the burn damage from your cards."
+      ]
+    }
+  },
+  "Demon": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Gain +1 Attack if facing a Faerie-type card."
+      ]
+    },
+    "Fire": {
+      "effects": [
+        "Deal 2 damage to an opponent's card.",
+        "Inflict 'Burn', causing 2 damage per turn for 2 turns.",
+        "Inflict 'Burn' on all enemies, causing 1 damage for 2 turns"
+      ]
+    },
+    "Oni": {
+      "effects": [
+        "Summon an Oni minion with 2 attack and 2 defense.",
+        "Increase the attack of all Oni minions by 1.",
+        "When destroyed, summon an Oni with 1 attack and 1 defense."
+      ]
+    }
+  },
+  "Faerie": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Draw 1 card if the Faerie survives the turn."
+      ]
+    },
+    "Evil": {
+      "Evil": {
+        "effects": [
+          "Inflict 'Curse' on an opponent's card, reducing its attack and defense by 2 for 2 turns.",
+          "Opponent discards 1 card at the start of their next turn.",
+          "When a cursed card dies, your opponent discards a card."
+        ]
+      }
+    }
+  },
+  "Giant": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Gain +2 Defense if facing a smaller creature."
+      ]
+    },
+    "Yeti": {
+      "effects": [
+        "Reduce the attack of all opponent's cards by 1 for 1 turn.",
+        "Freeze an opponent’s card for 1 turn.",
+        "When destroyed, freze all opponents cards."
+      ]
+    },
+    "Hecatoncheires": {
+      "effects": [
+        "Gain 1 attack and 1 defense for every opponent's card in play.",
+        "Reduce all opponent's cards' attack by 1 for 1 turn.",
+        "When destroyed, deal 1 damage to all opponent’s cards."
+      ]
+    },
+    "Ogre": {
+      "effects": [
+        "Crush an opponent's card, reducing its defense by 3 for 1 turn.",
+        "Increase your attack by 2 for 1 turn.",
+        "When destroyed, increase the attack of all of your cards by 1"
+      ]
+    }
+  },
+  "Goblin": {
+    "Base": {
+      "effects": ["+1 Attack", "+1 Defense", "Draw 1 card when played."]
+    },
+    "Bugbear": {
+      "effects": [
+        "Steal 1 card from the opponent's hand.",
+        "Reduce an opponent's attack by 1 for 1 turn.",
+        "Increase Goblin’s attack by 1 if a card is stolen."
+      ]
+    },
+    "Burglar": {
+      "effects": [
+        "Draw 2 cards.",
+        "Discard 1 random card from the opponent’s hand.",
+        "When destroyed, your opponent discards a card"
+      ]
+    }
+  },
+  "Owl": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Reveal the top card of your deck."
+      ]
+    },
+    "Golden": {
+      "effects": [
+        "Reveal the top card of the opponent's deck.",
+        "Gain +1 Attack whenever a card is revealed",
+        "When a card is Revealed add it to your hand."
+      ]
+    },
+    "Warrior": {
+      "effects": [
+        "Increase the attack of all your cards by 1 for 1 turn.",
+        "Increase your defense by 2 for 1 turn.",
+        "When destroyed, increase the states of your cards by 1."
+      ]
+    },
+    "Magic": {
+      "effects": [
+        "Draw 1 card from your deck.",
+        "Increase your spell card effects by 1 for 1 turn.",
+        "Increase the defense of all your cards by 1 for 1 turn."
+      ]
+    }
+  },
+  "Phoenix": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Revive with 1/2 original stats when destroyed."
+      ]
+    },
+    "Frost": {
+      "effects": [
+        "Freeze an opponent’s card for 2 turns.",
+        "When destroyed, revive with 1/2 original stats and freeze a random opponent's card.",
+        "Increase attack by 1 for each frozen card."
+      ]
+    }
+  },
+  "Unicorn": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Heal 1 damage from any card when played."
+      ]
+    },
+
+    "Warrior": {
+      "effects": [
+        "Increase the defense of all your cards by 2 for 1 turn.",
+        "Increase attack by 1 for all Unicorn-type cards.",
+        "When destoryed, increase the attack of a random card by 3"
+      ]
+    }
+  },
+  "Vampire": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Drain 1 health point from the opponent’s card."
+      ]
+    },
+    "Fanged": {
+      "effects": [
+        "Drain 2 health points from an opponent’s card and heal 2 health points to this card.",
+        "Inflict ‘Bloodthirst’ causing 1 damage for each turn the Vampire remains in play.",
+        "When destroyed, deal 2 damage to a random card."
+      ]
+    }
+  },
+  "Werewolf": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Transform into a different creature upon being played."
+      ]
+    },
+    "Shapeshifter": {
+      "effects": [
+        "Transform into a creature card from your deck upon being played.",
+        "Gain +1 attack for each different type of card you have in play.",
+        "When destroyed summon a 1/1 unit of a random type."
+      ]
+    }
+  },
+  "Wizard": {
+    "Base": {
+      "effects": ["+1 Attack", "+1 Defense", "Draw 1 card when played."]
+    },
+
+    "Druid": {
+      "effects": [
+        "Summon a creature with 1 attack and 1 defense.",
+        "Heal 2 damage from any of your cards.",
+        "Increase one of your card's stats by 2."
+      ]
+    },
+
+    "Necromancer": {
+      "effects": [
+        "Revive a destroyed creature with 1/2 original stats.",
+        "Destroy a random card on the board.",
+        "When destroyed, revive a reandom creature"
+      ]
+    },
+
+    "Frost": {
+      "effects": [
+        "Freeze all opponent’s cards for 1 turn.",
+        "Freeze an opponents card for 2 turns.",
+        "Deal 1 damage to every frozen card."
+      ]
+    }
+  },
+  "Zombie": {
+    "Base": {
+      "effects": [
+        "+1 Attack",
+        "+1 Defense",
+        "Revive with 1/2 original stats if destroyed."
+      ]
+    },
+    "Voodoo": {
+      "effects": [
+        "Inflict ‘Voodoo’ causing 1 damage to an opponent’s card whenever the Zombie takes damage.",
+        "Revive this Zombie on it's first death.",
+        "When destroyed, deal 2 damage to the opponent’s cards."
+      ]
+    }
+  }
+}

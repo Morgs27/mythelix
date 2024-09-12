@@ -1,392 +1,388 @@
-
 @property --rotate {
-    syntax: "<angle>";
-    initial-value: 132deg;
-    inherits: false;
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
 }
 
-
-$secondary : #54577C;
-$correct: #00A300;
+$secondary: #54577c;
+$correct: #00a300;
 $error: #ff3434;
-$background: rgb(40,40,40);
+$background: rgb(40, 40, 40);
 $card-height: 300px;
 $card-width: calc($card-height / 1.5);
 
 @keyframes fadeIn {
-    from {
-      opacity: 0.6;
-      transform: translateX(-3px);
-      filter: blur(3px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0px);
-      filter: blur(0px);
-    }
+  from {
+    opacity: 0.6;
+    transform: translateX(-3px);
+    filter: blur(3px);
   }
-
-  @keyframes loading {
-    0%{
-      left: -45%;
-    }
-    100%{
-      left: 100%;
-    }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+    filter: blur(0px);
   }
+}
 
-.card-locality-collection{
+@keyframes loading {
+  0% {
+    left: -45%;
+  }
+  100% {
+    left: 100%;
+  }
+}
 
-    position: relative;
+.card-locality-collection {
+  position: relative;
+  width: $card-width;
+  height: $card-height;
+  // margin-top: 25px;
+  // margin-bottom: 25px;
+  margin: 15px;
+
+  .placeholder {
+    position: absolute;
+
     width: $card-width;
     height: $card-height;
-    // margin-top: 25px;
-    // margin-bottom: 25px;
-    margin: 15px;
 
-    .placeholder{
-        position: absolute;
+    background-color: rgb(29, 29, 29);
+    overflow: hidden;
+    border-radius: 5px;
 
-        width: $card-width;
-        height: $card-height;
+    .activity {
+      position: absolute;
+      left: -45%;
+      height: 100%;
+      width: 45%;
+      opacity: 0.2;
+      background-image: linear-gradient(
+        to left,
+        transparent,
+        $secondary,
+        transparent
+      );
+      animation: loading 3s infinite;
+    }
+  }
+  // background: black;
 
-        background-color: rgb(29, 29, 29);
-        overflow: hidden;
-        border-radius: 5px;
+  // animation: fadeIn 1s ease-in-out;
 
-        .activity{
-            position: absolute;
-            left: -45%;
-            height: 100%;
-            width: 45%;
-            opacity: 0.2;
-            background-image: linear-gradient(to left, transparent, $secondary, transparent);
-            animation: loading 3s infinite;
-        }
-    }
-    // background: black;
+  .card {
+    // margin: 20px;
+    /* background: rgb(255, 255, 255); */
+    width: $card-width;
+    height: $card-height;
+    position: relative;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    display: flex;
+    font-size: 1.5em;
+    color: rgb(88 199 250 / 0%);
+    cursor: pointer;
+    // font-family: cursive;
 
-    // animation: fadeIn 1s ease-in-out;
-    
-    .card {
-        // margin: 20px;
-        /* background: rgb(255, 255, 255); */
-        width: $card-width;
-        height: $card-height;
-        position: relative;
-        justify-content: center;
-        align-items: flex-start;
-        text-align: center;
-        display: flex;
-        font-size: 1.5em;
-        color: rgb(88 199 250 / 0%);
-        cursor: pointer;
-        // font-family: cursive;
-        
-        transition-duration: 300ms;
-        transition-property: transform, box-shadow, opacity;
-        transition-timing-function: ease-in-out;
-        transform: rotate3d(0);
-        transform-origin: center center;
+    transition-duration: 300ms;
+    transition-property: transform, box-shadow, opacity;
+    transition-timing-function: ease-in-out;
+    transform: rotate3d(0);
+    transform-origin: center center;
 
-        transform: translate(0px);
-        // transition-delay: calc(var(--i) * 0.1s);;
+    transform: translate(0px);
+    // transition-delay: calc(var(--i) * 0.1s);;
 
-        &.loading{
-            opacity: 0;
-            transform: translateY(2px);
-        }
+    &.loading {
+      opacity: 0;
+      transform: translateY(2px);
     }
+  }
 
-    
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
-        // z-index: 1000;
-    }
-    
-    .card.focus{
-        position: absolute;
-        z-index: 10000;
-        left: calc(50vw - ($card-width / 2));
-        top: calc(50vh - ($card-height / 2));
-        
-    }
-    
-    .card .glow {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        z-index: 100;
-    
-        background-image: radial-gradient(circle at 50% -20%, transparent, transparent);
-    }
-    
-    .card .image{
-        width: 100%;
-        transition: 0.5s;
-        z-index: 2;
-    }
-    
-    .imageOverlay{
-        position: absolute;
-        z-index: 3;
-        width: calc(100% + 2px);
-        height: calc(100% + 2px);
-        left: -1px;
-        top: -1px;
-    }
-    
-    .card .border{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        /* border: 1px solid rgba(255,255,255, 0.2); */
-        z-index: 4;
-    }
-    
-    .card .overlay{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: 5;
-        opacity: 1;
-        display: grid;
-        grid-template-rows: 42% 15% 25% 18%;
-        transition: 0.5s;
-    }
-    
-    .card .alteration{
-        
-        display: flex;
-        justify-content: center;
-        color: white;
-        font-size: $card-width / 18;
-        background-clip: text;
-        -webkit-background-clip: text;
-        color: transparent;
-        animation: spin 3s linear infinite;
-        // font-weight: bold;
-        letter-spacing: 1mm;
-        margin-bottom: 8px;
-        // font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+    // z-index: 1000;
+  }
 
-        color: white !important;
-        
-    }
-    
-    .card .name{
-        text-align: center;
-        grid-row: 2;
-        width: 100%;
-        height: 100%;
-        display: flex;
-    
-        color: white;
-        font-family: Lucida Calligraphy;
-        letter-spacing: 0.2mm;
-        display: flex;
-    
-        flex-direction: column-reverse;
-    }
-    
-    .card .top{
-        grid-row: 1;
-        z-index: -1;
-        /* background: red; */
-        position: relative;
-        height: $card-height;
-        // background-image: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(255,255,255,0.15) 25%)
-        background-image: linear-gradient(135deg, rgba(0,0,0,1) 0%, transparent 30%, transparent 100%)
-    }
-    
-    .card .top .contribution{
-        z-index: 1;
-        opacity: 1;
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        left: 0px;
-        top: 0;
-        margin: ($card-width / 12) - 10px;
-        margin: 0px;
-        transform: rotate(45deg) scale(calc( $card-height / 350px));
-        /* background: radial-gradient( rgba(0,0,0,0.5),transparent); */
-        padding: 3px;
-        
-    }
-    
-    .contribution .center{
-        width: 8px;
-        height: 8px; 
-        border-radius: 2px;
-        background: white;
-        right: 0;
-        bottom: 0;
-        position: absolute;
-    }
-    
-    .contribution .side{
-        position: absolute;
-        bottom: 0;
-        left: 8px;
-        height: 8px;
-        border-radius: 2px;
-        width: 30px;
-        display: flex;
-        flex-direction: row-reverse;
-        gap: 5px;
-    }
-    
-    .contribution .side *{
-        height: 100%;
-        border-radius: 2px;
-        width: 8px;
-        background: white;
-    }
-    
-    .contribution .right {
-        transform: rotate(90deg);
-        right: -11px;
-        bottom: 23px;
-        left: auto;
-    
-    }
-    
-    .contribution .hide{
-        background: transparent;
-    }
-    
-    .card .top .cost{
-        z-index: 100;
-        width: 30px;
-        height: 30px;
-        margin: $card-width / 12;
-        margin: 10px;
+  .card.focus {
+    position: absolute;
+    z-index: 10000;
+    left: calc(50vw - ($card-width / 2));
+    top: calc(50vh - ($card-height / 2));
+  }
 
-        border: 1px solid white;
-        /* background: rgba(0,0,0,0.6);
+  .card .glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 100;
+
+    background-image: radial-gradient(
+      circle at 50% -20%,
+      transparent,
+      transparent
+    );
+  }
+
+  .card .image {
+    width: 100%;
+    transition: 0.5s;
+    z-index: 2;
+  }
+
+  .imageOverlay {
+    position: absolute;
+    z-index: 3;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    left: -1px;
+    top: -1px;
+  }
+
+  .card .border {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid rgba(255,255,255, 0.2); */
+    z-index: 4;
+  }
+
+  .card .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    opacity: 1;
+    display: grid;
+    grid-template-rows: 42% 15% 25% 18%;
+    transition: 0.5s;
+  }
+
+  .card .alteration {
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: $card-width / 18;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: spin 3s linear infinite;
+    // font-weight: bold;
+    letter-spacing: 1mm;
+    margin-bottom: 8px;
+    // font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+    color: white !important;
+  }
+
+  .card .name {
+    text-align: center;
+    grid-row: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    color: white;
+    font-family: Lucida Calligraphy;
+    letter-spacing: 0.2mm;
+    display: flex;
+
+    flex-direction: column-reverse;
+  }
+
+  .card .top {
+    grid-row: 1;
+    z-index: -1;
+    /* background: red; */
+    position: relative;
+    height: $card-height;
+    // background-image: linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(255,255,255,0.15) 25%)
+    background-image: linear-gradient(
+      135deg,
+      rgba(0, 0, 0, 1) 0%,
+      transparent 30%,
+      transparent 100%
+    );
+  }
+
+  .card .top .contribution {
+    z-index: 1;
+    opacity: 1;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 0px;
+    top: 0;
+    margin: ($card-width / 12) - 10px;
+    margin: 0px;
+    transform: rotate(45deg) scale(calc($card-height / 350px));
+    /* background: radial-gradient( rgba(0,0,0,0.5),transparent); */
+    padding: 3px;
+  }
+
+  .contribution .center {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: white;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+  }
+
+  .contribution .side {
+    position: absolute;
+    bottom: 0;
+    left: 8px;
+    height: 8px;
+    border-radius: 2px;
+    width: 30px;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 5px;
+  }
+
+  .contribution .side * {
+    height: 100%;
+    border-radius: 2px;
+    width: 8px;
+    background: white;
+  }
+
+  .contribution .right {
+    transform: rotate(90deg);
+    right: -11px;
+    bottom: 23px;
+    left: auto;
+  }
+
+  .contribution .hide {
+    background: transparent;
+  }
+
+  .card .top .cost {
+    z-index: 100;
+    width: 30px;
+    height: 30px;
+    margin: $card-width / 12;
+    margin: 10px;
+
+    border: 1px solid white;
+    /* background: rgba(0,0,0,0.6);
         background: radial-gradient( rgba(0,0,0,0.5),transparent); */
-        transform: rotate(45deg) scale(calc( $card-height / 350px));
-        display:flex;
-        justify-content: center;
-        // font-family: Arial, Helvetica, sans-serif;
-        color: white;
-        align-items: center;
-        
-    }
-    
-    .card .top .cost .text{
-        transform: rotate(-45deg) translateY(-2px);
-    }
-    
-    .card .description{
-        grid-row: 3;
-        width: 90%;
-        margin-left: 5%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: white;
-        font-size: 14px;
-        
-        margin-top: 10px;
-        font-family: Maiandra GD;
-        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    }
-    
-    .card .bottom{
-        grid-row: 4;
-        width: 100%;
-        height: 100%;
-        display: grid;
-        grid-template-columns: 30% 1fr 30%;
-    }
-    
-    .card .class{
-        grid-column: 2;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        color: white;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: $card-width / 23;
-        gap: 4px;
-    }
-    
-    .card .class img{
-        width: $card-width / 10;
-        height: $card-width / 10;
-    }
-    
-    
-    .card .defence{
-        grid-column: 1;
-        width: 98%;
-        height: 88%;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: $card-width / 10;
-        font-family:  Arial, Helvetica, sans-serif;
-    }
-    
-    
-    .card .attack{
-        color: white;
-        grid-column: 3;
-        width: 100%;
-        height: 88%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: $card-width / 10;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-        
-    .card::before {
-        --border-width : 2px;
-        content: "";
-        width: calc(100% + (var(--border-width) * 2));
-        height: calc(100% + (var(--border-width) * 2));
-        position: absolute;
-        background-image: linear-gradient(var(--rotate)
-        , #ffffff, #000000);
-        z-index: 0;
-        top: calc( -1 * var(--border-width));
-        left: calc( -1 * var(--border-width));
-        // animation: spin 4s linear infinite;
-        opacity: 0.6;
-    }
+    transform: rotate(45deg) scale(calc($card-height / 350px));
+    display: flex;
+    justify-content: center;
+    // font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    align-items: center;
+  }
 
-    .card.animateBorder::before{
-        animation: spin 4s linear infinite;
-    }
-    
-    .card.null::before{
-    
-        animation: none;
-        background-image: none;
-    }
-    
-    
-    @keyframes spin {
-        0% {
-            --rotate: 0deg;
-        }
-        100% {
-            --rotate: 360deg;
-        }
-    }
-        
-    
+  .card .top .cost .text {
+    transform: rotate(-45deg) translateY(-2px);
+  }
 
+  .card .description {
+    grid-row: 3;
+    width: 90%;
+    margin-left: 5%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 12px;
+
+    margin-top: 10px;
+    font-family: Maiandra GD;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+      sans-serif;
+  }
+
+  .card .bottom {
+    grid-row: 4;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 30% 1fr 30%;
+  }
+
+  .card .class {
+    grid-column: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: $card-width / 23;
+    gap: 4px;
+  }
+
+  .card .class img {
+    width: $card-width / 10;
+    height: $card-width / 10;
+  }
+
+  .card .defence {
+    grid-column: 1;
+    width: 98%;
+    height: 88%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: $card-width / 10;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .card .attack {
+    color: white;
+    grid-column: 3;
+    width: 100%;
+    height: 88%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: $card-width / 10;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  .card::before {
+    --border-width: 2px;
+    content: "";
+    width: calc(100% + (var(--border-width) * 2));
+    height: calc(100% + (var(--border-width) * 2));
+    position: absolute;
+    background-image: linear-gradient(var(--rotate), #ffffff, #000000);
+    z-index: 0;
+    top: calc(-1 * var(--border-width));
+    left: calc(-1 * var(--border-width));
+    // animation: spin 4s linear infinite;
+    opacity: 0.6;
+  }
+
+  .card.animateBorder::before {
+    animation: spin 4s linear infinite;
+  }
+
+  .card.null::before {
+    animation: none;
+    background-image: none;
+  }
+
+  @keyframes spin {
+    0% {
+      --rotate: 0deg;
+    }
+    100% {
+      --rotate: 360deg;
+    }
+  }
 }

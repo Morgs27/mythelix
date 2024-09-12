@@ -72,7 +72,6 @@ const Card = ({imageSrc, animate, effect, cost, attack, defence, name, contribut
                         <div className={"alteration " + special}>{special.toUpperCase()}</div>
                         : <></>
                     }
-                    {/* {name.toLocaleUpperCase()} */}
                 </div>
                 
                 <div className="description">{effect}</div>
