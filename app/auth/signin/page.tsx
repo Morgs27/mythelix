@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 
 const Page = () => {
-  const callBackUrl = "http://localhost:3000/";
+  const callBackUrl = "/";
 
   const [visible, setVisible] = useState(false);
 

@@ -22,3 +22,6 @@ export async function GET(request: NextRequest) {
     { status: 200 }
   );
 }
+
+// Query results depend on the request, so never prerender at build time.
+export const dynamic = "force-dynamic";
