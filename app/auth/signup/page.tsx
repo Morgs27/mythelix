@@ -228,7 +228,7 @@ const UserForm = () => {
       await signIn("credentials", {
         username: response.username,
         password: response.password,
-        callbackUrl: "http://localhost:3000",
+        callbackUrl: "/",
       });
     }
   };

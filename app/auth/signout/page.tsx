@@ -12,7 +12,7 @@ export default function SignOutPage() {
   });
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "http://localhost:3000/" });
+    await signOut({ callbackUrl: "/" });
   };
 
   if (session == null) {
